@@ -4,9 +4,14 @@
 int main() {
 
     GameData gd;
-
+    gd.drawMenu();
     while (gd.running()){
         gd.update();
-        gd.render();
+        if(gd.isInGame()){
+            gd.render();
+        }else{
+            gd.renderMenu();
+        }
+
     }
 }

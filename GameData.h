@@ -5,6 +5,7 @@
 #ifndef FINN_RUNNER_GAMEDATA_H
 #define FINN_RUNNER_GAMEDATA_H
 
+#define max_options 2
 
 class GameData {
 
@@ -36,6 +37,10 @@ class GameData {
 
     const bool running();
 
+    void renderMenu();
+
+    bool isInGame() const;
+
 private:
 
         //variables
@@ -44,6 +49,16 @@ private:
         bool character_alive;
         sf::RenderWindow* window;
         sf::Event event;
+        sf::RectangleShape background;
+        sf::RectangleShape backgroundGame;
+        sf::Texture texture;
+        sf::Texture titleTexture;
+        sf::Texture gameTexture;
+        sf::RectangleShape title;
+        sf::Text menuOptions[max_options];
+        int menuSelected;
+        bool inGame;
+        sf::Font font;
 
         //functions
 
