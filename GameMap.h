@@ -4,7 +4,6 @@
 
 #ifndef FINN_RUNNER_GAMEMAP_H
 #define FINN_RUNNER_GAMEMAP_H
-#include <SFML/Graphics.hpp>
 
 
 class GameMap {
@@ -13,17 +12,9 @@ class GameMap {
         void createTerrain();
         void objectPlacement();
         void spawnGameCharacter();
-
-    GameMap();
-
-    const sf::Sprite &getFloor() const;
-
-private:
+    private:
         float spawnX;
         float spawnY;
-
-        sf::Texture textureFloor;
-        sf::Sprite floor;
 };
 
 

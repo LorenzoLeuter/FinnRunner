@@ -34,7 +34,7 @@ void GameData::restartGame() {
 
 }
 
-GameData::GameData() : meters(0), record(0),character_alive(false),inGame(false),xL1(0),xL2(600) {
+GameData::GameData() : meters(0), record(0),character_alive(false),inGame(false) {
     initVariables();
     initWindow();
 
@@ -44,15 +44,9 @@ GameData::GameData() : meters(0), record(0),character_alive(false),inGame(false)
 
     }
 
-    background.setSize(sf::Vector2f(600,600));
-    background.setPosition(sf::Vector2f(0,0));
-    texture.loadFromFile("C:\\Users\\lori0\\ClionProjects\\FinnRunner\\assets\\background.png");
-    background.setTexture(&texture);
-
-
-    background2.setSize(sf::Vector2f(600,600));
-    background2.setPosition(sf::Vector2f(xL2,0));
-    background2.setTexture(&texture);
+    backgroundGame.setSize(sf::Vector2f(600,600));
+    gameTexture.loadFromFile("C:\\Users\\lori0\\ClionProjects\\FinnRunner\\assets\\backgroundGame.png");
+    backgroundGame.setTexture(&gameTexture);
 
     title.setSize(sf::Vector2f(300,120));
     title.setPosition(sf::Vector2f(150,50));
@@ -78,6 +72,10 @@ GameData::~GameData() {
 }
 
 void GameData::drawMenu() {
+    background.setSize(sf::Vector2f(600,600));
+    texture.loadFromFile("C:\\Users\\lori0\\ClionProjects\\FinnRunner\\assets\\backgroundMenu.png");
+    background.setTexture(&texture);
+
     for (int i = 0; i < max_options; ++i) {
         std::cout << menuOptions[i].getString().isEmpty();
     }
@@ -88,50 +86,41 @@ void GameData::drawMenu() {
 
 void GameData::update() {
     while (this->window->pollEvent(this->event)){
-        if(inGame){
-            if(event.type == sf::Event::Closed)
+        if(event.type == sf::Event::Closed)
+            this->window->close();
+
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+            this->window->close();
+
+        if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+            std::cout << "HA CLICCATO   " << menuSelected << std::endl;
+            if(menuSelected == 0){
+                inGame = true;
+            }else if(menuSelected == 1){
                 this->window->close();
-
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-                this->window->close();
-        }else{
-            if(event.type == sf::Event::Closed)
-                this->window->close();
-
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-                this->window->close();
-
-            if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-                if(menuSelected == 0){
-                    inGame = true;
-                    map.createSpawnArea();
-                }else if(menuSelected == 1){
-                    this->window->close();
-                }
-            }
-
-            if(sf::Event::MouseMoved){
-
-                if(event.mouseMove.x >= 431 && event.mouseMove.x <= 541 && event.mouseMove.y >= 310 && event.mouseMove.y <= 360){
-                    menuSelected = 1;
-                }else if(event.mouseMove.x >= 55 && event.mouseMove.x <= 182 && event.mouseMove.y >= 310 && event.mouseMove.y <= 375) {
-                    menuSelected = 0;
-                }else{
-                    menuSelected = -1;
-                }
-
-                if(menuSelected == -1){
-                    for (int i = 0; i < max_options; i++) {
-                        menuOptions[i].setFillColor(sf::Color::White);
-                    }
-                }else{
-                    menuOptions[menuSelected].setFillColor(sf::Color::Black);
-                }
             }
         }
-    }
-    if(inGame) {
-        animationTime();
+
+        if(sf::Event::MouseMoved){
+            std::cout << "SI E' MOSSO" << std::endl;
+            std::cout << "x= " << event.mouseMove.x << "  y=" << event.mouseMove.y << std::endl;
+
+            if(event.mouseMove.x >= 431 && event.mouseMove.x <= 541 && event.mouseMove.y >= 310 && event.mouseMove.y <= 360){
+                menuSelected = 1;
+            }else if(event.mouseMove.x >= 55 && event.mouseMove.x <= 182 && event.mouseMove.y >= 310 && event.mouseMove.y <= 375) {
+                menuSelected = 0;
+            }else{
+                menuSelected = -1;
+            }
+
+            if(menuSelected == -1){
+                for (int i = 0; i < max_options; i++) {
+                    menuOptions[i].setFillColor(sf::Color::White);
+                }
+            }else{
+                menuOptions[menuSelected].setFillColor(sf::Color::Black);
+            }
+        }
     }
 }
 
@@ -147,9 +136,7 @@ void GameData::renderMenu() {
 
 void GameData::render() {
     window->clear();
-    window->draw(background);
-    window->draw(background2);
-    window->draw(map.getFloor());
+    window->draw(backgroundGame);
     window->display();
 }
 
@@ -168,19 +155,3 @@ const bool GameData::running() {
 bool GameData::isInGame() const {
     return inGame;
 }
-
-void GameData::animationTime() {
-    if(c.getElapsedTime().asSeconds() > 0.01f){
-        if(xL1 == -600){
-            xL1 = 0;
-            xL2 = 600;
-        }else{
-            xL1 -= 1;
-            xL2 -= 1;
-        }
-        background.setPosition(sf::Vector2f(xL1,0));
-        background2.setPosition(sf::Vector2f(xL2,0));
-        c.restart();
-    }
-}
-
