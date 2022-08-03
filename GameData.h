@@ -5,6 +5,8 @@
 #ifndef FINN_RUNNER_GAMEDATA_H
 #define FINN_RUNNER_GAMEDATA_H
 
+#include "GameMap.h"
+
 #define max_options 2
 
 class GameData {
@@ -50,15 +52,18 @@ private:
         sf::RenderWindow* window;
         sf::Event event;
         sf::RectangleShape background;
-        sf::RectangleShape backgroundGame;
+        sf::RectangleShape background2;
         sf::Texture texture;
         sf::Texture titleTexture;
-        sf::Texture gameTexture;
         sf::RectangleShape title;
         sf::Text menuOptions[max_options];
         int menuSelected;
+        float xL1;
+        float xL2;
+        sf::Clock c;
         bool inGame;
         sf::Font font;
+        GameMap map;
 
         //functions
 
