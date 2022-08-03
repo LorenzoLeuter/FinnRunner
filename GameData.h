@@ -50,15 +50,17 @@ private:
         sf::RenderWindow* window;
         sf::Event event;
         sf::RectangleShape background;
-        sf::RectangleShape backgroundGame;
-        sf::Texture texture;
+        sf::RectangleShape background2;
+        sf::Texture textureB;
         sf::Texture titleTexture;
-        sf::Texture gameTexture;
         sf::RectangleShape title;
         sf::Text menuOptions[max_options];
         int menuSelected;
+        float xL1;
+        float xL2;
         bool inGame;
         sf::Font font;
+        sf::Clock c;
 
 
 
@@ -66,6 +68,7 @@ private:
 
         void initVariables();
         void initWindow();
+        void animationLoop();
 };
 
 
