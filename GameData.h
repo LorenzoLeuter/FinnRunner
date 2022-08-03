@@ -43,6 +43,7 @@ class GameData {
 
     bool isInGame() const;
 
+
 private:
 
         //variables
@@ -69,6 +70,7 @@ private:
 
         void initVariables();
         void initWindow();
+        void animationTime();
 };
 
 

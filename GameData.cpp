@@ -130,19 +130,8 @@ void GameData::update() {
             }
         }
     }
-    if(inGame){
-        if(c.getElapsedTime().asSeconds() > 0.01f){
-            if(xL1 == -600){
-                xL1 = 0;
-                xL2 = 600;
-            }else{
-                xL1 -= 1;
-                xL2 -= 1;
-            }
-            background.setPosition(sf::Vector2f(xL1,0));
-            background2.setPosition(sf::Vector2f(xL2,0));
-            c.restart();
-        }
+    if(inGame) {
+        animationTime();
     }
 }
 
@@ -179,3 +168,19 @@ const bool GameData::running() {
 bool GameData::isInGame() const {
     return inGame;
 }
+
+void GameData::animationTime() {
+    if(c.getElapsedTime().asSeconds() > 0.01f){
+        if(xL1 == -600){
+            xL1 = 0;
+            xL2 = 600;
+        }else{
+            xL1 -= 1;
+            xL2 -= 1;
+        }
+        background.setPosition(sf::Vector2f(xL1,0));
+        background2.setPosition(sf::Vector2f(xL2,0));
+        c.restart();
+    }
+}
+

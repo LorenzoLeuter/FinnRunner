@@ -14,7 +14,15 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bf75a6fe-d0b8-4aa1-a2ef-29f7c47ba9c5" name="Changes" comment="" />
+    <list default="true" id="bf75a6fe-d0b8-4aa1-a2ef-29f7c47ba9c5" name="Changes" comment="Loop background, organization of assets">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameData.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/GameData.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameData.h" beforeDir="false" afterPath="$PROJECT_DIR$/GameData.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/FinnRunner.dir/GameData.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/FinnRunner.dir/GameData.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/FinnRunner.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/FinnRunner.exe" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -209,8 +217,25 @@
       <workItem from="1658053606484" duration="603000" />
       <workItem from="1658054711819" duration="465000" />
       <workItem from="1658160327275" duration="16000" />
-      <workItem from="1659364841311" duration="2833000" />
+      <workItem from="1659364841311" duration="3750000" />
+      <workItem from="1659451319257" duration="3916000" />
+      <workItem from="1659533871086" duration="5227000" />
     </task>
+    <task id="LOCAL-00001" summary="commit">
+      <created>1659367956938</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1659367956938</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Loop background, organization of assets">
+      <created>1659538866947</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1659538866947</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -228,6 +253,8 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="commit" />
+    <MESSAGE value="Loop background, organization of assets" />
+    <option name="LAST_COMMIT_MESSAGE" value="Loop background, organization of assets" />
   </component>
 </project>
