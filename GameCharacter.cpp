@@ -14,13 +14,3 @@ GameCharacter::GameCharacter() {
 
 
 
-void GameCharacter::setDirection(const sf::Vector2f &dir) {
-
-    vel = dir * speed;
-
-}
-
-void GameCharacter::Update(float dt) {
-    pos += vel * dt;
-    game_character.setPosition(pos);
-}
