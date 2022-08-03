@@ -60,6 +60,7 @@ private:
         bool inGame;
         sf::Font font;
 
+
         //functions
 
         void initVariables();

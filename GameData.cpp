@@ -124,6 +124,7 @@ void GameData::update() {
     }
 }
 
+
 void GameData::renderMenu() {
     window->clear();
     window->draw(background);
