@@ -61,6 +61,7 @@ private:
         sf::Font font;
 
 
+
         //functions
 
         void initVariables();
