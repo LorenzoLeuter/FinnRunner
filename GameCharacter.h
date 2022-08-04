@@ -3,21 +3,22 @@
 #include <SFML/Graphics.hpp>
 
 class GameCharacter{
-    public:
-        GameCharacter();
+public:
+    GameCharacter();
 
-        void getKilled();
-        void moveAnimation();
+    void getKilled();
+    void moveAnimation();
 
-        sf::Sprite getGameCharacter(){
-            return game_character;
-        }
+    sf::Sprite getGameCharacter(){
+        return game_character;
+    }
 
-    private:
-        sf::Vector2f pos;
-        sf::Texture texture;
-        sf::Sprite game_character;
-
+private:
+    sf::Vector2f pos;
+    sf::Texture texture;
+    sf::Sprite game_character;
+    sf::Clock clock;
+    sf::IntRect rectSourceSprite{0, 0, 32, 32};
 
 };
 

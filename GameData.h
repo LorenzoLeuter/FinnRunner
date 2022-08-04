@@ -7,6 +7,8 @@
 
 #define max_options 2
 
+#include "GameCharacter.h"
+
 class GameData {
 
     public:
@@ -61,6 +63,8 @@ private:
         bool inGame;
         sf::Font font;
         sf::Clock c;
+        GameCharacter player;
+
 
 
 

@@ -38,7 +38,7 @@ GameData::GameData() : meters(0), record(0),character_alive(false),inGame(false)
     initVariables();
     initWindow();
 
-    if (!font.loadFromFile("C:\\Users\\lori0\\ClionProjects\\FinnRunner\\arial.ttf"))
+    if (!font.loadFromFile("C:\\Users\\gabri\\CLionProjects\\FinnRunner\\font_gioco.TTF"))
     {
         std::cout << "DON'T IMPORT THE FONT";
 
@@ -46,7 +46,7 @@ GameData::GameData() : meters(0), record(0),character_alive(false),inGame(false)
 
     background.setSize(sf::Vector2f(600,600));
     background.setPosition(sf::Vector2f(xL1,0));
-    textureB.loadFromFile("C:\\Users\\lori0\\ClionProjects\\FinnRunner\\assets\\background.png");
+    textureB.loadFromFile("C:\\Users\\gabri\\CLionProjects\\FinnRunner\\assets\\background.png");
     background.setTexture(&textureB);
 
 
@@ -56,20 +56,20 @@ GameData::GameData() : meters(0), record(0),character_alive(false),inGame(false)
 
     title.setSize(sf::Vector2f(300,120));
     title.setPosition(sf::Vector2f(150,50));
-    titleTexture.loadFromFile("C:\\Users\\lori0\\ClionProjects\\FinnRunner\\assets\\FinnRunnerTitle.png");
+    titleTexture.loadFromFile("C:\\Users\\gabri\\CLionProjects\\FinnRunner\\assets\\FinnRunnerTitle.png");
     title.setTexture(&titleTexture);
 
     menuOptions[0].setFont(font);
-    menuOptions[0].setString("Play");
+    menuOptions[0].setString("PLAY");
     menuOptions[0].setFillColor(sf::Color::White);
-    menuOptions[0].setCharacterSize(70);
+    menuOptions[0].setCharacterSize(50);
     menuOptions[0].setPosition(50,290);
 
     //EXIT
     menuOptions[1].setFont(font);
-    menuOptions[1].setString("Exit");
+    menuOptions[1].setString("EXIT");
     menuOptions[1].setFillColor(sf::Color::White);
-    menuOptions[1].setCharacterSize(70);
+    menuOptions[1].setCharacterSize(50);
     menuOptions[1].setPosition(425,290);
 }
 
@@ -132,6 +132,7 @@ void GameData::update() {
     }
     if(inGame){
         animationLoop();
+        player.moveAnimation();
     }
 }
 
@@ -151,6 +152,7 @@ void GameData::render() {
     window->clear();
     window->draw(background);
     window->draw(background2);
+    window->draw(player.getGameCharacter());
     window->display();
 }
 
