@@ -34,7 +34,7 @@ void GameData::restartGame() {
 
 }
 
-GameData::GameData() : meters(0), record(0),character_alive(false),inGame(false),xL1(0),xL2(600) {
+GameData::GameData() : meters(0), record(0),character_alive(true),inGame(false),xL1(0),xL2(600) {
     initVariables();
     initWindow();
 
@@ -54,7 +54,7 @@ GameData::GameData() : meters(0), record(0),character_alive(false),inGame(false)
     background2.setPosition(sf::Vector2f(xL2,0));
     background2.setTexture(&textureB);
 
-    title.setSize(sf::Vector2f(300,120));
+    title.setSize(sf::Vector2f(450,175));
     title.setPosition(sf::Vector2f(150,50));
     titleTexture.loadFromFile("C:\\Users\\gabri\\CLionProjects\\FinnRunner\\assets\\FinnRunnerTitle.png");
     title.setTexture(&titleTexture);
@@ -131,8 +131,14 @@ void GameData::update() {
         }
     }
     if(inGame){
-        animationLoop();
-        player.moveAnimation();
+        if(character_alive){
+
+            animationLoop();
+            player.moveAnimation();
+
+        } else {
+            //player.death
+        }
     }
 }
 
@@ -157,7 +163,7 @@ void GameData::render() {
 }
 
 void GameData::initWindow() {
-    this->window = new sf::RenderWindow(sf::VideoMode(600,600), "Finn_Runner_Menu");
+    this->window = new sf::RenderWindow(sf::VideoMode(600,600), "FinnRunner", sf::Style::Titlebar | sf::Style::Close);
 }
 
 void GameData::initVariables() {
