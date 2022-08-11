@@ -8,17 +8,27 @@ public:
 
     void getKilled();
     void moveAnimation();
+    void update();
+    void jump();
+
 
     sf::Sprite getGameCharacter(){
         return game_character;
     }
 
+
+
+
 private:
-    sf::Vector2f pos;
+    float positionX = 10, positionY = 500;
+    float velocityX = 0.0, velocityY = 0.0;
+    float gravity = 0.5;
+    bool onGround = true;
+    float animation_fps;
     sf::Texture texture;
     sf::Sprite game_character;
     sf::Clock clock;
-    sf::IntRect rectSourceSprite{0, 0, 32, 32};
+    sf::IntRect rectSourceSprite{448, 0, 32, 32};
 
 };
 

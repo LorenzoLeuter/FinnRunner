@@ -134,7 +134,9 @@ void GameData::update() {
         if(character_alive){
 
             animationLoop();
+            player.update();
             player.moveAnimation();
+            player.jump();
 
         } else {
             //player.death
