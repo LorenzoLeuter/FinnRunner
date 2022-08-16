@@ -57,6 +57,7 @@ private:
         sf::Texture titleTexture;
         sf::RectangleShape title;
         sf::Text menuOptions[max_options];
+        sf::Text score;
         int menuSelected;
         float xL1;
         float xL2;

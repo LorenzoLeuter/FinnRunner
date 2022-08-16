@@ -6,7 +6,7 @@ void GameCharacter::getKilled(){
 }
 
 GameCharacter::GameCharacter() {
-    texture.loadFromFile("C:\\Users\\gabri\\CLionProjects\\FinnRunner\\assets\\FinnSprite.png");
+    texture.loadFromFile("C:\\Users\\lori0\\CLionProjects\\FinnRunner\\assets\\FinnSprite.png");
     game_character.setTexture(texture);
     game_character.setPosition(positionX, positionY);
     game_character.scale(2.5, 2.5);

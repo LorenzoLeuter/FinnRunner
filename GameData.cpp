@@ -38,7 +38,7 @@ GameData::GameData() : meters(0), record(0),character_alive(true),inGame(false),
     initVariables();
     initWindow();
 
-    if (!font.loadFromFile("C:\\Users\\gabri\\CLionProjects\\FinnRunner\\font_gioco.TTF"))
+    if (!font.loadFromFile("C:\\Users\\lori0\\CLionProjects\\FinnRunner\\font_gioco.TTF"))
     {
         std::cout << "DON'T IMPORT THE FONT";
 
@@ -46,7 +46,7 @@ GameData::GameData() : meters(0), record(0),character_alive(true),inGame(false),
 
     background.setSize(sf::Vector2f(600,600));
     background.setPosition(sf::Vector2f(xL1,0));
-    textureB.loadFromFile("C:\\Users\\gabri\\CLionProjects\\FinnRunner\\assets\\background.png");
+    textureB.loadFromFile("C:\\Users\\lori0\\CLionProjects\\FinnRunner\\assets\\background.png");
     background.setTexture(&textureB);
 
 
@@ -55,22 +55,32 @@ GameData::GameData() : meters(0), record(0),character_alive(true),inGame(false),
     background2.setTexture(&textureB);
 
     title.setSize(sf::Vector2f(450,175));
-    title.setPosition(sf::Vector2f(150,50));
-    titleTexture.loadFromFile("C:\\Users\\gabri\\CLionProjects\\FinnRunner\\assets\\FinnRunnerTitle.png");
+    title.setPosition(sf::Vector2f(77,50));
+    titleTexture.loadFromFile("C:\\Users\\lori0\\CLionProjects\\FinnRunner\\assets\\FinnRunnerTitle.png");
     title.setTexture(&titleTexture);
 
+    //PLAY
     menuOptions[0].setFont(font);
     menuOptions[0].setString("PLAY");
     menuOptions[0].setFillColor(sf::Color::White);
     menuOptions[0].setCharacterSize(50);
-    menuOptions[0].setPosition(50,290);
+    menuOptions[0].setPosition(30,320);
 
     //EXIT
     menuOptions[1].setFont(font);
     menuOptions[1].setString("EXIT");
     menuOptions[1].setFillColor(sf::Color::White);
     menuOptions[1].setCharacterSize(50);
-    menuOptions[1].setPosition(425,290);
+    menuOptions[1].setPosition(410,320);
+
+    //SCORE
+    score.setFont(font);
+    score.setString("SCORE: 999");
+    score.setFillColor(sf::Color::White);
+    score.setCharacterSize(20);
+    score.setPosition(15,15);
+    score.setOutlineColor(sf::Color::Black);
+    score.setOutlineThickness(5);
 }
 
 GameData::~GameData() {
@@ -89,6 +99,7 @@ void GameData::drawMenu() {
 
 void GameData::update() {
     while (this->window->pollEvent(this->event)){
+        std::cout << event.mouseMove.x << "   " << event.mouseMove.y << std::endl;
         if(inGame){
             if(event.type == sf::Event::Closed)
                 this->window->close();
@@ -112,9 +123,9 @@ void GameData::update() {
             }
 
             if(sf::Event::MouseMoved){
-                if(event.mouseMove.x >= 431 && event.mouseMove.x <= 541 && event.mouseMove.y >= 310 && event.mouseMove.y <= 360){
+                if(event.mouseMove.x >= 410 && event.mouseMove.x <= 572 && event.mouseMove.y >= 329 && event.mouseMove.y <= 370){   //exit
                     menuSelected = 1;
-                }else if(event.mouseMove.x >= 55 && event.mouseMove.x <= 182 && event.mouseMove.y >= 310 && event.mouseMove.y <= 375) {
+                }else if(event.mouseMove.x >= 29 && event.mouseMove.x <= 209 && event.mouseMove.y >= 329 && event.mouseMove.y <= 370) {  //play
                     menuSelected = 0;
                 }else{
                     menuSelected = -1;
@@ -160,6 +171,7 @@ void GameData::render() {
     window->clear();
     window->draw(background);
     window->draw(background2);
+    window->draw(score);
     window->draw(player.getGameCharacter());
     window->display();
 }
