@@ -7,7 +7,7 @@ public:
     GameCharacter();
 
     void getKilled();
-    void moveAnimation();
+    void animation();
     void update();
     void jump();
 
