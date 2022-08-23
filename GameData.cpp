@@ -101,7 +101,7 @@ void GameData::update() {
         if(character_alive){
             backgroundLoop();
             player.update();
-            player.moveAnimation();
+            player.animation();
             player.jump();
             scoreUpdate();
         } else {
@@ -138,7 +138,7 @@ void GameData::initWindow() {
 void GameData::initGuiVariables() {
     //INIZIALIZZAZIONE DELLE COMPONENTI GRAFICHE DELLA FINESTRA (MENU E IL GIOCO)
 
-    if (!font.loadFromFile("C:\\Users\\lori0\\CLionProjects\\FinnRunner\\font_gioco.TTF")) //INSERIMENTO DEL FONT
+    if (!font.loadFromFile("C:\\Users\\lori0\\CLionProjects\\FinnRunner\\assets\\font_gioco.TTF")) //INSERIMENTO DEL FONT
     {
         std::cout << "DON'T IMPORT THE FONT";
 
