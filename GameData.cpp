@@ -78,6 +78,7 @@ void GameData::update() {
                 }
             }
 
+
             if(sf::Event::MouseMoved){
                 if(event.mouseMove.x >= 410 && event.mouseMove.x <= 572 && event.mouseMove.y >= 329 && event.mouseMove.y <= 370){   //exit
                     menuSelected = 1;
