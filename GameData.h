@@ -13,37 +13,23 @@ class GameData {
 
     public:
 
-    virtual ~GameData();
+        virtual ~GameData();  //todo FARE IL DISTRUTTORE QUANDO IL PLAYER MUORE E TORNA AL MENU
+        GameData();
+        int getMeters() const;
+        void setMeters(int meters);
+        int getRecord() const;
+        void setRecord(int record);
+        bool isCharacterAlive() const;
+        void setCharacterAlive(bool characterAlive);
+        void restartGame(); //todo FARE IL RESTART GAME
+        void drawMenu();
+        void update();
+        void renderGame();
+        const bool running();
+        void renderMenu();
+        bool isInGame() const;
 
-    GameData();
-
-    int getMeters() const;
-
-    void setMeters(int meters);
-
-    int getRecord() const;
-
-    void setRecord(int record);
-
-    bool isCharacterAlive() const;
-
-    void setCharacterAlive(bool characterAlive);
-
-    void restartGame();
-
-    void drawMenu();
-
-    void update();
-
-    void render();
-
-    const bool running();
-
-    void renderMenu();
-
-    bool isInGame() const;
-
-private:
+    private:
 
         //variables
         int meters;
@@ -64,16 +50,14 @@ private:
         bool inGame;
         sf::Font font;
         sf::Clock c;
+        sf::Clock cs;
         GameCharacter player;
 
-
-
-
         //functions
-
-        void initVariables();
+        void initGuiVariables();
         void initWindow();
-        void animationLoop();
+        void backgroundLoop();
+        void scoreUpdate();
 };
 
 
