@@ -1,13 +1,10 @@
-//
-// Created by lorenzoleuter on 06/07/22.
-//
-
 #ifndef FINN_RUNNER_GAMEDATA_H
 #define FINN_RUNNER_GAMEDATA_H
 
 #define max_options 2
 
 #include "GameCharacter.h"
+#include "EnemyObject.h"
 
 class GameData {
 

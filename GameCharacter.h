@@ -3,33 +3,35 @@
 #include <SFML/Graphics.hpp>
 
 class GameCharacter{
-public:
-    GameCharacter();
+    public:
 
-    void getKilled();
-    void animation();
-    void update();
-    void jump();
+        GameCharacter();
+        virtual ~GameCharacter(); //todo FARE DISTRUTTORE GameCharacter
+
+        void getKilled();
+        void animation();
+        void update();
+        void jump();
 
 
-    sf::Sprite getGameCharacter(){
-        return game_character;
+        sf::Sprite getGameCharacter(){
+            return game_character;
     }
 
 
 
 
-private:
-    float positionX = 10, positionY = 500;
-    float velocityX = 0.0, velocityY = 0.0;
-    float gravity = 0.5;
-    bool onGround = true;
-    float animation_fps;
-    sf::Texture texture;
-    sf::Sprite game_character;
-    sf::Clock clock;
-    sf::IntRect rectSourceSprite{448, 0, 32, 32};
+    private:
 
+        float positionX, positionY;
+        float velocityX, velocityY;
+        float gravity;
+        bool onGround;
+        float animation_fps;
+        sf::Texture texture;
+        sf::Sprite game_character;
+        sf::Clock clock;
+        sf::IntRect rectSourceSprite{448, 0, 32, 32};
 };
 
 

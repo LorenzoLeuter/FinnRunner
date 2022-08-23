@@ -1,26 +1,29 @@
 #include "GameCharacter.h"
 
 
-void GameCharacter::getKilled(){
 
-}
-
-GameCharacter::GameCharacter() {
+GameCharacter::GameCharacter() : positionX(10), positionY(500), velocityX(0.0), velocityY(0.0), gravity(0.5), onGround(true){
     texture.loadFromFile("C:\\Users\\gabri\\CLionProjects\\FinnRunner\\assets\\FinnSprite.png");
     game_character.setTexture(texture);
     game_character.setPosition(positionX, positionY);
     game_character.scale(2.5, 2.5);
 }
 
+void GameCharacter::getKilled(){
+
+}
+
 void GameCharacter::animation() {
     if (clock.getElapsedTime().asSeconds() > animation_fps){
         if(onGround){
+            //ANIMAZIONE CORSA (quando è a terra)
             if(rectSourceSprite.left == 448 || rectSourceSprite.left == 480) {
                 rectSourceSprite.left = 288;
             }else {
                 rectSourceSprite.left += 32;
             }
         } else {
+            //ANIMAZIONE SALTO (cambia solamente la porzione di texture)
             rectSourceSprite.left = 480;
         }
 
@@ -37,6 +40,7 @@ void GameCharacter::update() {
 
     game_character.setPosition(positionX, positionY);
 
+    //MANTIENE A TERRA IL PERSONAGGIO
     if(positionY > 500){
         positionY = 500;
         velocityY = 0.0;
@@ -52,6 +56,10 @@ void GameCharacter::jump() {
         onGround = false;
         animation_fps = 0.015;
     }
+}
+
+GameCharacter::~GameCharacter() {
+
 }
 
 
