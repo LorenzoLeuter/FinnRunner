@@ -44,17 +44,34 @@ GameData::~GameData() {
 }
 
 void GameData::drawMenu() {
+    //CREAZIONE DEL MENU DI GIOCO
 
-    for (int i = 0; i < max_options; ++i) {
-        std::cout << menuOptions[i].getString().isEmpty();
-    }
+    //CREAZIONE DEL TITOLO
+    title.setSize(sf::Vector2f(450,175));
+    title.setPosition(sf::Vector2f(77,50));
+    titleTexture.loadFromFile("C:\\Users\\lori0\\CLionProjects\\FinnRunner\\assets\\FinnRunnerTitle.png");
+    title.setTexture(&titleTexture);
 
+    //CREAZIONE DEL TASTO PLAY
+    menuOptions[0].setFont(font);
+    menuOptions[0].setString("PLAY");
+    menuOptions[0].setFillColor(sf::Color::White);
+    menuOptions[0].setCharacterSize(50);
+    menuOptions[0].setPosition(30,320);
+
+    //CREAZIONE DEL TASTO EXIT
+    menuOptions[1].setFont(font);
+    menuOptions[1].setString("EXIT");
+    menuOptions[1].setFillColor(sf::Color::White);
+    menuOptions[1].setCharacterSize(50);
+    menuOptions[1].setPosition(410,320);
+
+    //SCELTA NEL MENU A -1
     menuSelected = -1;
 }
 
 void GameData::update() {
     while (this->window->pollEvent(this->event)){
-        std::cout << event.mouseMove.x << "   " << event.mouseMove.y << std::endl;
         if(inGame){
             if(event.type == sf::Event::Closed)
                 this->window->close();
@@ -156,30 +173,7 @@ void GameData::initGuiVariables() {
     background2.setPosition(sf::Vector2f(xL2,0));
     background2.setTexture(&textureB);
 
-    //CREAZIONE DEL MENU DI GIOCO
-
-    //CREAZIONE DEL TITOLO
-    title.setSize(sf::Vector2f(450,175));
-    title.setPosition(sf::Vector2f(77,50));
-    titleTexture.loadFromFile("C:\\Users\\lori0\\CLionProjects\\FinnRunner\\assets\\FinnRunnerTitle.png");
-    title.setTexture(&titleTexture);
-
-    //CREAZIONE DEL TASTO PLAY
-    menuOptions[0].setFont(font);
-    menuOptions[0].setString("PLAY");
-    menuOptions[0].setFillColor(sf::Color::White);
-    menuOptions[0].setCharacterSize(50);
-    menuOptions[0].setPosition(30,320);
-
-    //CREAZIONE DEL TASTO EXIT
-    menuOptions[1].setFont(font);
-    menuOptions[1].setString("EXIT");
-    menuOptions[1].setFillColor(sf::Color::White);
-    menuOptions[1].setCharacterSize(50);
-    menuOptions[1].setPosition(410,320);
-
     //CREAZIONE DEGLI OGGETTI DI GIOCO
-
     //CREAZIONE DELLO SCORE
     score.setFont(font);
     score.setString("METRES: 0");
