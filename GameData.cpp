@@ -33,7 +33,7 @@ void GameData::restartGame() {
 
 }
 
-GameData::GameData() : meters(0), record(0),character_alive(false),inGame(false),xL1(0),xL2(600) {
+GameData::GameData() : meters(0), record(0),character_alive(false),inGame(false),xL1(0),xL2(600),blVel(0.025f) {
     this->window = nullptr; //INIZIALIZZAZIONE DELLA FINESTRA DI GIOCO
     initGuiVariables();
     initWindow();
@@ -176,7 +176,7 @@ void GameData::initGuiVariables() {
     //CREAZIONE DEGLI OGGETTI DI GIOCO
     //CREAZIONE DELLO SCORE
     score.setFont(font);
-    score.setString("METRES: 0");
+    score.setString("METERS: 0");
     score.setFillColor(sf::Color::White);
     score.setCharacterSize(20);
     score.setPosition(15,15);
@@ -193,7 +193,34 @@ bool GameData::isInGame() const {
 }
 
 void GameData::backgroundLoop() {
-    if(c.getElapsedTime().asSeconds() > 0.025f){
+
+    switch (meters) {
+        case 20:
+            blVel = 0.021f;
+            break;
+        case 21:
+            blVel = 0.016f;
+            break;
+        case 22:
+            blVel = 0.013f;
+            break;
+        case 23:
+            blVel = 0.010f;
+            break;
+        case 40:
+            blVel = 0.008f;
+            break;
+        case 41:
+            blVel = 0.0063f;
+            break;
+        case 42:
+            blVel = 0.0054f;
+            break;
+        case 43:
+            blVel = 0.004f;
+            break;
+    }
+    if(c.getElapsedTime().asSeconds() > blVel){
         if(xL1 == -600){
             xL1 = 0;
             xL2 = 600;
@@ -210,7 +237,7 @@ void GameData::backgroundLoop() {
 void GameData::scoreUpdate() {
     if(cs.getElapsedTime().asSeconds() > 0.5f){
         meters += 1;
-        score.setString("METRES: "+ std::to_string(meters));
+        score.setString("METERS: "+ std::to_string(meters));
         cs.restart();
     }
 }

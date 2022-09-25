@@ -50,6 +50,7 @@ class GameData {
         sf::Clock c;
         sf::Clock cs;
         Hero player;
+        float blVel;
 
         //functions
         void initGuiVariables();
