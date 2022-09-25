@@ -19,7 +19,6 @@ class GameCharacter{
     protected:
         float positionX, positionY;
         float velocityX, velocityY;
-        float animation_fps;
         sf::Texture texture;
         sf::Sprite gc_sprite;
         sf::Clock clock;

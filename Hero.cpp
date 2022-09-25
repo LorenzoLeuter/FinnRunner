@@ -7,8 +7,6 @@ Hero::Hero(): GameCharacter(10,500,0.0,0.0), gravity(0.5), onGround(true){
     gc_sprite.scale(2.5, 2.5);
 }
 
-
-
 void Hero::getKilled(){
 
 }

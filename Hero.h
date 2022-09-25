@@ -17,6 +17,7 @@ class Hero : public GameCharacter{
     private:
         float gravity = 0.5;
         bool onGround;
+        float animation_fps;
         sf::IntRect rectSourceSprite{448, 0, 32, 32};
 };
 
