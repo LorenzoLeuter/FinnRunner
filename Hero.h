@@ -21,7 +21,6 @@ class Hero : public GameCharacter{
         sf::IntRect rectSourceSprite{448, 0, 32, 32};
         sf::Clock clock;
         sf::Texture texture;
-        float animation_fps;
 };
 
 
