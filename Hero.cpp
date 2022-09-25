@@ -1,19 +1,19 @@
-#include "GameCharacter.h"
+#include "Hero.h"
 
-
-
-GameCharacter::GameCharacter() : positionX(10), positionY(500), velocityX(0.0), velocityY(0.0), gravity(0.5), onGround(true){
+Hero::Hero(): GameCharacter(10,500,0.0,0.0), gravity(0.5), onGround(true){
     texture.loadFromFile("C:\\Users\\gabri\\CLionProjects\\FinnRunner\\assets\\FinnSprite.png");
-    game_character.setTexture(texture);
-    game_character.setPosition(positionX, positionY);
-    game_character.scale(2.5, 2.5);
+    gc_sprite.setTexture(texture);
+    gc_sprite.setPosition(positionX, positionY);
+    gc_sprite.scale(2.5, 2.5);
 }
 
-void GameCharacter::getKilled(){
+
+
+void Hero::getKilled(){
 
 }
 
-void GameCharacter::animation() {
+void Hero::animation(){
     if (clock.getElapsedTime().asSeconds() > animation_fps){
         if(onGround){
             //ANIMAZIONE CORSA (quando è a terra)
@@ -27,18 +27,18 @@ void GameCharacter::animation() {
             rectSourceSprite.left = 480;
         }
 
-        game_character.setTextureRect(rectSourceSprite);
+        gc_sprite.setTextureRect(rectSourceSprite);
         clock.restart();
     }
 
 }
 
-void GameCharacter::update() {
+void Hero::update() {
     positionX += velocityX * clock.getElapsedTime().asSeconds();
     positionY += velocityY * clock.getElapsedTime().asSeconds();
     velocityY += gravity * clock.getElapsedTime().asSeconds();
 
-    game_character.setPosition(positionX, positionY);
+    gc_sprite.setPosition(positionX, positionY);
 
     //MANTIENE A TERRA IL PERSONAGGIO
     if(positionY > 500){
@@ -50,7 +50,7 @@ void GameCharacter::update() {
 
 }
 
-void GameCharacter::jump() {
+void Hero::jump() {
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && onGround == true){
         velocityY = -12.0;
         onGround = false;
@@ -58,9 +58,6 @@ void GameCharacter::jump() {
     }
 }
 
-GameCharacter::~GameCharacter() {
+Hero::~Hero() {
 
 }
-
-
-

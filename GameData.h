@@ -3,7 +3,7 @@
 
 #define max_options 2
 
-#include "GameCharacter.h"
+#include "Hero.h"
 #include "EnemyObject.h"
 
 class GameData {
@@ -48,7 +48,7 @@ class GameData {
         sf::Font font;
         sf::Clock c;
         sf::Clock cs;
-        GameCharacter player;
+        Hero* player;
 
         //functions
         void initGuiVariables();

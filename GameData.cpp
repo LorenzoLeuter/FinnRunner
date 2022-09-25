@@ -35,6 +35,7 @@ void GameData::restartGame() {
 
 GameData::GameData() : meters(0), record(0),character_alive(false),inGame(false),xL1(0),xL2(600) {
     this->window = nullptr; //INIZIALIZZAZIONE DELLA FINESTRA DI GIOCO
+    player = new Hero();
     initGuiVariables();
     initWindow();
 }
@@ -101,12 +102,12 @@ void GameData::update() {
     if(inGame){
         if(character_alive){
             backgroundLoop();
-            player.update();
-            player.animation();
-            player.jump();
+            player->update();
+            player->animation();
+            player->jump();
             scoreUpdate();
         } else {
-            //player.death
+            //player->death
         }
     }
 }
@@ -128,7 +129,7 @@ void GameData::renderGame() {
     window->draw(background);
     window->draw(background2);
     window->draw(score);
-    window->draw(player.getGameCharacter());
+    window->draw(player->getGameCharacter());
     window->display();
 }
 

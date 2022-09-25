@@ -5,33 +5,24 @@
 class GameCharacter{
     public:
 
-        GameCharacter();
-        virtual ~GameCharacter(); //todo FARE DISTRUTTORE GameCharacter
+        GameCharacter(float x, float y, float vel_x, float vel_y) : positionX(x), positionY(y), velocityX(vel_x), velocityY(vel_y){
+        }
 
-        void getKilled();
-        void animation();
-        void update();
-        void jump();
-
+        virtual void animation();
+        virtual void update();
 
         sf::Sprite getGameCharacter(){
-            return game_character;
-    }
+            return gc_sprite;
+        }
 
 
-
-
-    private:
-
+    protected:
         float positionX, positionY;
         float velocityX, velocityY;
-        float gravity;
-        bool onGround;
         float animation_fps;
         sf::Texture texture;
-        sf::Sprite game_character;
+        sf::Sprite gc_sprite;
         sf::Clock clock;
-        sf::IntRect rectSourceSprite{448, 0, 32, 32};
 };
 
 
