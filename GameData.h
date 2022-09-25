@@ -29,6 +29,7 @@ class GameData {
     private:
 
         //variables
+        float gameVelocity;
         int meters;
         int record;
         bool character_alive;
@@ -48,7 +49,7 @@ class GameData {
         sf::Font font;
         sf::Clock c;
         sf::Clock cs;
-        Hero* player;
+        Hero player;
 
         //functions
         void initGuiVariables();

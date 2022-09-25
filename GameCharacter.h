@@ -3,26 +3,24 @@
 #include <SFML/Graphics.hpp>
 
 class GameCharacter{
-    public:
+public:
+    GameCharacter(float posX,float posY,float velX,float velY) : positionX(posX),positionY(posY),velocityX(velX),velocityY(velY) {}
 
-        GameCharacter(float x, float y, float vel_x, float vel_y) : positionX(x), positionY(y), velocityX(vel_x), velocityY(vel_y){
-        }
-
-        virtual void animation();
-        virtual void update();
-
-        sf::Sprite getGameCharacter(){
-            return gc_sprite;
-        }
+    virtual void animation() {};
+    virtual void update() {};
 
 
-    protected:
-        float positionX, positionY;
-        float velocityX, velocityY;
-        float animation_fps;
-        sf::Texture texture;
-        sf::Sprite gc_sprite;
-        sf::Clock clock;
+    sf::Sprite getGameCharacter(){
+        return game_character;
+    }
+
+
+protected:
+    float positionX = 10, positionY = 500;
+    float velocityX = 0.0, velocityY = 0.0;
+    sf::Sprite game_character;
+
+
 };
 
 

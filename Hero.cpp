@@ -1,10 +1,10 @@
 #include "Hero.h"
 
 Hero::Hero(): GameCharacter(10,500,0.0,0.0), gravity(0.5), onGround(true){
-    texture.loadFromFile("C:\\Users\\gabri\\CLionProjects\\FinnRunner\\assets\\FinnSprite.png");
-    gc_sprite.setTexture(texture);
-    gc_sprite.setPosition(positionX, positionY);
-    gc_sprite.scale(2.5, 2.5);
+    texture.loadFromFile("assets/FinnSprite.png");
+    game_character.setTexture(texture);
+    game_character.setPosition(positionX, positionY);
+    game_character.scale(2.5, 2.5);
 }
 
 
@@ -27,7 +27,7 @@ void Hero::animation(){
             rectSourceSprite.left = 480;
         }
 
-        gc_sprite.setTextureRect(rectSourceSprite);
+        game_character.setTextureRect(rectSourceSprite);
         clock.restart();
     }
 
@@ -38,7 +38,7 @@ void Hero::update() {
     positionY += velocityY * clock.getElapsedTime().asSeconds();
     velocityY += gravity * clock.getElapsedTime().asSeconds();
 
-    gc_sprite.setPosition(positionX, positionY);
+    game_character.setPosition(positionX, positionY);
 
     //MANTIENE A TERRA IL PERSONAGGIO
     if(positionY > 500){
@@ -51,7 +51,7 @@ void Hero::update() {
 }
 
 void Hero::jump() {
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && onGround == true){
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && onGround){
         velocityY = -12.0;
         onGround = false;
         animation_fps = 0.015;
