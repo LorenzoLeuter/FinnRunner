@@ -1,7 +1,3 @@
-//
-// Created by lorenzoleuter on 06/07/22.
-//
-
 #include "GameMap.h"
 
 void GameMap::createSpawnArea() {

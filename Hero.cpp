@@ -28,7 +28,6 @@ void Hero::animation(){
         game_character.setTextureRect(rectSourceSprite);
         clock.restart();
     }
-
 }
 
 void Hero::update() {

@@ -1,6 +1,3 @@
-// Created by lorenzoleuter on 06/07/22.
-//
-
 #include <SFML/Graphics.hpp>
 #include "GameData.h"
 #include <iostream>
@@ -49,7 +46,7 @@ void GameData::drawMenu() {
     //CREAZIONE DEL TITOLO
     title.setSize(sf::Vector2f(450,175));
     title.setPosition(sf::Vector2f(77,50));
-    titleTexture.loadFromFile("assets/FinnRunnerTitle.png");
+    titleTexture.loadFromFile("assets/Title.png");
     title.setTexture(&titleTexture);
 
     //CREAZIONE DEL TASTO PLAY
@@ -121,6 +118,7 @@ void GameData::update() {
             player.update();
             player.animation();
             player.jump();
+            bat_test.animation();
             scoreUpdate();
         } else {
             //player.death
@@ -146,6 +144,7 @@ void GameData::renderGame() {
     window->draw(background2);
     window->draw(score);
     window->draw(player.getGameCharacter());
+    window->draw(bat_test.getGameCharacter());
     window->display();
 }
 
@@ -156,7 +155,7 @@ void GameData::initWindow() {
 void GameData::initGuiVariables() {
     //INIZIALIZZAZIONE DELLE COMPONENTI GRAFICHE DELLA FINESTRA (MENU E IL GIOCO)
 
-    if (!font.loadFromFile("assets/font_gioco.TTF")) //INSERIMENTO DEL FONT
+    if (!font.loadFromFile("assets/font.TTF")) //INSERIMENTO DEL FONT
     {
         std::cout << "DON'T IMPORT THE FONT";
 

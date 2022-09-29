@@ -4,7 +4,7 @@
 #define max_options 2
 
 #include "Hero.h"
-#include "EnemyObject.h"
+#include "Bat.h"
 
 class GameData {
 
@@ -50,6 +50,7 @@ class GameData {
         sf::Clock c;
         sf::Clock cs;
         Hero player;
+        Bat bat_test;
         float blVel;
 
         //functions

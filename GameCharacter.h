@@ -16,11 +16,12 @@ public:
 
 
 protected:
-    float positionX = 10, positionY = 500;
-    float velocityX = 0.0, velocityY = 0.0;
+    float positionX, positionY;
+    float velocityX, velocityY;
+    float animation_fps = 0.06;
     sf::Sprite game_character;
-
-
+    sf::Clock clock;
+    sf::Texture texture;
 };
 
 #endif //FINN_RUNNER_GAMECHARACTER_H
