@@ -9,7 +9,7 @@ class Bat : public GameCharacter {
         virtual ~Bat();
 
         void animation() override;
-        //void update() override;
+        void update() override;
 
     private:
         sf::IntRect rectSourceSprite{0, 0, 32, 32};
