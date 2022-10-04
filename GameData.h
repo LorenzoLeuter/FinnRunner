@@ -4,9 +4,12 @@
 #define max_options 2
 
 #include "Hero.h"
-#include "Bat.h"
+#include "Subject.h"
+#include "list"
+#include "vector"
 
-class GameData {
+
+class GameData : public Subject {
 
     public:
 
@@ -25,6 +28,12 @@ class GameData {
         const bool running();
         void renderMenu();
         bool isInGame() const;
+        void createEnemy();
+        void deleteEnemy();
+        void registerObserver(Observer *o) override;
+        void removeObserver(Observer *o) override;
+        void notifyObservers() const override;
+        void setAchievementTxt(std::string achievement);
 
     private:
 
@@ -50,8 +59,9 @@ class GameData {
         sf::Clock c;
         sf::Clock cs;
         Hero player;
-        Bat bat_test;
+        std::list<Observer*> observers;
         float blVel;
+        sf::Text achievementTxt;
 
         //functions
         void initGuiVariables();

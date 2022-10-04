@@ -114,12 +114,13 @@ void GameData::update() {
     }
     if(inGame){
         if(character_alive){
+
             backgroundLoop();
             player.update();
             player.animation();
             player.jump();
-            bat_test.animation();
-            bat_test.update();
+            //bat_test.animation();
+            //bat_test.update();
             scoreUpdate();
         } else {
             //player.death
@@ -144,8 +145,9 @@ void GameData::renderGame() {
     window->draw(background);
     window->draw(background2);
     window->draw(score);
+    window->draw(achievementTxt);
     window->draw(player.getGameCharacter());
-    window->draw(bat_test.getGameCharacter());
+    //window->draw(bat_test.getGameCharacter());
     window->display();
 }
 
@@ -240,6 +242,43 @@ void GameData::scoreUpdate() {
         score.setString("METERS: "+ std::to_string(meters));
         cs.restart();
     }
+    notifyObservers();
+}
+/*
+void GameData::createEnemy() {
+    if((rand() % 2)==0){
+        enemies.push_back(std::unique_ptr<Enemy>(new Enemy(10, 500, 0, 0, 0)));
+    }else{
+        enemies.push_back(std::unique_ptr<Enemy>(new Enemy(10,400,0,0,1)));
+    }
 }
 
+void GameData::deleteEnemy() {
+    for(int i=0;i<enemies.size();i++){
+        if(enemies[i]->getPositionX() == -600.00){
+            enemies.erase(enemies.begin()+i);
+        }
+    }
+}*/
 
+void GameData::registerObserver(Observer *o) {
+    observers.push_back(o);
+}
+
+void GameData::removeObserver(Observer *o) {
+    observers.remove(o);
+}
+
+void GameData::notifyObservers() const{
+    for (auto itr = std::begin(observers); itr != std::end(observers); itr++)
+        (*itr)->update();
+}
+
+void GameData::setAchievementTxt(std::string achievement) {
+    //CREAZIONE DEGLI ACHIEVEMENT
+    achievementTxt.setFont(font);
+    achievementTxt.setString(achievement);
+    achievementTxt.setFillColor(sf::Color::White);
+    achievementTxt.setCharacterSize(33);
+    achievementTxt.setPosition(69,270);
+}

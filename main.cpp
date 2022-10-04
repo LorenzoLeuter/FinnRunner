@@ -1,9 +1,11 @@
 #include <SFML/Graphics.hpp>
 #include "GameData.h"
+#include "Achievement.h"
 
 int main() {
 
     GameData gd;
+    Achievement a = Achievement(&gd);
     gd.drawMenu();
     //GAME LOOP
     while (gd.running()){ //CONTROLLO DELLA FINESTRA DI GIOCO SE E' APERTA
