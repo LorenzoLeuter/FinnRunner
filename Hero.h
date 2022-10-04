@@ -15,7 +15,7 @@ class Hero : public GameCharacter{
         void jump();
 
     private:
-        float gravity = 0.5;
+        float gravity;
         bool onGround;
         sf::IntRect rectSourceSprite{448, 0, 32, 32};
 };

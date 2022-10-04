@@ -9,11 +9,27 @@ public:
     virtual void animation() {};
     virtual void update() {};
 
+    float getVelocityX() const {
+        return velocityX;
+    }
+
+    virtual void setVelocityX(float velX) { };
+
+    float getPositionX() const {
+        return positionX;
+    }
+
+    float getPositionY() const {
+        return positionY;
+    }
 
     sf::Sprite getGameCharacter(){
         return game_character;
     }
 
+    void setPositionX(float posX) {
+        GameCharacter::positionX = posX;
+    }
 
 protected:
     float positionX, positionY;

@@ -30,7 +30,7 @@ void GameData::restartGame() {
 
 }
 
-GameData::GameData() : meters(0), record(0),character_alive(false),inGame(false),xL1(0),xL2(600),blVel(0.025f) {
+GameData::GameData() : meters(0), record(0),character_alive(false),inGame(false),xL1(0),xL2(600),blVel(0.025f),rangeSpawn(7) {
     this->window = nullptr; //INIZIALIZZAZIONE DELLA FINESTRA DI GIOCO
     initGuiVariables();
     initWindow();
@@ -114,11 +114,22 @@ void GameData::update() {
     }
     if(inGame){
         if(character_alive){
-
             backgroundLoop();
             player.update();
             player.animation();
             player.jump();
+            for (int i = 0; i < enemies.size(); i++) {
+                int x = enemies[i]->getPositionX();
+                if(x != 50){
+                    enemies[i]->update();
+                    enemies[i]->animation();
+                }else{
+                    deleteEnemy(i);
+                }
+            }
+            if(enemySpawn.getElapsedTime().asSeconds() > rangeSpawn){
+                createEnemy();
+            }
             scoreUpdate();
         } else {
             //player.death
@@ -145,6 +156,9 @@ void GameData::renderGame() {
     window->draw(score);
     window->draw(achievementTxt);
     window->draw(player.getGameCharacter());
+    for (int i = 0; i < enemies.size(); i++) {
+        window->draw(enemies[i]->getGameCharacter());
+    }
     //window->draw(bat_test.getGameCharacter());
     window->display();
 }
@@ -193,7 +207,6 @@ bool GameData::isInGame() const {
 }
 
 void GameData::backgroundLoop() {
-
     switch (meters) {
         case 20:
             blVel = 0.021f;
@@ -242,22 +255,19 @@ void GameData::scoreUpdate() {
     }
     notifyObservers();
 }
-/*
+
 void GameData::createEnemy() {
-    if((rand() % 2)==0){
-        enemies.push_back(std::unique_ptr<Enemy>(new Enemy(10, 500, 0, 0, 0)));
+    if((rand()%2) == 0){
+        enemies.push_back(std::unique_ptr<ZombieToast>(new ZombieToast()));
     }else{
-        enemies.push_back(std::unique_ptr<Enemy>(new Enemy(10,400,0,0,1)));
+        enemies.push_back(std::unique_ptr<Bat>(new Bat()));
     }
+    enemySpawn.restart();
 }
 
-void GameData::deleteEnemy() {
-    for(int i=0;i<enemies.size();i++){
-        if(enemies[i]->getPositionX() == -600.00){
-            enemies.erase(enemies.begin()+i);
-        }
-    }
-}*/
+void GameData::deleteEnemy(int posList) {
+    enemies.erase(enemies.begin()+posList);
+}
 
 void GameData::registerObserver(Observer *o) {
     observers.push_back(o);

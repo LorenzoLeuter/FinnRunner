@@ -55,6 +55,6 @@ void Hero::jump() {
     }
 }
 
-Hero::~Hero() {
+Hero::~Hero() { }
 
-}
+

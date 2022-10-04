@@ -7,6 +7,8 @@
 #include "Subject.h"
 #include "list"
 #include "vector"
+#include "ZombieToast.h"
+#include "Bat.h"
 
 
 class GameData : public Subject {
@@ -28,8 +30,6 @@ class GameData : public Subject {
         const bool running();
         void renderMenu();
         bool isInGame() const;
-        void createEnemy();
-        void deleteEnemy();
         void registerObserver(Observer *o) override;
         void removeObserver(Observer *o) override;
         void notifyObservers() const override;
@@ -60,7 +60,10 @@ class GameData : public Subject {
         sf::Clock cs;
         Hero player;
         std::list<Observer*> observers;
+        std::vector<std::unique_ptr<GameCharacter>> enemies;
         float blVel;
+        float rangeSpawn;
+        sf::Clock enemySpawn;
         sf::Text achievementTxt;
 
         //functions
@@ -68,6 +71,8 @@ class GameData : public Subject {
         void initWindow();
         void backgroundLoop();
         void scoreUpdate();
+        void createEnemy();
+        void deleteEnemy(int posList);
 };
 
 
