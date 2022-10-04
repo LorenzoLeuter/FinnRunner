@@ -1,7 +1,3 @@
-//
-// Created by lori0 on 04/10/2022.
-//
-
 #include "Achievement.h"
 
 Achievement::Achievement(GameData *gameData): g(gameData),score(0) {

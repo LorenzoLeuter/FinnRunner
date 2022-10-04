@@ -119,8 +119,6 @@ void GameData::update() {
             player.update();
             player.animation();
             player.jump();
-            //bat_test.animation();
-            //bat_test.update();
             scoreUpdate();
         } else {
             //player.death
