@@ -5,7 +5,7 @@
 
 class ZombieToast : public GameCharacter{
     public:
-        ZombieToast();
+        ZombieToast(float v);
         virtual ~ZombieToast();
 
         void animation() override;

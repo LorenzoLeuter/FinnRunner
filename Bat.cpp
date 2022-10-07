@@ -1,6 +1,6 @@
 #include "Bat.h"
 
-Bat::Bat(): GameCharacter(500,400,-1.0,0.0){
+Bat::Bat(float positY,float v): GameCharacter(664,positY,(v-1),0.0){
     texture.loadFromFile("assets/Bat.png");
     game_character.setTexture(texture);
     game_character.setPosition(positionX, positionY);

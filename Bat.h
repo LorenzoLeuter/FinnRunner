@@ -5,7 +5,7 @@
 
 class Bat : public GameCharacter {
     public:
-        Bat();
+        Bat(float positY,float v);
         virtual ~Bat();
 
         void animation() override;

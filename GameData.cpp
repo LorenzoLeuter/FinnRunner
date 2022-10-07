@@ -30,7 +30,7 @@ void GameData::restartGame() {
 
 }
 
-GameData::GameData() : meters(0), record(0),character_alive(false),inGame(false),xL1(0),xL2(600),blVel(0.025f),rangeSpawn(7) {
+GameData::GameData() : meters(0), record(0),character_alive(false),inGame(false),xL1(0),xL2(600),blVel(0.025f),rangeSpawn(2.6),enemyVX(-1.3) {
     this->window = nullptr; //INIZIALIZZAZIONE DELLA FINESTRA DI GIOCO
     initGuiVariables();
     initWindow();
@@ -115,12 +115,13 @@ void GameData::update() {
     if(inGame){
         if(character_alive){
             backgroundLoop();
+            setEnemyVelocity();
             player.update();
             player.animation();
             player.jump();
             for (int i = 0; i < enemies.size(); i++) {
                 int x = enemies[i]->getPositionX();
-                if(x != 50){
+                if(x != -64){
                     enemies[i]->update();
                     enemies[i]->animation();
                 }else{
@@ -207,32 +208,7 @@ bool GameData::isInGame() const {
 }
 
 void GameData::backgroundLoop() {
-    switch (meters) {
-        case 20:
-            blVel = 0.021f;
-            break;
-        case 21:
-            blVel = 0.016f;
-            break;
-        case 22:
-            blVel = 0.013f;
-            break;
-        case 23:
-            blVel = 0.010f;
-            break;
-        case 40:
-            blVel = 0.008f;
-            break;
-        case 41:
-            blVel = 0.0063f;
-            break;
-        case 42:
-            blVel = 0.0054f;
-            break;
-        case 43:
-            blVel = 0.004f;
-            break;
-    }
+    setBackgroundVelocity();
     if(c.getElapsedTime().asSeconds() > blVel){
         if(xL1 == -600){
             xL1 = 0;
@@ -258,9 +234,13 @@ void GameData::scoreUpdate() {
 
 void GameData::createEnemy() {
     if((rand()%2) == 0){
-        enemies.push_back(std::unique_ptr<ZombieToast>(new ZombieToast()));
+        enemies.push_back(std::unique_ptr<ZombieToast>(new ZombieToast(enemyVX)));
     }else{
-        enemies.push_back(std::unique_ptr<Bat>(new Bat()));
+        if((rand()%2) == 0){
+            enemies.push_back(std::unique_ptr<Bat>(new Bat(500,enemyVX)));
+        }else{
+            enemies.push_back(std::unique_ptr<Bat>(new Bat(440,enemyVX)));
+        }
     }
     enemySpawn.restart();
 }
@@ -286,7 +266,70 @@ void GameData::setAchievementTxt(std::string achievement) {
     //CREAZIONE DEGLI ACHIEVEMENT
     achievementTxt.setFont(font);
     achievementTxt.setString(achievement);
-    achievementTxt.setFillColor(sf::Color::White);
-    achievementTxt.setCharacterSize(33);
-    achievementTxt.setPosition(69,270);
+    achievementTxt.setFillColor(sf::Color::Black);
+    achievementTxt.setCharacterSize(10);
+    achievementTxt.setPosition(495,5);
+}
+
+void GameData::setBackgroundVelocity() {
+    switch (meters) {
+        case 20:
+            blVel = 0.021f;
+            break;
+        case 22:
+            blVel = 0.017f;
+            break;
+        case 24:
+            blVel = 0.014f;
+            break;
+        case 26:
+            blVel = 0.010f;
+            break;
+        case 40:
+            blVel = 0.0085f;
+            break;
+        case 42:
+            blVel = 0.007f;
+            break;
+        case 44:
+            blVel = 0.0062f;
+            break;
+        case 46:
+            blVel = 0.0046f;
+            break;
+    }
+}
+
+void GameData::setEnemyVelocity() {
+    switch (meters) {
+        case 20:
+            enemyVX = -1.45;
+            break;
+        case 22:
+            enemyVX = -1.65;
+            rangeSpawn = 1.65;
+            break;
+        case 24:
+            enemyVX = -1.85;
+            break;
+        case 26:
+            enemyVX = -2.05;
+            break;
+        case 40:
+            enemyVX = -2.1;
+            break;
+        case 42:
+            enemyVX = -2.2;
+            rangeSpawn = 1.47;
+            break;
+        case 44:
+            enemyVX = -2.3;
+            break;
+        case 46:
+            enemyVX = -2.4;
+            break;
+    }
+    for (int i = 0; i < enemies.size(); i++) {
+        enemies[i]->setVelocityX(enemyVX);
+    }
 }

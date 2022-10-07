@@ -65,6 +65,7 @@ class GameData : public Subject {
         float rangeSpawn;
         sf::Clock enemySpawn;
         sf::Text achievementTxt;
+        float enemyVX;
 
         //functions
         void initGuiVariables();
@@ -73,6 +74,8 @@ class GameData : public Subject {
         void scoreUpdate();
         void createEnemy();
         void deleteEnemy(int posList);
+        void setBackgroundVelocity();
+        void setEnemyVelocity();
 };
 
 

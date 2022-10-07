@@ -13,7 +13,9 @@ public:
         return velocityX;
     }
 
-    virtual void setVelocityX(float velX) { };
+    void setVelocityX(float velX) {
+        GameCharacter::velocityX = velX;
+    };
 
     float getPositionX() const {
         return positionX;

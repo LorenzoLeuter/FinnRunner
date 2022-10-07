@@ -15,6 +15,8 @@ void Achievement::update() {
 
 void Achievement::draw() {
     if(score == 15){
-        g->setAchievementTxt("HELLO GUYSSSSSS");
+        g->setAchievementTxt("PARTIRE DALLE BASI");
+    }else if(score == 21){
+        g->setAchievementTxt("");
     }
 }

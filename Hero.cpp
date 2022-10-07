@@ -49,7 +49,7 @@ void Hero::update() {
 
 void Hero::jump() {
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && onGround){
-        velocityY = -12.0;
+        velocityY = -11;
         onGround = false;
         animation_fps = 0.015;
     }
