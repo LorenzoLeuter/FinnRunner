@@ -1,30 +1,43 @@
 #include "Hero.h"
 
-Hero::Hero(): GameCharacter(10,500,0.0,0.0), gravity(0.5), onGround(true){
+Hero::Hero(): GameCharacter(10,500,0.0,0.0), gravity(0.5), onGround(true), isAlive(true), isAttacking(false){
     texture.loadFromFile("assets/FinnSprite.png");
     game_character.setTexture(texture);
     game_character.setPosition(positionX, positionY);
     game_character.scale(2.5, 2.5);
 }
 
-void Hero::getKilled(){
-
+void Hero::getKilled(GameCharacter enemy){
+    if((int)positionX == (int)enemy.getPositionX() - 20 && ((int)positionY == (int)enemy.getPositionY() + 16  || (int)positionY == (int)enemy.getPositionY())){
+        isAlive = false;
+        rectSourceSprite.left = 512;
+    }
 }
 
-void Hero::animation(){
-    if (clock.getElapsedTime().asSeconds() > animation_fps){
-        if(onGround){
-            //ANIMAZIONE CORSA (quando è a terra)
-            if(rectSourceSprite.left == 448 || rectSourceSprite.left == 480) {
-                rectSourceSprite.left = 288;
-            }else {
-                rectSourceSprite.left += 32;
+void Hero::animation() {
+    if (clock.getElapsedTime().asSeconds() > animation_fps) {
+        if (isAlive) {
+            if (onGround) {
+
+                //ANIMAZIONE CORSA (quando è a terra)
+                if (rectSourceSprite.left == 448 || rectSourceSprite.left == 480 || rectSourceSprite.left == 864) {
+                    rectSourceSprite.left = 288;
+                } else if(isAttacking){
+                    rectSourceSprite.left += 32;
+                } else {
+                    rectSourceSprite.left += 32;
+                }
+            } else {
+                //ANIMAZIONE SALTO (cambia solamente la porzione di texture)
+                rectSourceSprite.left = 480;
             }
         } else {
-            //ANIMAZIONE SALTO (cambia solamente la porzione di texture)
-            rectSourceSprite.left = 480;
-        }
+            //ANIMAZIONE MORTE
+            if(rectSourceSprite.left != 704){
+                rectSourceSprite.left += 32;
+            }
 
+        }
         game_character.setTextureRect(rectSourceSprite);
         clock.restart();
     }
@@ -52,6 +65,13 @@ void Hero::jump() {
         velocityY = -11;
         onGround = false;
         animation_fps = 0.015;
+    }
+}
+
+void Hero::attack() {
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && onGround){
+        isAttacking = true;
+        rectSourceSprite.left = 704;
     }
 }
 

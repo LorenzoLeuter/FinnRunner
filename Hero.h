@@ -9,14 +9,19 @@ class Hero : public GameCharacter{
         Hero();
         virtual ~Hero(); //todo FARE DISTRUTTORE CLASSE HERO
 
-        void getKilled();
+        bool getStatus(){
+            return isAlive;
+        }
+
+        void getKilled(GameCharacter enemy);
         void animation() override;
         void update() override;
         void jump();
+        void attack();
 
     private:
         float gravity;
-        bool onGround;
+        bool onGround, isAlive, isAttacking;
         sf::IntRect rectSourceSprite{448, 0, 32, 32};
 };
 

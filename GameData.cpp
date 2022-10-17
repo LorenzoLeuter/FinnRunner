@@ -113,27 +113,51 @@ void GameData::update() {
         }
     }
     if(inGame){
-        if(character_alive){
+        if(player.getStatus()){
+
             backgroundLoop();
             setEnemyVelocity();
+
             player.update();
             player.animation();
             player.jump();
-            for (int i = 0; i < enemies.size(); i++) {
+            player.attack();
+
+            /*for (int i = 0; i < enemies.size(); i++) {
                 int x = enemies[i]->getPositionX();
                 if(x != -64){
                     enemies[i]->update();
                     enemies[i]->animation();
+                    player.attack(*enemies[i]);
+                    player.getKilled(*enemies[i]);
+
                 }else{
                     deleteEnemy(i);
                 }
             }
             if(enemySpawn.getElapsedTime().asSeconds() > rangeSpawn){
                 createEnemy();
-            }
+            }*/
+
             scoreUpdate();
+
         } else {
-            //player.death
+
+            /*for (int i = 0; i < enemies.size(); i++) {
+                int x = enemies[i]->getPositionX();
+                if(x != -64){
+                    enemies[i]->update();
+                    enemies[i]->animation();
+
+                }else{
+                    deleteEnemy(i);
+                }
+            }*/
+
+
+            player.animation();
+            player.jump();
+
         }
     }
 }
