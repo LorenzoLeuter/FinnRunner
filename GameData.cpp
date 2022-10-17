@@ -233,16 +233,21 @@ void GameData::scoreUpdate() {
 }
 
 void GameData::createEnemy() {
-    if((rand()%2) == 0){
-        enemies.push_back(std::unique_ptr<ZombieToast>(new ZombieToast(enemyVX)));
-    }else{
-        if((rand()%2) == 0){
-            enemies.push_back(std::unique_ptr<Bat>(new Bat(500,enemyVX)));
+    if(meters >= 500){
+        if((rand()%7) == 0){
+            enemies.push_back(std::unique_ptr<ZombieToast>(new ZombieToast(enemyVX)));
         }else{
-            enemies.push_back(std::unique_ptr<Bat>(new Bat(440,enemyVX)));
+            if((rand()%7) == 0){
+                enemies.push_back(std::unique_ptr<Bat>(new Bat(500,enemyVX)));
+            }else{
+                enemies.push_back(std::unique_ptr<Bat>(new Bat(440,enemyVX)));
+            }
         }
+        enemySpawn.restart();
+    }else{
+        enemies.push_back(std::unique_ptr<ZombieToast>(new ZombieToast(enemyVX)));
+        enemySpawn.restart();
     }
-    enemySpawn.restart();
 }
 
 void GameData::deleteEnemy(int posList) {
