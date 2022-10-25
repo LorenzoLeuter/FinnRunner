@@ -18,10 +18,10 @@ void Hero::animation() {
     if (clock.getElapsedTime().asSeconds() > animation_fps) {
         if (isAlive) {
             if (onGround) {
-
                 //ANIMAZIONE CORSA (quando è a terra)
                 if (rectSourceSprite.left == 448 || rectSourceSprite.left == 480 || rectSourceSprite.left == 864) {
                     rectSourceSprite.left = 288;
+                    animation_fps = 0.06;
                 } else if(isAttacking){
                     rectSourceSprite.left += 32;
                 } else {
@@ -72,9 +72,13 @@ void Hero::attack() {
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && onGround){
         isAttacking = true;
         rectSourceSprite.left = 704;
+        animation_fps = 30;
     }
 }
 
 Hero::~Hero() { }
+
+
+
 
 

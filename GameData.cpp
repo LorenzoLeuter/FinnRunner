@@ -121,8 +121,14 @@ void GameData::update() {
             player.update();
             player.animation();
             player.jump();
-            player.attack();
-
+            if(player.isAttacking1()){
+                if(attackingTime.getElapsedTime().asSeconds() >= (float)coolDownAttack){
+                    player.setIsAttacking(false);
+                    attackingTime.restart();
+                }
+            }else{
+                player.attack();
+            }
             /*for (int i = 0; i < enemies.size(); i++) {
                 int x = enemies[i]->getPositionX();
                 if(x != -64){

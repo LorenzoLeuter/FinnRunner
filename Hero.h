@@ -13,7 +13,16 @@ class Hero : public GameCharacter{
             return isAlive;
         }
 
-        void getKilled(GameCharacter enemy);
+        bool isAttacking1() const {
+            return isAttacking;
+        }
+
+        void setIsAttacking(bool isAttack) {
+            isAttacking = isAttack;
+        }
+
+
+    void getKilled(GameCharacter enemy);
         void animation() override;
         void update() override;
         void jump();
