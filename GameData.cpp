@@ -116,7 +116,7 @@ void GameData::update() {
         if(player.getStatus()){
 
             backgroundLoop();
-            setEnemyVelocity();
+            //setEnemyVelocity();
 
             player.update();
             player.animation();
@@ -129,13 +129,13 @@ void GameData::update() {
             }else{
                 player.attack();
             }
-            /*for (int i = 0; i < enemies.size(); i++) {
+            for (int i = 0; i < enemies.size(); i++) {
                 int x = enemies[i]->getPositionX();
                 if(x != -64){
                     enemies[i]->update();
                     enemies[i]->animation();
-                    player.attack(*enemies[i]);
-                    player.getKilled(*enemies[i]);
+                    //player.attack(*enemies[i]);
+                    //player.getKilled(*enemies[i]);
 
                 }else{
                     deleteEnemy(i);
@@ -143,13 +143,13 @@ void GameData::update() {
             }
             if(enemySpawn.getElapsedTime().asSeconds() > rangeSpawn){
                 createEnemy();
-            }*/
+            }
 
             scoreUpdate();
 
         } else {
 
-            /*for (int i = 0; i < enemies.size(); i++) {
+            for (int i = 0; i < enemies.size(); i++) {
                 int x = enemies[i]->getPositionX();
                 if(x != -64){
                     enemies[i]->update();
@@ -158,7 +158,7 @@ void GameData::update() {
                 }else{
                     deleteEnemy(i);
                 }
-            }*/
+            }
 
 
             player.animation();
@@ -239,18 +239,16 @@ bool GameData::isInGame() const {
 
 void GameData::backgroundLoop() {
     setBackgroundVelocity();
-    if(c.getElapsedTime().asSeconds() > blVel){
-        if(xL1 == -600){
-            xL1 = 0;
-            xL2 = 600;
-        }else{
-            xL1 -= 1;
-            xL2 -= 1;
-        }
-        background.setPosition(sf::Vector2f(xL1,0));
-        background2.setPosition(sf::Vector2f(xL2,0));
-        c.restart();
+    float velocityX = 30;
+    xL1 -= velocityX * c.getElapsedTime().asSeconds();
+    xL2 -= velocityX * c.getElapsedTime().asSeconds();
+    if((int)xL1 == -600){
+        xL1 = 0;
+        xL2 = 600;
     }
+    background.setPosition(sf::Vector2f(xL1,0));
+    background2.setPosition(sf::Vector2f(xL2,0));
+    c.restart();
 }
 
 void GameData::scoreUpdate() {
@@ -338,7 +336,7 @@ void GameData::setBackgroundVelocity() {
 void GameData::setEnemyVelocity() {
     switch (meters) {
         case 20:
-            enemyVX = -1.45;
+            enemyVX = -1,45;
             break;
         case 22:
             enemyVX = -1.65;
