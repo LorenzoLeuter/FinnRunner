@@ -2,7 +2,7 @@
 #define FINN_RUNNER_GAMEDATA_H
 
 #define max_options 2
-#define coolDownAttack 2
+#define coolDownAttack 1.25
 
 #include "Hero.h"
 #include "Subject.h"
@@ -68,6 +68,7 @@ class GameData : public Subject {
         sf::Text achievementTxt;
         float enemyVX;
         sf::Clock attackingTime;
+        sf::Clock frameRate;
 
         //functions
         void initGuiVariables();
