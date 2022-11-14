@@ -1,6 +1,6 @@
 #include "Hero.h"
 
-Hero::Hero(): GameCharacter(10,500,0.0,0.0), gravity(0.5), onGround(true), isAlive(true), isAttacking(false){
+Hero::Hero(): GameCharacter(10,500,0.0,0.0), gravity(0.5), onGround(true), isAlive(true), isAttacking(false), swordCollected(false), attackCounter(0){
     texture.loadFromFile("assets/FinnSprite.png");
     game_character.setTexture(texture);
     game_character.setPosition(positionX, positionY);
@@ -21,7 +21,6 @@ void Hero::animation() {
                 //ANIMAZIONE CORSA (quando è a terra)
                 if (rectSourceSprite.left == 448 || rectSourceSprite.left == 480 || rectSourceSprite.left == 864) {
                     rectSourceSprite.left = 288;
-                    animation_fps = 0.06;
                 } else if(isAttacking){
                     rectSourceSprite.left += 32;
                 } else {
@@ -50,6 +49,10 @@ void Hero::update() {
 
     game_character.setPosition(positionX, positionY);
 
+    if(attackCounter == 4){
+        swordCollected = false;
+    }
+
     //MANTIENE A TERRA IL PERSONAGGIO
     if(positionY > 500){
         positionY = 500;
@@ -61,7 +64,7 @@ void Hero::update() {
 }
 
 void Hero::jump() {
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && onGround && !isAttacking){
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && onGround){
         velocityY = -11;
         onGround = false;
         animation_fps = 0.015;
@@ -69,10 +72,15 @@ void Hero::jump() {
 }
 
 void Hero::attack() {
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && onGround){
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && onGround && swordCollected){
         isAttacking = true;
         rectSourceSprite.left = 704;
-        animation_fps = 30;
+    }
+}
+
+void Hero::collect(PowerUpFactory itm) {
+    if((int)itm.getPowerUpSprite().getPosition().x == (int)positionX){
+        swordCollected = true;
     }
 }
 

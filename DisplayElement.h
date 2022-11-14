@@ -1,7 +1,3 @@
-//
-// Created by lori0 on 04/10/2022.
-//
-
 #ifndef FINNRUNNER_DISPLAYELEMENT_H
 #define FINNRUNNER_DISPLAYELEMENT_H
 

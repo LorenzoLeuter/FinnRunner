@@ -10,6 +10,7 @@
 #include "vector"
 #include "ZombieToast.h"
 #include "Bat.h"
+#include "PowerUpFactory.h"
 
 
 class GameData : public Subject {
@@ -69,6 +70,7 @@ class GameData : public Subject {
         float enemyVX;
         sf::Clock attackingTime;
         sf::Clock frameRate;
+        PowerUpFactory sword;
 
         //functions
         void initGuiVariables();

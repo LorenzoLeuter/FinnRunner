@@ -1,7 +1,3 @@
-//
-// Created by lori0 on 18/10/2022.
-//
-
 #ifndef FINNRUNNER_POWERUP_H
 #define FINNRUNNER_POWERUP_H
 

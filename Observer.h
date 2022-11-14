@@ -1,7 +1,3 @@
-//
-// Created by lori0 on 29/09/2022.
-//
-
 #ifndef FINNRUNNER_OBSERVER_H
 #define FINNRUNNER_OBSERVER_H
 
