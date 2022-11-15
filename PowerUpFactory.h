@@ -4,10 +4,6 @@
 #include "PowerUp.h"
 #include <SFML/Graphics.hpp>
 
-enum powerUps {
-    sword, speedskip, freeze
-};
-
 class PowerUpFactory {
 
 public:
@@ -19,6 +15,10 @@ public:
         return power_up;
     }
 
+    int getObjType(){
+        return obj_type;
+    }
+
     void update();
 
     int setUpPowerUp(int currentPowerUp);
@@ -26,6 +26,8 @@ public:
 private:
     float positionX, positionY;
     float velocityX, velocityY;
+    int obj_type;
+    sf::IntRect rectSourceSprite_sword{32, 0, 32, 32};
     sf::Sprite power_up;
     sf::Texture texture;
     sf::Clock clock;

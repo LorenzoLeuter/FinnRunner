@@ -10,9 +10,11 @@ class ZombieToast : public GameCharacter{
 
         void animation() override;
         void update() override;
+        void getKilled(GameCharacter hero);
 
     private:
         sf::IntRect rectSourceSprite{0, 0, 64, 64};
+        bool isAlive;
 };
 
 

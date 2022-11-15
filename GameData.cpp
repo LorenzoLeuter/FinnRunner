@@ -124,20 +124,21 @@ void GameData::update() {
             player.collect(sword);
 
             if(player.isAttacking1()){
+
                 if(attackingTime.getElapsedTime().asSeconds() >= (float)coolDownAttack){
                     player.setIsAttacking(false);
-                    player.incAttackCounter();
                     attackingTime.restart();
                 }
+
             }else{
                 player.attack();
             }
+
             for (int i = 0; i < enemies.size(); i++) {
                 int x = enemies[i]->getPositionX();
                 if(x != -64){
                     enemies[i]->update();
                     enemies[i]->animation();
-                    //player.attack(*enemies[i]);
                     //player.getKilled(*enemies[i]);
 
                 }else{
@@ -190,6 +191,9 @@ void GameData::renderGame() {
     window->draw(background);
     window->draw(background2);
     window->draw(score);
+    window->draw(swords[0]);
+    window->draw(swords[1]);
+    window->draw(swords[2]);
     window->draw(achievementTxt);
     window->draw(player.getGameCharacter());
     for (int i = 0; i < enemies.size(); i++) {
@@ -233,6 +237,30 @@ void GameData::initGuiVariables() {
     score.setPosition(15,15);
     score.setOutlineColor(sf::Color::Black);
     score.setOutlineThickness(2.5);
+
+    //SWORD GUI INFO
+    swords_texture.loadFromFile("assets/sword_sprite.png");
+
+    swords[0].setTextureRect(rectSourceSpriteSwords);
+    swords[1].setTextureRect(rectSourceSpriteSwords);
+    swords[2].setTextureRect(rectSourceSpriteSwords);
+
+    swords[0].setTexture(swords_texture);
+    swords[1].setTexture(swords_texture);
+    swords[2].setTexture(swords_texture);
+
+    swords[0].scale(2.0,2.0);
+    swords[1].scale(2.0,2.0);
+    swords[2].scale(2.0,2.0);
+
+
+    swords[0].setPosition(0, 30);
+    swords[1].setPosition(55, 30);
+    swords[2].setPosition(105, 30);
+
+
+
+
 }
 
 const bool GameData::running() {

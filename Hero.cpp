@@ -1,6 +1,6 @@
 #include "Hero.h"
 
-Hero::Hero(): GameCharacter(10,500,0.0,0.0), gravity(0.5), onGround(true), isAlive(true), isAttacking(false), swordCollected(false), attackCounter(0){
+Hero::Hero(): GameCharacter(10,500,0.0,0.0), gravity(0.5), onGround(true), isAlive(true), isAttacking(false), swordCollected(false), potionCollected(false), attackCounter(0){
     texture.loadFromFile("assets/FinnSprite.png");
     game_character.setTexture(texture);
     game_character.setPosition(positionX, positionY);
@@ -8,7 +8,7 @@ Hero::Hero(): GameCharacter(10,500,0.0,0.0), gravity(0.5), onGround(true), isAli
 }
 
 void Hero::getKilled(GameCharacter enemy){
-    if((int)positionX == (int)enemy.getPositionX() - 20 && ((int)positionY == (int)enemy.getPositionY() + 16  || (int)positionY == (int)enemy.getPositionY())){
+    if((int)positionX == (int)enemy.getPositionX() - 20 && ((int)positionY == (int)enemy.getPositionY() + 16  || (int)positionY == (int)enemy.getPositionY()) && isAttacking == false){
         isAlive = false;
         rectSourceSprite.left = 512;
     }
@@ -51,6 +51,12 @@ void Hero::update() {
 
     if(attackCounter == 4){
         swordCollected = false;
+        attackCounter = 0;
+    }
+
+    if(potionJumpCounter == 4){
+        potionCollected = false;
+        potionJumpCounter = 0;
     }
 
     //MANTIENE A TERRA IL PERSONAGGIO
@@ -65,7 +71,14 @@ void Hero::update() {
 
 void Hero::jump() {
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && onGround){
-        velocityY = -11;
+
+        if(potionCollected){
+            velocityY = -21;
+            potionJumpCounter++;
+        } else {
+            velocityY = -11;
+        }
+
         onGround = false;
         animation_fps = 0.015;
     }
@@ -75,12 +88,23 @@ void Hero::attack() {
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && onGround && swordCollected){
         isAttacking = true;
         rectSourceSprite.left = 704;
+        attackCounter++;
     }
 }
 
 void Hero::collect(PowerUpFactory itm) {
     if((int)itm.getPowerUpSprite().getPosition().x == (int)positionX){
-        swordCollected = true;
+        switch (itm.getObjType()) {
+            case 1:
+                swordCollected = true;
+                break;
+
+            case 2:
+                potionCollected = true;
+                break;
+
+        }
+
     }
 }
 

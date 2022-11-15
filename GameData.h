@@ -70,6 +70,10 @@ class GameData : public Subject {
         float enemyVX;
         sf::Clock attackingTime;
         sf::Clock frameRate;
+        sf::Sprite swords[3];
+        sf::Texture swords_texture;
+        sf::IntRect rectSourceSpriteSwords{0, 0, 32, 32};
+        int sword_counter = 3;
         PowerUpFactory sword;
 
         //functions
