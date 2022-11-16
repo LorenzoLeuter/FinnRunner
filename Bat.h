@@ -8,6 +8,7 @@ class Bat : public GameCharacter {
         Bat(float positY,float v,const sf::Texture& texture);
         virtual ~Bat();
 
+
         void animation() override;
         void update();
 

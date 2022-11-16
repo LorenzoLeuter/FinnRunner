@@ -78,6 +78,7 @@ class GameData : public Subject {
         sf::Texture z;
         sf::Texture b;
 
+
         //functions
         void initGuiVariables();
         void initWindow();

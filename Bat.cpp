@@ -14,6 +14,7 @@ void Bat::animation(){
             rectSourceSprite.left += 32;
         }
 
+
         game_character.setTextureRect(rectSourceSprite);
         clock.restart();
 

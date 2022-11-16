@@ -24,7 +24,6 @@ void ZombieToast::animation() {
 
         game_character.setTextureRect(rectSourceSprite);
         clock.restart();
-
     }
 }
 
