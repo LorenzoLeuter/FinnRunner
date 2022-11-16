@@ -75,6 +75,8 @@ class GameData : public Subject {
         sf::IntRect rectSourceSpriteSwords{0, 0, 32, 32};
         int sword_counter = 3;
         PowerUpFactory sword;
+        sf::Texture z;
+        sf::Texture b;
 
         //functions
         void initGuiVariables();

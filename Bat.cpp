@@ -1,8 +1,7 @@
 #include "Bat.h"
 
-Bat::Bat(float positY,float v): GameCharacter(664,positY,(v-1),0.0){
-    texture.loadFromFile("assets/Bat.png");
-    game_character.setTexture(texture);
+Bat::Bat(float positY,float v,const sf::Texture& t): GameCharacter(664,positY,(v-1),0.0){
+    game_character.setTexture(t);
     game_character.setPosition(positionX, positionY);
     game_character.scale(1.5, 1.5);
 }

@@ -1,8 +1,7 @@
 #include "ZombieToast.h"
 
-ZombieToast::ZombieToast(float v) : GameCharacter(664, 484, v, 0.0), isAlive(true) {
-    texture.loadFromFile("assets/ZombieToast.png");
-    game_character.setTexture(texture);
+ZombieToast::ZombieToast(float v,const sf::Texture& t) : GameCharacter(664, 484, v, 0.0), isAlive(true) {
+    game_character.setTexture(t);
     game_character.setPosition(positionX, positionY);
     game_character.scale(1.25, 1.25);
 }

@@ -139,7 +139,7 @@ void GameData::update() {
                 if(x != -64){
                     enemies[i]->update();
                     enemies[i]->animation();
-                    //player.getKilled(*enemies[i]);
+                    player.getKilled(*enemies[i]);
 
                 }else{
                     deleteEnemy(i);
@@ -218,14 +218,14 @@ void GameData::initGuiVariables() {
     }
 
     //CREAZIONE DEI 2 BACKGROUND PER LA REALIZZAZIONE DEL BACKGROUND LOOP
-    background.setSize(sf::Vector2f(600,600));
-    background.setPosition(sf::Vector2f(xL1,0));
+    background.setSize(sf::Vector2f(600, 600));
+    background.setPosition(sf::Vector2f(xL1, 0));
     textureB.loadFromFile("assets/background.png");
     background.setTexture(&textureB);
 
 
-    background2.setSize(sf::Vector2f(600,600));
-    background2.setPosition(sf::Vector2f(xL2,0));
+    background2.setSize(sf::Vector2f(600, 600));
+    background2.setPosition(sf::Vector2f(xL2, 0));
     background2.setTexture(&textureB);
 
     //CREAZIONE DEGLI OGGETTI DI GIOCO
@@ -234,7 +234,7 @@ void GameData::initGuiVariables() {
     score.setString("METERS: 0");
     score.setFillColor(sf::Color::White);
     score.setCharacterSize(20);
-    score.setPosition(15,15);
+    score.setPosition(15, 15);
     score.setOutlineColor(sf::Color::Black);
     score.setOutlineThickness(2.5);
 
@@ -249,17 +249,17 @@ void GameData::initGuiVariables() {
     swords[1].setTexture(swords_texture);
     swords[2].setTexture(swords_texture);
 
-    swords[0].scale(2.0,2.0);
-    swords[1].scale(2.0,2.0);
-    swords[2].scale(2.0,2.0);
+    swords[0].scale(2.0, 2.0);
+    swords[1].scale(2.0, 2.0);
+    swords[2].scale(2.0, 2.0);
 
 
     swords[0].setPosition(0, 30);
     swords[1].setPosition(55, 30);
     swords[2].setPosition(105, 30);
 
-
-
+    z.loadFromFile("assets/ZombieToast.png");
+    b.loadFromFile("assets/Bat.png");
 
 }
 
@@ -297,17 +297,17 @@ void GameData::scoreUpdate() {
 void GameData::createEnemy() {
     if(meters >= 500){
         if((rand()%7) == 0){
-            enemies.push_back(std::unique_ptr<ZombieToast>(new ZombieToast(enemyVX)));
+            enemies.push_back(std::unique_ptr<ZombieToast>(new ZombieToast(enemyVX,z)));
         }else{
             if((rand()%7) == 0){
-                enemies.push_back(std::unique_ptr<Bat>(new Bat(500,enemyVX)));
+                enemies.push_back(std::unique_ptr<Bat>(new Bat(500,enemyVX,b)));
             }else{
-                enemies.push_back(std::unique_ptr<Bat>(new Bat(440,enemyVX)));
+                enemies.push_back(std::unique_ptr<Bat>(new Bat(440,enemyVX,b)));
             }
         }
         enemySpawn.restart();
     }else{
-        enemies.push_back(std::unique_ptr<ZombieToast>(new ZombieToast(enemyVX)));
+        enemies.push_back(std::unique_ptr<ZombieToast>(new ZombieToast(enemyVX,z)));
         enemySpawn.restart();
     }
 }

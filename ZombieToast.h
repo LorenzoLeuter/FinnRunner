@@ -5,9 +5,8 @@
 
 class ZombieToast : public GameCharacter{
     public:
-        ZombieToast(float v);
+        ZombieToast(float v, const sf::Texture& texture);
         virtual ~ZombieToast();
-
         void animation() override;
         void update() override;
         void getKilled(GameCharacter hero);

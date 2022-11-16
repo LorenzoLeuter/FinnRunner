@@ -5,7 +5,7 @@
 
 class Bat : public GameCharacter {
     public:
-        Bat(float positY,float v);
+        Bat(float positY,float v,const sf::Texture& texture);
         virtual ~Bat();
 
         void animation() override;
