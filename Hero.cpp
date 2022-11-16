@@ -54,7 +54,7 @@ void Hero::update() {
         attackCounter = 0;
     }
 
-    if(potionJumpCounter == 4){
+    if(potionJumpCounter == 3){
         potionCollected = false;
         potionJumpCounter = 0;
     }

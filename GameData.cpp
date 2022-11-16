@@ -30,7 +30,7 @@ void GameData::restartGame() {
 
 }
 
-GameData::GameData() : meters(0), record(0),character_alive(false),inGame(false),xL1(0),xL2(600),blVel(0.025f),rangeSpawn(2.6),enemyVX(-1.3),sword(1) {
+GameData::GameData() : meters(0), record(0),character_alive(false),inGame(false),xL1(0),xL2(600),blVel(0.025f),rangeSpawn(2.6),enemyVX(-1.3),sword(2, 400) {
     this->window = nullptr; //INIZIALIZZAZIONE DELLA FINESTRA DI GIOCO
     initGuiVariables();
     initWindow();
@@ -121,7 +121,7 @@ void GameData::update() {
             player.update();
             player.animation();
             player.jump();
-            player.collect(sword);
+            //player.collect(sword);
 
             if(player.isAttacking1()){
 
@@ -134,7 +134,7 @@ void GameData::update() {
                 player.attack();
             }
 
-            for (int i = 0; i < enemies.size(); i++) {
+            /*for (int i = 0; i < enemies.size(); i++) {
                 int x = enemies[i]->getPositionX();
                 if(x != -64){
                     enemies[i]->update();
@@ -147,7 +147,7 @@ void GameData::update() {
             }
             if(enemySpawn.getElapsedTime().asSeconds() > rangeSpawn){
                 createEnemy();
-            }
+            }*/
 
             sword.update();
 
@@ -155,7 +155,7 @@ void GameData::update() {
 
         } else {
 
-            for (int i = 0; i < enemies.size(); i++) {
+            /*for (int i = 0; i < enemies.size(); i++) {
                 int x = enemies[i]->getPositionX();
                 if(x != -64){
                     enemies[i]->update();
@@ -164,7 +164,7 @@ void GameData::update() {
                 }else{
                     deleteEnemy(i);
                 }
-            }
+            }*/
 
 
             player.animation();

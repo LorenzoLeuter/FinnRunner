@@ -7,7 +7,7 @@
 class PowerUpFactory {
 
 public:
-    PowerUpFactory(int obj);
+    PowerUpFactory(int obj, float X);
 
     virtual ~PowerUpFactory();
 
