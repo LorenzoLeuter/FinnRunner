@@ -92,7 +92,7 @@ void Hero::attack() {
     }
 }
 
-void Hero::collect(PowerUpFactory itm) {
+/*void Hero::collect(PowerUpFactory itm) {
     if((int)itm.getPowerUpSprite().getPosition().x == (int)positionX){
         switch (itm.getObjType()) {
             case 1:
@@ -106,7 +106,7 @@ void Hero::collect(PowerUpFactory itm) {
         }
 
     }
-}
+}*/
 
 Hero::~Hero() { }
 

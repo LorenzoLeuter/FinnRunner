@@ -30,7 +30,8 @@ void GameData::restartGame() {
 
 }
 
-GameData::GameData() : meters(0), record(0),character_alive(false),inGame(false),xL1(0),xL2(600),blVel(0.025f),rangeSpawn(2.6),enemyVX(-1.3),sword(2, 400) {
+GameData::GameData() : meters(0), record(0),character_alive(false),inGame(false),xL1(0),xL2(600),blVel(0.025f),rangeSpawn(2.6),enemyVX(-1.3),spawnPUP(1) {
+    //LA VELOCITA' DELLO ZOMBIE E' LA VELOCITA' DEL BACKGROUND / 100
     this->window = nullptr; //INIZIALIZZAZIONE DELLA FINESTRA DI GIOCO
     initGuiVariables();
     initWindow();
@@ -121,7 +122,7 @@ void GameData::update() {
             player.update();
             player.animation();
             player.jump();
-            //player.collect(sword);
+            //player.collect(powerUp);
 
             if(player.isAttacking1()){
 
@@ -134,7 +135,7 @@ void GameData::update() {
                 player.attack();
             }
 
-            /*for (int i = 0; i < enemies.size(); i++) {
+            for (int i = 0; i < enemies.size(); i++) {
                 int x = enemies[i]->getPositionX();
                 if(x != -64){
                     enemies[i]->update();
@@ -147,15 +148,28 @@ void GameData::update() {
             }
             if(enemySpawn.getElapsedTime().asSeconds() > rangeSpawn){
                 createEnemy();
-            }*/
+            }
 
-            sword.update();
+            if(meters == (10)*spawnPUP){
+                spawnPUP++;
+                if((rand()%2) == 0){
+                    powerUp.setCurrentPowerUp(1);
+                    powerUpGui.setTexture(swords_texture,powerUp);
+                    powerUpGui.setPositionX(500);
+                }else{
+                    powerUp.setCurrentPowerUp(2);
+                    powerUpGui.setTexture(potion,powerUp);
+                    powerUpGui.setPositionX(500);
+                }
+            }
+
+            powerUpGui.update();
 
             scoreUpdate();
 
         } else {
 
-            /*for (int i = 0; i < enemies.size(); i++) {
+            for (int i = 0; i < enemies.size(); i++) {
                 int x = enemies[i]->getPositionX();
                 if(x != -64){
                     enemies[i]->update();
@@ -164,7 +178,7 @@ void GameData::update() {
                 }else{
                     deleteEnemy(i);
                 }
-            }*/
+            }
 
 
             player.animation();
@@ -191,16 +205,15 @@ void GameData::renderGame() {
     window->draw(background);
     window->draw(background2);
     window->draw(score);
-    window->draw(swords[0]);
-    window->draw(swords[1]);
-    window->draw(swords[2]);
+    //window->draw(swords[0]);
+    //window->draw(swords[1]);
+    //window->draw(swords[2]);
     window->draw(achievementTxt);
     window->draw(player.getGameCharacter());
     for (int i = 0; i < enemies.size(); i++) {
         window->draw(enemies[i]->getGameCharacter());
     }
-    //window->draw(bat_test.getGameCharacter());
-    window->draw(sword.getPowerUpSprite());
+    window->draw(powerUpGui.getPowerUpSprite());
     window->display();
 }
 
@@ -258,8 +271,10 @@ void GameData::initGuiVariables() {
     swords[1].setPosition(55, 30);
     swords[2].setPosition(105, 30);
 
+    //Texture
     z.loadFromFile("assets/ZombieToast.png");
     b.loadFromFile("assets/Bat.png");
+    potion.loadFromFile("assets/potion.png");
 
 }
 

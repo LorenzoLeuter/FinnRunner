@@ -7,7 +7,7 @@
 class PowerUpFactory {
 
 public:
-    PowerUpFactory(int obj, float X);
+    PowerUpFactory(float X);
 
     virtual ~PowerUpFactory();
 
@@ -15,22 +15,22 @@ public:
         return power_up;
     }
 
-    int getObjType(){
-        return obj_type;
-    }
+    void setTexture(const sf::Texture &texture,const PowerUp &pUp);
+
+    void setPositionX(float positionX);
 
     void update();
 
-    int setUpPowerUp(int currentPowerUp);
 
 private:
     float positionX, positionY;
     float velocityX, velocityY;
     int obj_type;
-    sf::IntRect rectSourceSprite_sword{32, 0, 32, 32};
     sf::Sprite power_up;
     sf::Texture texture;
     sf::Clock clock;
+    sf::IntRect rectSourceSprite_sword{32, 0, 32, 32};
+    sf::IntRect rectSourceSprite_potion{0, 0, 32, 32};
 };
 
 

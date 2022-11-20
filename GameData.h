@@ -40,6 +40,7 @@ class GameData : public Subject {
     private:
 
         //variables
+        int spawnPUP;
         float gameVelocity;
         int meters;
         int record;
@@ -71,12 +72,16 @@ class GameData : public Subject {
         sf::Clock attackingTime;
         sf::Clock frameRate;
         sf::Sprite swords[3];
-        sf::Texture swords_texture;
-        sf::IntRect rectSourceSpriteSwords{0, 0, 32, 32};
         int sword_counter = 3;
-        PowerUpFactory sword;
+        PowerUpFactory powerUpGui = PowerUpFactory(0);
+        PowerUp powerUp;
         sf::Texture z;
         sf::Texture b;
+        sf::Texture swords_texture;
+        sf::Texture potion;
+        sf::IntRect rectSourceSpriteSwords{0, 0, 32, 32};
+        sf::IntRect rectSourceSprite_sword{32, 0, 32, 32};
+
 
 
         //functions
