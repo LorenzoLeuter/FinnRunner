@@ -82,6 +82,7 @@ class GameData : public Subject {
         float objectVelX;
         bool contr;
         int countE;
+        int contZB;
 
 
 

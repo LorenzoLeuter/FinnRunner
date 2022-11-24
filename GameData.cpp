@@ -31,7 +31,7 @@ void GameData::restartGame() {
 
 }
 
-GameData::GameData() : meters(0), record(0),character_alive(false),inGame(false),xL1(0),xL2(600),rangeSpawn(2.6),enemyVX(-1.3),spawnPUP(1),objectVelX(30),countE(1) {
+GameData::GameData() : meters(0), record(0),character_alive(false),inGame(false),xL1(0),xL2(600),rangeSpawn(2.6),enemyVX(-1.3),spawnPUP(1),objectVelX(30),countE(1),contZB(1) {
     //LA VELOCITA' DELLO ZOMBIE E' LA VELOCITA' DEL BACKGROUND / 100
     this->window = nullptr; //INIZIALIZZAZIONE DELLA FINESTRA DI GIOCO
     initGuiVariables();
@@ -309,32 +309,27 @@ void GameData::scoreUpdate() {
 }
 
 void GameData::createEnemy() {
-    /*if(meters >= 100){
-        if((rand()%7) <= 3){
-            enemies.push_back(std::unique_ptr<ZombieToast>(new ZombieToast(enemyVX,z)));
+    if(countE != 1){
+        countE--;
+    }else{
+        if(rand()%15 <= 1) {
+            countE = 1;
+        }else if(rand()%15 > 1 && rand()%15 <= 8){
+            countE = 2;
         }else{
-            if((rand()%2) == 0){
-                enemies.push_back(std::unique_ptr<Bat>(new Bat(500,enemyVX,b)));
-            }else{
-                enemies.push_back(std::unique_ptr<Bat>(new Bat(440,enemyVX,b)));
-            }
+            countE = 3;
         }
         enemySpawn.restart();
-    }else{*/
-        if(countE != 1){
-            countE--;
-        }else{
-            if(rand()%15 <= 1) {
-                countE = 1;
-            }else if(rand()%15 > 1 && rand()%15 <= 8){
-                countE = 2;
-            }else{
-                countE = 3;
-            }
-            enemySpawn.restart();
+    }
+    if(meters >= 30) {
+        if(rand()%15==0) {
+            enemies.push_back(std::unique_ptr<Bat>(new Bat(500,enemyVX,b)));
+        }else {
+            enemies.push_back(std::unique_ptr<ZombieToast>(new ZombieToast(enemyVX,z)));
         }
+    }else{
         enemies.push_back(std::unique_ptr<ZombieToast>(new ZombieToast(enemyVX,z)));
-    //}
+    }
 }
 
 void GameData::deleteEnemy(int posList) {
