@@ -19,6 +19,8 @@ public:
 
     void setPositionX(float positionX);
 
+    void setVelocityX(float velocityX);
+
     void update();
 
 

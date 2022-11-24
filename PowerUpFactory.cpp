@@ -1,4 +1,3 @@
-#include <iostream>
 #include "PowerUpFactory.h"
 
 PowerUpFactory::PowerUpFactory(float X) : positionX(X), velocityX(30){}
@@ -35,4 +34,8 @@ void PowerUpFactory::setTexture(const sf::Texture &t,const PowerUp& pUp) {
 
 void PowerUpFactory::setPositionX(float positionX) {
     PowerUpFactory::positionX = positionX;
+}
+
+void PowerUpFactory::setVelocityX(float velocityX) {
+    PowerUpFactory::velocityX = velocityX;
 }

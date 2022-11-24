@@ -30,7 +30,7 @@ void GameData::restartGame() {
 
 }
 
-GameData::GameData() : meters(0), record(0),character_alive(false),inGame(false),xL1(0),xL2(600),blVel(0.025f),rangeSpawn(2.6),enemyVX(-1.3),spawnPUP(1) {
+GameData::GameData() : meters(0), record(0),character_alive(false),inGame(false),xL1(0),xL2(600),rangeSpawn(2.6),enemyVX(-1.3),spawnPUP(1),objectVelX(30) {
     //LA VELOCITA' DELLO ZOMBIE E' LA VELOCITA' DEL BACKGROUND / 100
     this->window = nullptr; //INIZIALIZZAZIONE DELLA FINESTRA DI GIOCO
     initGuiVariables();
@@ -116,8 +116,8 @@ void GameData::update() {
     if(inGame){
         if(player.getStatus()){
 
+            setObjectVelocity();
             backgroundLoop();
-            //setEnemyVelocity();
 
             player.update();
             player.animation();
@@ -150,7 +150,7 @@ void GameData::update() {
                 createEnemy();
             }
 
-            if(meters == (10)*spawnPUP){
+            if(meters == (150)*spawnPUP){
                 spawnPUP++;
                 if((rand()%2) == 0){
                     powerUp.setCurrentPowerUp(1);
@@ -287,10 +287,8 @@ bool GameData::isInGame() const {
 }
 
 void GameData::backgroundLoop() {
-    setBackgroundVelocity();
-    float velocityX = 30;
-    xL1 -= velocityX * c.getElapsedTime().asSeconds();
-    xL2 -= velocityX * c.getElapsedTime().asSeconds();
+    xL1 -= objectVelX * c.getElapsedTime().asSeconds();
+    xL2 -= objectVelX * c.getElapsedTime().asSeconds();
     if((int)xL1 == -600){
         xL1 = 0;
         xL2 = 600;
@@ -310,11 +308,11 @@ void GameData::scoreUpdate() {
 }
 
 void GameData::createEnemy() {
-    if(meters >= 500){
-        if((rand()%7) == 0){
+    if(meters >= 25){
+        if((rand()%7) <= 3){
             enemies.push_back(std::unique_ptr<ZombieToast>(new ZombieToast(enemyVX,z)));
         }else{
-            if((rand()%7) == 0){
+            if((rand()%2) == 0){
                 enemies.push_back(std::unique_ptr<Bat>(new Bat(500,enemyVX,b)));
             }else{
                 enemies.push_back(std::unique_ptr<Bat>(new Bat(440,enemyVX,b)));
@@ -353,65 +351,40 @@ void GameData::setAchievementTxt(std::string achievement) {
     achievementTxt.setPosition(495,5);
 }
 
-void GameData::setBackgroundVelocity() {
+void GameData::setObjectVelocity() {
+    contr = false;
     switch (meters) {
         case 20:
-            blVel = 0.021f;
+            objectVelX = 60;
+            contr = true;
             break;
         case 22:
-            blVel = 0.017f;
+            objectVelX = 90;
+            contr = true;
             break;
         case 24:
-            blVel = 0.014f;
+            objectVelX = 120;
+            rangeSpawn = 1.8;
+            contr = true;
             break;
-        case 26:
-            blVel = 0.010f;
-            break;
-        case 40:
-            blVel = 0.0085f;
-            break;
-        case 42:
-            blVel = 0.007f;
-            break;
-        case 44:
-            blVel = 0.0062f;
-            break;
-        case 46:
-            blVel = 0.0046f;
-            break;
+            /*case 40:
+                blVel = 0.0085f;
+                break;
+            case 42:
+                blVel = 0.007f;
+                break;
+            case 44:
+                blVel = 0.0062f;
+                break;
+            case 46:
+                blVel = 0.0046f;
+                break;*/
     }
-}
+    if(contr){
+        enemyVX = -(objectVelX / 100) - 1;
+        for (int i = 0; i < enemies.size(); i++) {
+            enemies[i]->setVelocityX(enemyVX);
+        }
+    }
 
-void GameData::setEnemyVelocity() {
-    switch (meters) {
-        case 20:
-            enemyVX = -1,45;
-            break;
-        case 22:
-            enemyVX = -1.65;
-            rangeSpawn = 1.65;
-            break;
-        case 24:
-            enemyVX = -1.85;
-            break;
-        case 26:
-            enemyVX = -2.05;
-            break;
-        case 40:
-            enemyVX = -2.1;
-            break;
-        case 42:
-            enemyVX = -2.2;
-            rangeSpawn = 1.47;
-            break;
-        case 44:
-            enemyVX = -2.3;
-            break;
-        case 46:
-            enemyVX = -2.4;
-            break;
-    }
-    for (int i = 0; i < enemies.size(); i++) {
-        enemies[i]->setVelocityX(enemyVX);
-    }
 }

@@ -41,7 +41,6 @@ class GameData : public Subject {
 
         //variables
         int spawnPUP;
-        float gameVelocity;
         int meters;
         int record;
         bool character_alive;
@@ -64,7 +63,6 @@ class GameData : public Subject {
         Hero player;
         std::list<Observer*> observers;
         std::vector<std::unique_ptr<GameCharacter>> enemies;
-        float blVel;
         float rangeSpawn;
         sf::Clock enemySpawn;
         sf::Text achievementTxt;
@@ -81,6 +79,8 @@ class GameData : public Subject {
         sf::Texture potion;
         sf::IntRect rectSourceSpriteSwords{0, 0, 32, 32};
         sf::IntRect rectSourceSprite_sword{32, 0, 32, 32};
+        float objectVelX;
+        bool contr;
 
 
 
@@ -91,8 +91,7 @@ class GameData : public Subject {
         void scoreUpdate();
         void createEnemy();
         void deleteEnemy(int posList);
-        void setBackgroundVelocity();
-        void setEnemyVelocity();
+        void setObjectVelocity();
 };
 
 
