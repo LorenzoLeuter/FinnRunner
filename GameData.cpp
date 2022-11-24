@@ -331,9 +331,9 @@ void GameData::createEnemy() {
             }else{
                 countE = 3;
             }
+            enemySpawn.restart();
         }
         enemies.push_back(std::unique_ptr<ZombieToast>(new ZombieToast(enemyVX,z)));
-        enemySpawn.restart();
     //}
 }
 
