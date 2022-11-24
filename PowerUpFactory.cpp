@@ -3,7 +3,7 @@
 PowerUpFactory::PowerUpFactory(float X) : positionX(X), velocityX(30){}
 
 void PowerUpFactory::update() {
-    if(positionX > 0){
+    if(positionX > -500){
         positionX -= velocityX * clock.getElapsedTime().asSeconds();
     }else{
         positionY = -100;

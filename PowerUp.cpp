@@ -1,7 +1,3 @@
-//
-// Created by lori0 on 18/10/2022.
-//
-
 #include "PowerUp.h"
 
 PowerUp::PowerUp() {

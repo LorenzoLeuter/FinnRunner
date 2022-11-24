@@ -92,9 +92,9 @@ void Hero::attack() {
     }
 }
 
-/*void Hero::collect(PowerUpFactory itm) {
+void Hero::collect(PowerUp pup, PowerUpFactory itm) {
     if((int)itm.getPowerUpSprite().getPosition().x == (int)positionX){
-        switch (itm.getObjType()) {
+        switch (pup.getCurrentPowerUp()) {
             case 1:
                 swordCollected = true;
                 break;
@@ -106,7 +106,7 @@ void Hero::attack() {
         }
 
     }
-}*/
+}
 
 Hero::~Hero() { }
 

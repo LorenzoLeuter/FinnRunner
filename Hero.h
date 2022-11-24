@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "GameCharacter.h"
+#include "PowerUp.h"
 #include "PowerUpFactory.h"
 
 class Hero : public GameCharacter {
@@ -33,7 +34,7 @@ public:
 
     void attack();
 
-    void collect(PowerUpFactory itm);
+    void collect(PowerUp pup, PowerUpFactory itm);
 
 private:
     float gravity;
