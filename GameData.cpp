@@ -123,7 +123,6 @@ void GameData::update() {
             player.update();
             player.animation();
             player.jump();
-            //player.collect(powerUp);
 
             if(player.isAttacking1()){
 
@@ -165,6 +164,7 @@ void GameData::update() {
             }
 
             powerUpGui.update();
+            player.collect(powerUp, powerUpGui);
 
             scoreUpdate();
 
