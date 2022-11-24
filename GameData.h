@@ -81,6 +81,7 @@ class GameData : public Subject {
         sf::IntRect rectSourceSprite_sword{32, 0, 32, 32};
         float objectVelX;
         bool contr;
+        int countE;
 
 
 
