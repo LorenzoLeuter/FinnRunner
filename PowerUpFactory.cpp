@@ -39,3 +39,4 @@ void PowerUpFactory::setPositionX(float positionX) {
 void PowerUpFactory::setVelocityX(float velocityX) {
     PowerUpFactory::velocityX = velocityX;
 }
+

@@ -2,6 +2,7 @@
 #include "GameData.h"
 #include <iostream>
 
+
 int GameData::getMeters() const {
     return meters;
 }

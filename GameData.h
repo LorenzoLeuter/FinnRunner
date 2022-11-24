@@ -85,6 +85,7 @@ class GameData : public Subject {
 
 
 
+
         //functions
         void initGuiVariables();
         void initWindow();
