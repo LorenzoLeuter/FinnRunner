@@ -31,7 +31,7 @@ void GameData::restartGame() {
 
 }
 
-GameData::GameData() : meters(0), record(0),character_alive(false),inGame(false),xL1(0),xL2(600),rangeSpawn(2.6),enemyVX(-1.3),spawnPUP(1),objectVelX(30),countE(1),contZB(1) {
+GameData::GameData() : meters(0), record(0),character_alive(false),inGame(false),xL1(0),xL2(600),rangeSpawn(2),enemyVX(-1.3),spawnPUP(1),objectVelX(30),countE(1) {
     //LA VELOCITA' DELLO ZOMBIE E' LA VELOCITA' DEL BACKGROUND / 100
     this->window = nullptr; //INIZIALIZZAZIONE DELLA FINESTRA DI GIOCO
     initGuiVariables();
@@ -125,7 +125,6 @@ void GameData::update() {
             player.jump();
 
             if(player.isAttacking1()){
-
                 if(attackingTime.getElapsedTime().asSeconds() >= (float)coolDownAttack){
                     player.setIsAttacking(false);
                     attackingTime.restart();
@@ -135,7 +134,7 @@ void GameData::update() {
                 player.attack();
             }
 
-            for (int i = 0; i < enemies.size(); i++) {
+            /*for (int i = 0; i < enemies.size(); i++) {
                 int x = enemies[i]->getPositionX();
                 if(x != -64){
                     enemies[i]->update();
@@ -148,25 +147,46 @@ void GameData::update() {
             }
             if(enemySpawn.getElapsedTime().asSeconds() > rangeSpawn || (countE != 1 && (664-(int)enemies[enemies.size()-1]->getPositionX())==33)){
                 createEnemy();
-            }
+            }*/
 
-            if(meters == (150)*spawnPUP || meters==20){
+            if(meters == (30)*spawnPUP){
                 spawnPUP++;
-                if((rand()%2) == 0){
+                //if((rand()%2) == 0){
                     powerUp.setCurrentPowerUp(1);
                     powerUpGui.setTexture(swords_texture,powerUp);
-                    powerUpGui.setPositionX(500);
-                }else{
+                    powerUpGui.setPositionX(610);
+                /*}else{
                     powerUp.setCurrentPowerUp(2);
                     powerUpGui.setTexture(potion,powerUp);
-                    powerUpGui.setPositionX(500);
-                }
+                    powerUpGui.setPositionX(610);
+                }*/
             }
 
-            powerUpGui.update();
-            player.collect(powerUp, powerUpGui);
+
+            contrTakeObj = player.collect(powerUp, powerUpGui);
 
             scoreUpdate();
+
+            std::cout << contrTakeObj << std::endl;
+            std::cout << swordTake << std::endl;
+
+            if(contrTakeObj){
+                powerUpGui.updateCollect();
+                if(!swordTake){
+                    swordTake = true;
+                }
+                if(powerUp.getCurrentPowerUp()==1){
+                    for (int i = 0; i < 3; i++) {
+                        swords[i].setTextureRect(rectSourceSprite_sword);
+                    }
+                }
+            }else{
+                powerUpGui.update();
+            }
+
+            if(swordTake){
+                controlAvailableAttack();
+            }
 
         } else {
 
@@ -206,9 +226,11 @@ void GameData::renderGame() {
     window->draw(background);
     window->draw(background2);
     window->draw(score);
-    //window->draw(swords[0]);
-    //window->draw(swords[1]);
-    //window->draw(swords[2]);
+    if(swordTake){
+        window->draw(swords[0]);
+        window->draw(swords[1]);
+        window->draw(swords[2]);
+    }
     window->draw(achievementTxt);
     window->draw(player.getGameCharacter());
     for (int i = 0; i < enemies.size(); i++) {
@@ -255,9 +277,7 @@ void GameData::initGuiVariables() {
     //SWORD GUI INFO
     swords_texture.loadFromFile("assets/sword_sprite.png");
 
-    swords[0].setTextureRect(rectSourceSpriteSwords);
-    swords[1].setTextureRect(rectSourceSpriteSwords);
-    swords[2].setTextureRect(rectSourceSpriteSwords);
+
 
     swords[0].setTexture(swords_texture);
     swords[1].setTexture(swords_texture);
@@ -276,7 +296,6 @@ void GameData::initGuiVariables() {
     z.loadFromFile("assets/ZombieToast.png");
     b.loadFromFile("assets/Bat.png");
     potion.loadFromFile("assets/potion.png");
-
 }
 
 const bool GameData::running() {
@@ -309,18 +328,31 @@ void GameData::scoreUpdate() {
 }
 
 void GameData::createEnemy() {
-    if(countE != 1){
-        countE--;
-    }else{
-        if(rand()%15 <= 1) {
-            countE = 1;
-        }else if(rand()%15 > 1 && rand()%15 <= 8){
-            countE = 2;
+    if(meters > 200 && meters<=300){
+        if(countE != 1){
+            countE--;
         }else{
-            countE = 3;
+            if(rand()%10 <= 3) {
+                countE = 1;
+            }else{
+                countE = 2;
+            }
+            enemySpawn.restart();
         }
-        enemySpawn.restart();
+    }else if(meters > 300){
+        if(countE != 1){
+            countE--;
+        }else{
+            if(rand()%15 <= 1) {
+                countE = 1;
+            }else if(rand()%15 > 1 && rand()%15 <= 8){
+                countE = 2;
+            }else{
+                countE = 3;
+            }
+        }
     }
+    enemySpawn.restart();
     if(meters >= 30) {
         if(rand()%15==0) {
             enemies.push_back(std::unique_ptr<Bat>(new Bat(500,enemyVX,b)));
@@ -361,15 +393,15 @@ void GameData::setAchievementTxt(std::string achievement) {
 void GameData::setObjectVelocity() {
     contr = false;
     switch (meters) {
-        case 20:
+        case 0:
             objectVelX = 60;
             contr = true;
             break;
-        case 22:
+        case 2:
             objectVelX = 90;
             contr = true;
             break;
-        case 24:
+        case 4:
             objectVelX = 120;
             rangeSpawn = 1.8;
             contr = true;
@@ -389,9 +421,18 @@ void GameData::setObjectVelocity() {
     }
     if(contr){
         enemyVX = -(objectVelX / 100) - 1;
+        powerUpGui.setVelocityX(objectVelX);
         for (int i = 0; i < enemies.size(); i++) {
             enemies[i]->setVelocityX(enemyVX);
         }
     }
 
+}
+
+void GameData::controlAvailableAttack() {
+    if(player.getAttackCounter() != 0){
+        for (int i = 3; i > (2-player.getAttackCounter()); i--) {
+            swords[i].setTextureRect(rectSourceSpriteSwords);
+        }
+    }
 }

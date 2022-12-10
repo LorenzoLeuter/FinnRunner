@@ -92,7 +92,7 @@ void Hero::attack() {
     }
 }
 
-void Hero::collect(PowerUp pup, PowerUpFactory itm) {
+bool Hero::collect(PowerUp pup, PowerUpFactory itm) {
     if((int)itm.getPowerUpSprite().getPosition().x == (int)positionX){
         switch (pup.getCurrentPowerUp()) {
             case 1:
@@ -104,11 +104,17 @@ void Hero::collect(PowerUp pup, PowerUpFactory itm) {
                 break;
 
         }
-
+        itm.setPositionX(-100);
+        return true;
     }
+    return false;
 }
 
 Hero::~Hero() { }
+
+int Hero::getAttackCounter() const {
+    return attackCounter;
+}
 
 
 

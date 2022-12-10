@@ -23,6 +23,7 @@ public:
 
     void update();
 
+    void updateCollect();
 
 private:
     float positionX, positionY;

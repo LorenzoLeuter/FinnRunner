@@ -34,7 +34,9 @@ public:
 
     void attack();
 
-    void collect(PowerUp pup, PowerUpFactory itm);
+    bool collect(PowerUp pup, PowerUpFactory itm);
+
+    int getAttackCounter() const;
 
 private:
     float gravity;

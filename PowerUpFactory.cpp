@@ -13,6 +13,13 @@ void PowerUpFactory::update() {
     clock.restart();
 }
 
+void PowerUpFactory::updateCollect(){
+    positionX = -100;
+    positionY = -100;
+    power_up.setPosition(positionX, positionY);
+    clock.restart();
+}
+
 
 PowerUpFactory::~PowerUpFactory() {
 

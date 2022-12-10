@@ -70,7 +70,7 @@ class GameData : public Subject {
         sf::Clock attackingTime;
         sf::Clock frameRate;
         sf::Sprite swords[3];
-        int sword_counter = 3;
+        bool swordTake;
         PowerUpFactory powerUpGui = PowerUpFactory(0);
         PowerUp powerUp;
         sf::Texture z;
@@ -82,7 +82,7 @@ class GameData : public Subject {
         float objectVelX;
         bool contr;
         int countE;
-        int contZB;
+        bool contrTakeObj;
 
 
 
@@ -95,6 +95,8 @@ class GameData : public Subject {
         void createEnemy();
         void deleteEnemy(int posList);
         void setObjectVelocity();
+
+    void controlAvailableAttack();
 };
 
 
