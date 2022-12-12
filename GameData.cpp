@@ -78,6 +78,22 @@ void GameData::update() {
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 this->window->close();
 
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
+                if(swordTake){
+                    if(player.isAttacking1()){
+                        if(attackingTime.getElapsedTime().asSeconds() >= (float)coolDownAttack){
+                            player.setIsAttacking(false);
+                            attackingTime.restart();
+                        }
+                    }else{
+                        sis = player.attack();
+                        if(sis){
+                            swords[player.getAttackCounter()].setTextureRect(rectSourceSpriteSwords);
+                        }
+                    }
+                }
+            }
+
         }else{
             if(event.type == sf::Event::Closed)
                 this->window->close();
@@ -124,20 +140,6 @@ void GameData::update() {
             player.animation();
             player.jump();
 
-            if(swordTake){
-                if(player.isAttacking1()){
-                    if(attackingTime.getElapsedTime().asSeconds() >= (float)coolDownAttack){
-                        player.setIsAttacking(false);
-                        attackingTime.restart();
-                    }
-                }else{
-                    sis = player.attack();
-                    if(sis){
-                        swords[player.getAttackCounter()].setTextureRect(rectSourceSpriteSwords);
-                    }
-                }
-            }
-
 
             /*for (int i = 0; i < enemies.size(); i++) {
                 int x = enemies[i]->getPositionX();
@@ -182,6 +184,7 @@ void GameData::update() {
                     for (int i = 0; i < 3; i++) {
                         swords[i].setTextureRect(rectSourceSprite_sword);
                     }
+                    player.setAttackCounter(3);
                 }
             }else{
                 powerUpGui.update();

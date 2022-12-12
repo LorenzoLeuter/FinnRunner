@@ -38,6 +38,8 @@ public:
 
     int getAttackCounter() const;
 
+    void setAttackCounter(int attackCounter);
+
 private:
     float gravity;
     bool onGround, isAlive, isAttacking, swordCollected, potionCollected;

@@ -86,7 +86,7 @@ void Hero::jump() {
 }
 
 bool Hero::attack() {
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && onGround && swordCollected){
+    if(onGround && swordCollected){
         isAttacking = true;
         rectSourceSprite.left = 704;
         std::cout << attackCounter << std::endl;
@@ -118,6 +118,10 @@ Hero::~Hero() { }
 
 int Hero::getAttackCounter() const {
     return attackCounter;
+}
+
+void Hero::setAttackCounter(int attackCounter) {
+    Hero::attackCounter = attackCounter;
 }
 
 
