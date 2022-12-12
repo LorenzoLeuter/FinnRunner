@@ -83,6 +83,7 @@ class GameData : public Subject {
         bool contr;
         int countE;
         bool contrTakeObj;
+        bool sis;
 
 
 
@@ -95,8 +96,6 @@ class GameData : public Subject {
         void createEnemy();
         void deleteEnemy(int posList);
         void setObjectVelocity();
-
-    void controlAvailableAttack();
 };
 
 

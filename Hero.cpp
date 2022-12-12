@@ -1,6 +1,7 @@
+#include <iostream>
 #include "Hero.h"
 
-Hero::Hero(): GameCharacter(10,500,0.0,0.0), gravity(0.5), onGround(true), isAlive(true), isAttacking(false), swordCollected(false), potionCollected(false), attackCounter(0){
+Hero::Hero(): GameCharacter(10,500,0.0,0.0), gravity(0.5), onGround(true), isAlive(true), isAttacking(false), swordCollected(false), potionCollected(false), attackCounter(3){
     texture.loadFromFile("assets/FinnSprite.png");
     game_character.setTexture(texture);
     game_character.setPosition(positionX, positionY);
@@ -49,9 +50,9 @@ void Hero::update() {
 
     game_character.setPosition(positionX, positionY);
 
-    if(attackCounter == 4){
+    if(attackCounter == 0){
         swordCollected = false;
-        attackCounter = 0;
+        attackCounter = 3;
     }
 
     if(potionJumpCounter == 3){
@@ -84,12 +85,15 @@ void Hero::jump() {
     }
 }
 
-void Hero::attack() {
+bool Hero::attack() {
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && onGround && swordCollected){
         isAttacking = true;
         rectSourceSprite.left = 704;
-        attackCounter++;
+        std::cout << attackCounter << std::endl;
+        attackCounter--;
+        return true;
     }
+    return false;
 }
 
 bool Hero::collect(PowerUp pup, PowerUpFactory itm) {

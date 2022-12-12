@@ -32,7 +32,7 @@ public:
 
     void jump();
 
-    void attack();
+    bool attack();
 
     bool collect(PowerUp pup, PowerUpFactory itm);
 

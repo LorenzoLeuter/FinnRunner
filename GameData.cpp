@@ -31,7 +31,7 @@ void GameData::restartGame() {
 
 }
 
-GameData::GameData() : meters(0), record(0),character_alive(false),inGame(false),xL1(0),xL2(600),rangeSpawn(2),enemyVX(-1.3),spawnPUP(1),objectVelX(30),countE(1) {
+GameData::GameData() : meters(0), record(0),character_alive(false),inGame(false),xL1(0),xL2(600),rangeSpawn(2),enemyVX(-1.3),spawnPUP(1),objectVelX(30),countE(1),contrTakeObj(false),swordTake(false) {
     //LA VELOCITA' DELLO ZOMBIE E' LA VELOCITA' DEL BACKGROUND / 100
     this->window = nullptr; //INIZIALIZZAZIONE DELLA FINESTRA DI GIOCO
     initGuiVariables();
@@ -124,15 +124,20 @@ void GameData::update() {
             player.animation();
             player.jump();
 
-            if(player.isAttacking1()){
-                if(attackingTime.getElapsedTime().asSeconds() >= (float)coolDownAttack){
-                    player.setIsAttacking(false);
-                    attackingTime.restart();
+            if(swordTake){
+                if(player.isAttacking1()){
+                    if(attackingTime.getElapsedTime().asSeconds() >= (float)coolDownAttack){
+                        player.setIsAttacking(false);
+                        attackingTime.restart();
+                    }
+                }else{
+                    sis = player.attack();
+                    if(sis){
+                        swords[player.getAttackCounter()].setTextureRect(rectSourceSpriteSwords);
+                    }
                 }
-
-            }else{
-                player.attack();
             }
+
 
             /*for (int i = 0; i < enemies.size(); i++) {
                 int x = enemies[i]->getPositionX();
@@ -167,8 +172,6 @@ void GameData::update() {
 
             scoreUpdate();
 
-            std::cout << contrTakeObj << std::endl;
-            std::cout << swordTake << std::endl;
 
             if(contrTakeObj){
                 powerUpGui.updateCollect();
@@ -184,9 +187,6 @@ void GameData::update() {
                 powerUpGui.update();
             }
 
-            if(swordTake){
-                controlAvailableAttack();
-            }
 
         } else {
 
@@ -276,8 +276,9 @@ void GameData::initGuiVariables() {
 
     //SWORD GUI INFO
     swords_texture.loadFromFile("assets/sword_sprite.png");
-
-
+    swords[0].setTextureRect(rectSourceSpriteSwords);
+    swords[0].setTextureRect(rectSourceSpriteSwords);
+    swords[0].setTextureRect(rectSourceSpriteSwords);
 
     swords[0].setTexture(swords_texture);
     swords[1].setTexture(swords_texture);
@@ -427,12 +428,4 @@ void GameData::setObjectVelocity() {
         }
     }
 
-}
-
-void GameData::controlAvailableAttack() {
-    if(player.getAttackCounter() != 0){
-        for (int i = 3; i > (2-player.getAttackCounter()); i--) {
-            swords[i].setTextureRect(rectSourceSpriteSwords);
-        }
-    }
 }
