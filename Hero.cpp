@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Hero.h"
 
-Hero::Hero(): GameCharacter(10,500,0.0,0.0), gravity(0.5), onGround(true), isAlive(true), isAttacking(false), swordCollected(false), potionCollected(false), attackCounter(3){
+Hero::Hero(): GameCharacter(20,500,0.0,0.0), gravity(0.5), onGround(true), isAlive(true), isAttacking(false), swordCollected(false), potionCollected(false), attackCounter(3){
     texture.loadFromFile("assets/FinnSprite.png");
     game_character.setTexture(texture);
     game_character.setPosition(positionX, positionY);

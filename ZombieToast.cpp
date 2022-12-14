@@ -18,7 +18,7 @@ void ZombieToast::animation() {
         } else {
             //ANIMAZIONE MORTE
             if(rectSourceSprite.left != 768){
-                rectSourceSprite.left += 32;
+                rectSourceSprite.left += 64;
             }
         }
 
@@ -36,10 +36,10 @@ void ZombieToast::update() {
 
 
 void ZombieToast::getKilled(GameCharacter hero) {
-    if ((int) positionX == (int) hero.getPositionX() - 20 &&
-        ((int) positionY == (int) hero.getPositionY() + 16 || (int) positionY == (int) hero.getPositionY())) {
+    if ((int)positionX == (int)hero.getPositionX() + 20) {
         isAlive = false;
-        rectSourceSprite.left = 480;
+        rectSourceSprite.left = 975;
+        animation_fps = 0.03;
     }
 }
 

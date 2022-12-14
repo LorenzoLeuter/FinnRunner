@@ -140,13 +140,18 @@ void GameData::update() {
             player.animation();
             player.jump();
 
-
-            /*for (int i = 0; i < enemies.size(); i++) {
+            for (int i = 0; i < enemies.size(); i++) {
                 int x = enemies[i]->getPositionX();
                 if(x != -64){
                     enemies[i]->update();
                     enemies[i]->animation();
-                    player.getKilled(*enemies[i]);
+
+                    if (player.isAttacking1()) {
+                        enemies[i]->getKilled(player);
+                    }
+
+                    //player.getKilled(*enemies[i]);
+
 
                 }else{
                     deleteEnemy(i);
@@ -154,19 +159,19 @@ void GameData::update() {
             }
             if(enemySpawn.getElapsedTime().asSeconds() > rangeSpawn || (countE != 1 && (664-(int)enemies[enemies.size()-1]->getPositionX())==33)){
                 createEnemy();
-            }*/
+            }
 
             if(meters == (30)*spawnPUP){
                 spawnPUP++;
-                //if((rand()%2) == 0){
+                if((rand()%2) == 0){
                     powerUp.setCurrentPowerUp(1);
                     powerUpGui.setTexture(swords_texture,powerUp);
                     powerUpGui.setPositionX(610);
-                /*}else{
+                }else{
                     powerUp.setCurrentPowerUp(2);
                     powerUpGui.setTexture(potion,powerUp);
                     powerUpGui.setPositionX(610);
-                }*/
+                }
             }
 
 
