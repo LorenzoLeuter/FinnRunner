@@ -101,10 +101,12 @@ bool Hero::collect(PowerUp pup, PowerUpFactory itm) {
         switch (pup.getCurrentPowerUp()) {
             case 1:
                 swordCollected = true;
+                potionCollected = false;
                 break;
 
             case 2:
                 potionCollected = true;
+                swordCollected = false;
                 break;
 
         }
@@ -122,6 +124,14 @@ int Hero::getAttackCounter() const {
 
 void Hero::setAttackCounter(int attackCounter) {
     Hero::attackCounter = attackCounter;
+}
+
+bool Hero::isSwordCollected() const {
+    return swordCollected;
+}
+
+bool Hero::isPotionCollected() const {
+    return potionCollected;
 }
 
 

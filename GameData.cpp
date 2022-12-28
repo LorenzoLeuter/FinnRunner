@@ -140,18 +140,13 @@ void GameData::update() {
             player.animation();
             player.jump();
 
-            for (int i = 0; i < enemies.size(); i++) {
+
+            /*for (int i = 0; i < enemies.size(); i++) {
                 int x = enemies[i]->getPositionX();
                 if(x != -64){
                     enemies[i]->update();
                     enemies[i]->animation();
-
-                    if (player.isAttacking1()) {
-                        enemies[i]->getKilled(player);
-                    }
-
-                    //player.getKilled(*enemies[i]);
-
+                    player.getKilled(*enemies[i]);
 
                 }else{
                     deleteEnemy(i);
@@ -159,19 +154,19 @@ void GameData::update() {
             }
             if(enemySpawn.getElapsedTime().asSeconds() > rangeSpawn || (countE != 1 && (664-(int)enemies[enemies.size()-1]->getPositionX())==33)){
                 createEnemy();
-            }
+            }*/
 
             if(meters == (30)*spawnPUP){
                 spawnPUP++;
-                if((rand()%2) == 0){
+                //if((rand()%2) == 0){
                     powerUp.setCurrentPowerUp(1);
                     powerUpGui.setTexture(swords_texture,powerUp);
                     powerUpGui.setPositionX(610);
-                }else{
+                /*}else{
                     powerUp.setCurrentPowerUp(2);
                     powerUpGui.setTexture(potion,powerUp);
                     powerUpGui.setPositionX(610);
-                }
+                }*/
             }
 
 
@@ -234,7 +229,7 @@ void GameData::renderGame() {
     window->draw(background);
     window->draw(background2);
     window->draw(score);
-    if(swordTake){
+    if(swordTake && player.isSwordCollected()){
         window->draw(swords[0]);
         window->draw(swords[1]);
         window->draw(swords[2]);

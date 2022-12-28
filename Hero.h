@@ -8,6 +8,7 @@
 
 class Hero : public GameCharacter {
 public:
+
     Hero();
 
     virtual ~Hero(); //todo FARE DISTRUTTORE CLASSE HERO
@@ -40,11 +41,15 @@ public:
 
     void setAttackCounter(int attackCounter);
 
+    bool isSwordCollected() const;
+
+    bool isPotionCollected() const;
+
 private:
     float gravity;
     bool onGround, isAlive, isAttacking, swordCollected, potionCollected;
-    int attackCounter = 0;
-    int potionJumpCounter = 0;
+    int attackCounter;
+    int potionJumpCounter;
     sf::IntRect rectSourceSprite{448, 0, 32, 32};
     sf::Texture texture;
 };
