@@ -158,17 +158,16 @@ void GameData::update() {
 
             if(meters == (30)*spawnPUP){
                 spawnPUP++;
-                //if((rand()%2) == 0){
+                if((rand()%2) == 0){
                     powerUp.setCurrentPowerUp(1);
                     powerUpGui.setTexture(swords_texture,powerUp);
                     powerUpGui.setPositionX(610);
-                /*}else{
+                }else{
                     powerUp.setCurrentPowerUp(2);
                     powerUpGui.setTexture(potion,powerUp);
                     powerUpGui.setPositionX(610);
-                }*/
+                }
             }
-
 
             contrTakeObj = player.collect(powerUp, powerUpGui);
 
