@@ -97,7 +97,7 @@ bool Hero::attack() {
 }
 
 bool Hero::collect(PowerUp pup, PowerUpFactory itm) {
-    if((int)itm.getPowerUpSprite().getPosition().x == (int)positionX){
+    if(((int)itm.getPowerUpSprite().getPosition().x == (int)positionX) && onGround == true){
         switch (pup.getCurrentPowerUp()) {
             case 1:
                 swordCollected = true;
