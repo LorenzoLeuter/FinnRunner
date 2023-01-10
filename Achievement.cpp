@@ -31,6 +31,7 @@ void Achievement::draw() {
         g->setAchievementTxt("ESSERE VELOCITA'");
         achivmentGui.restart();
     }
+
     if(achivmentGui.getElapsedTime().asSeconds() > 2.50){
         g->setAchievementTxt("");
     }

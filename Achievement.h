@@ -18,6 +18,7 @@ class Achievement : public Observer, public DisplayElement{
         void draw() override;
     protected:
         int score;
+        sf::Text text;
         GameData * g;
         sf::Clock achivmentGui;
 };

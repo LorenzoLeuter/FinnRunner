@@ -140,12 +140,17 @@ void GameData::update() {
             player.animation();
             player.jump();
 
-            /*
+
             for (int i = 0; i < enemies.size(); i++) {
                 int x = enemies[i]->getPositionX();
                 if(x != -64){
                     enemies[i]->update();
                     enemies[i]->animation();
+
+                    if (player.isAttacking1()) {
+                        enemies[i]->getKilled(player);
+                    }
+
                     player.getKilled(*enemies[i]);
 
                 }else{
@@ -155,7 +160,8 @@ void GameData::update() {
             if(enemySpawn.getElapsedTime().asSeconds() > rangeSpawn || (countE != 1 && (664-(int)enemies[enemies.size()-1]->getPositionX())==33)){
                 createEnemy();
             }
-            */
+
+
             if(meters == (30)*spawnPUP){
                 spawnPUP++;
                 if((rand()%2) == 0){
@@ -203,7 +209,7 @@ void GameData::update() {
                 }
             }
 
-
+            player.update();
             player.animation();
             player.jump();
 
@@ -304,11 +310,13 @@ void GameData::initGuiVariables() {
     potion.loadFromFile("assets/potion.png");
     trophy.loadFromFile("assets/trophy.png");
 
-    //Realizzazione del trofeo per gli achievement
+    /* Realizzazione del trofeo per gli achievement
 
     achievementTrophy.setSize(sf::Vector2f(20, 20));
     achievementTrophy.setPosition(sf::Vector2f(380, 5));
     achievementTrophy.setTexture(&trophy);
+
+     */
 }
 
 const bool GameData::running() {
@@ -398,9 +406,16 @@ void GameData::setAchievementTxt(std::string achievement) {
     //CREAZIONE DEGLI ACHIEVEMENT
     achievementTxt.setFont(font);
     achievementTxt.setString(achievement);
-    achievementTxt.setFillColor(sf::Color::Black);
-    achievementTxt.setCharacterSize(10);
-    achievementTxt.setPosition(415,5);
+    achievementTxt.setFillColor(sf::Color::White);
+    achievementTxt.setOutlineColor(sf::Color::Black);
+    achievementTxt.setOutlineThickness(2.5);
+    achievementTxt.setCharacterSize(25);
+
+    //TESTO AL CENTRO
+    sf::FloatRect textRect = achievementTxt.getLocalBounds();
+    achievementTxt.setOrigin(textRect.left + textRect.width/2.0f, textRect.top + textRect.height/2.0f);
+    achievementTxt.setPosition(window->getView().getCenter());
+
 }
 
 void GameData::setObjectVelocity() {
