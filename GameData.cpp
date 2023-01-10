@@ -31,7 +31,7 @@ void GameData::restartGame() {
 
 }
 
-GameData::GameData() : meters(0), record(0),character_alive(false),inGame(false),xL1(0),xL2(600),rangeSpawn(2),enemyVX(-1.3),spawnPUP(1),objectVelX(30),countE(1),contrTakeObj(false),swordTake(false) {
+GameData::GameData() : meters(0), record(0),character_alive(false),inGame(false),xL1(0),xL2(600),rangeSpawn(2),enemyVX(-1.3),spawnPUP(1),objectVelX(30),countE(1),contrTakeObj(false),swordTake(false),defaultS("") {
     //LA VELOCITA' DELLO ZOMBIE E' LA VELOCITA' DEL BACKGROUND / 100
     this->window = nullptr; //INIZIALIZZAZIONE DELLA FINESTRA DI GIOCO
     initGuiVariables();
@@ -140,8 +140,8 @@ void GameData::update() {
             player.animation();
             player.jump();
 
-
-            /*for (int i = 0; i < enemies.size(); i++) {
+            /*
+            for (int i = 0; i < enemies.size(); i++) {
                 int x = enemies[i]->getPositionX();
                 if(x != -64){
                     enemies[i]->update();
@@ -154,8 +154,8 @@ void GameData::update() {
             }
             if(enemySpawn.getElapsedTime().asSeconds() > rangeSpawn || (countE != 1 && (664-(int)enemies[enemies.size()-1]->getPositionX())==33)){
                 createEnemy();
-            }*/
-
+            }
+            */
             if(meters == (30)*spawnPUP){
                 spawnPUP++;
                 if((rand()%2) == 0){
@@ -233,7 +233,10 @@ void GameData::renderGame() {
         window->draw(swords[1]);
         window->draw(swords[2]);
     }
-    window->draw(achievementTxt);
+    if(achievementTxt.getString() != defaultS){
+        window->draw(achievementTrophy);
+        window->draw(achievementTxt);
+    }
     window->draw(player.getGameCharacter());
     for (int i = 0; i < enemies.size(); i++) {
         window->draw(enemies[i]->getGameCharacter());
@@ -299,6 +302,13 @@ void GameData::initGuiVariables() {
     z.loadFromFile("assets/ZombieToast.png");
     b.loadFromFile("assets/Bat.png");
     potion.loadFromFile("assets/potion.png");
+    trophy.loadFromFile("assets/trophy.png");
+
+    //Realizzazione del trofeo per gli achievement
+
+    achievementTrophy.setSize(sf::Vector2f(20, 20));
+    achievementTrophy.setPosition(sf::Vector2f(380, 5));
+    achievementTrophy.setTexture(&trophy);
 }
 
 const bool GameData::running() {
@@ -390,7 +400,7 @@ void GameData::setAchievementTxt(std::string achievement) {
     achievementTxt.setString(achievement);
     achievementTxt.setFillColor(sf::Color::Black);
     achievementTxt.setCharacterSize(10);
-    achievementTxt.setPosition(495,5);
+    achievementTxt.setPosition(415,5);
 }
 
 void GameData::setObjectVelocity() {

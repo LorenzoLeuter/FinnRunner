@@ -50,6 +50,7 @@ class GameData : public Subject {
         sf::RectangleShape background2;
         sf::Texture textureB;
         sf::Texture titleTexture;
+        sf::Texture trophy;
         sf::RectangleShape title;
         sf::Text menuOptions[max_options];
         sf::Text score;
@@ -65,6 +66,7 @@ class GameData : public Subject {
         std::vector<std::unique_ptr<GameCharacter>> enemies;
         float rangeSpawn;
         sf::Clock enemySpawn;
+        sf::RectangleShape achievementTrophy;
         sf::Text achievementTxt;
         float enemyVX;
         sf::Clock attackingTime;
@@ -84,9 +86,7 @@ class GameData : public Subject {
         int countE;
         bool contrTakeObj;
         bool sis;
-
-
-
+        const std::string defaultS;
 
         //functions
         void initGuiVariables();

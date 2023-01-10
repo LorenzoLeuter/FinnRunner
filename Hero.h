@@ -48,8 +48,8 @@ public:
 private:
     float gravity;
     bool onGround, isAlive, isAttacking, swordCollected, potionCollected;
-    int attackCounter;
-    int potionJumpCounter;
+    int attackCounter = 0;
+    int potionJumpCounter = 0;
     sf::IntRect rectSourceSprite{448, 0, 32, 32};
     sf::Texture texture;
 };

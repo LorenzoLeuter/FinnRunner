@@ -18,6 +18,7 @@ class Achievement : public Observer, public DisplayElement{
     protected:
         int score;
         GameData * g;
+        sf::Clock achivmentGui;
 };
 
 
