@@ -431,6 +431,7 @@ void GameData::setObjectVelocity() {
             case 46:
                 blVel = 0.0046f;
                 break;*/
+
     }
     if(contr){
         enemyVX = -(objectVelX / 100) - 1;

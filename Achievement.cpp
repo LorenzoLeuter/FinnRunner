@@ -13,6 +13,7 @@ void Achievement::update() {
     draw();
 }
 
+
 void Achievement::draw() {
     if(score == 25){
         g->setAchievementTxt("PARTIRE DALLE BASI");

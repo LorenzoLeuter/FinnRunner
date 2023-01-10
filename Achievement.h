@@ -9,6 +9,7 @@
 #include "DisplayElement.h"
 #include "GameData.h"
 
+
 class Achievement : public Observer, public DisplayElement{
     public:
         Achievement(GameData * gameData);

@@ -96,6 +96,7 @@ class GameData : public Subject {
         void createEnemy();
         void deleteEnemy(int posList);
         void setObjectVelocity();
+
 };
 
 
