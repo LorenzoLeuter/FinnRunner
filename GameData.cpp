@@ -1,6 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include "GameData.h"
 #include <iostream>
+#include <fstream>
+#include <cstring>
 
 
 int GameData::getMeters() const {
@@ -11,12 +13,29 @@ void GameData::setMeters(int meters) {
     GameData::meters = meters;
 }
 
-int GameData::getRecord() const {
-    return record;
+int GameData::getRecord(){
+    f = std::fopen("record.txt","r");
+    std::fread(&record[0], sizeof record[0], record.size(),f);
+    for(int j=0;j<record.size();j++) {
+        if(record[0]<'0' || record[0]>'9'){
+            record[0]='0';
+        }
+        if(record[j]>='0' && record[j]<='9'){
+            strApp=strApp+record[j];
+        }else{
+            j=record.size()+1;
+        }
+    }
+    std::fclose(f);
 }
 
-void GameData::setRecord(int record) {
-    GameData::record = record;
+bool GameData::setRecord() {
+    if(meters > std::stoi(strApp)){
+        f= std::fopen("record.txt","w");
+        std::fputs(std::to_string(meters).c_str(),f);
+        std::fclose(f);
+    }
+    return true;
 }
 
 bool GameData::isCharacterAlive() const {
@@ -31,9 +50,11 @@ void GameData::restartGame() {
 
 }
 
-GameData::GameData() : meters(0), record(0),character_alive(false),inGame(false),xL1(0),xL2(600),rangeSpawn(2),enemyVX(-1.3),spawnPUP(1),objectVelX(30),countE(1),contrTakeObj(false),swordTake(false),defaultS("") {
+GameData::GameData() : meters(0), record(10),character_alive(false),inGame(false),xL1(0),xL2(600),rangeSpawn(2),
+                        enemyVX(-1.3),spawnPUP(1),objectVelX(30),countE(1),contrTakeObj(false),swordTake(false),defaultS(""),
+                       countKill(0), countSP(0), countPP(0),contrSaveR(false){
     //LA VELOCITA' DELLO ZOMBIE E' LA VELOCITA' DEL BACKGROUND / 100
-    this->window = nullptr; //INIZIALIZZAZIONE DELLA FINESTRA DI GIOCO
+    getRecord();
     initGuiVariables();
     initWindow();
 }
@@ -162,7 +183,7 @@ void GameData::update() {
             }
 
 
-            if(meters == (30)*spawnPUP){
+            if(meters == (20)*spawnPUP){
                 spawnPUP++;
                 if((rand()%2) == 0){
                     powerUp.setCurrentPowerUp(1);
@@ -190,6 +211,9 @@ void GameData::update() {
                         swords[i].setTextureRect(rectSourceSprite_sword);
                     }
                     player.setAttackCounter(3);
+                    countSP++;
+                }else{
+                    countPP++;
                 }
             }else{
                 powerUpGui.update();
@@ -212,7 +236,9 @@ void GameData::update() {
             player.update();
             player.animation();
             player.jump();
-
+            if(!contrSaveR){
+                contrSaveR = setRecord();
+            }
         }
     }
 }
@@ -234,6 +260,7 @@ void GameData::renderGame() {
     window->draw(background);
     window->draw(background2);
     window->draw(score);
+    window->draw(recordT);
     if(swordTake && player.isSwordCollected()){
         window->draw(swords[0]);
         window->draw(swords[1]);
@@ -284,6 +311,19 @@ void GameData::initGuiVariables() {
     score.setPosition(15, 15);
     score.setOutlineColor(sf::Color::Black);
     score.setOutlineThickness(2.5);
+
+    //CREAZIONE DEL RECORD
+
+
+    std::cout << strApp.length();
+
+    recordT.setFont(font);
+    recordT.setString("RECORD= "+strApp);
+    recordT.setFillColor(sf::Color::White);
+    recordT.setCharacterSize(20);
+    recordT.setPosition(280, 15);
+    recordT.setOutlineColor(sf::Color::Black);
+    recordT.setOutlineThickness(2.5);
 
     //SWORD GUI INFO
     swords_texture.loadFromFile("assets/sword_sprite.png");
@@ -456,4 +496,12 @@ void GameData::setObjectVelocity() {
         }
     }
 
+}
+
+int GameData::getCountSp() const {
+    return countSP;
+}
+
+int GameData::getCountPp() const {
+    return countPP;
 }

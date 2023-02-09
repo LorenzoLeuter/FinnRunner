@@ -4,6 +4,7 @@
 #define max_options 2
 #define coolDownAttack 1.25
 
+#include <fstream>
 #include "Hero.h"
 #include "Subject.h"
 #include "list"
@@ -11,6 +12,7 @@
 #include "ZombieToast.h"
 #include "Bat.h"
 #include "PowerUpFactory.h"
+//#include "FileMgr.h"
 
 
 class GameData : public Subject {
@@ -21,8 +23,8 @@ class GameData : public Subject {
         GameData();
         int getMeters() const;
         void setMeters(int meters);
-        int getRecord() const;
-        void setRecord(int record);
+        int getRecord();
+        bool setRecord();
         bool isCharacterAlive() const;
         void setCharacterAlive(bool characterAlive);
         void restartGame(); //todo FARE IL RESTART GAME
@@ -36,13 +38,15 @@ class GameData : public Subject {
         void removeObserver(Observer *o) override;
         void notifyObservers() const override;
         void setAchievementTxt(std::string achievement);
+        int getCountSp() const;
+        int getCountPp() const;
 
-    private:
+private:
 
         //variables
         int spawnPUP;
         int meters;
-        int record;
+        std::vector<char> record;
         bool character_alive;
         sf::RenderWindow* window;
         sf::Event event;
@@ -54,6 +58,7 @@ class GameData : public Subject {
         sf::RectangleShape title;
         sf::Text menuOptions[max_options];
         sf::Text score;
+        sf::Text recordT;
         int menuSelected;
         float xL1;
         float xL2;
@@ -87,6 +92,12 @@ class GameData : public Subject {
         bool contrTakeObj;
         bool sis;
         const std::string defaultS;
+        int countKill;
+        int countSP; // numero di spade prese
+        int countPP; //numero di pozioni prese
+        std::FILE * f;
+        std::string strApp;
+        bool contrSaveR;
 
         //functions
         void initGuiVariables();
@@ -96,6 +107,7 @@ class GameData : public Subject {
         void createEnemy();
         void deleteEnemy(int posList);
         void setObjectVelocity();
+
 
 };
 

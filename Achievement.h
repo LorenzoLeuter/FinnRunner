@@ -21,6 +21,11 @@ class Achievement : public Observer, public DisplayElement{
         sf::Text text;
         GameData * g;
         sf::Clock achivmentGui;
+        int cSP;
+        int cPP;
+        bool achievementNotActiveS;
+        bool achievementNotActiveP;
+
 };
 
 
