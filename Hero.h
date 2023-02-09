@@ -35,7 +35,7 @@ public:
 
     bool attack();
 
-    bool collect(PowerUp pup, PowerUpFactory itm);
+    bool collect(PowerUp pup, PowerUpFactory itm,int delta);
 
     int getAttackCounter() const;
 

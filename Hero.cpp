@@ -89,15 +89,14 @@ bool Hero::attack() {
     if(onGround && swordCollected){
         isAttacking = true;
         rectSourceSprite.left = 704;
-        std::cout << attackCounter << std::endl;
         attackCounter--;
         return true;
     }
     return false;
 }
 
-bool Hero::collect(PowerUp pup, PowerUpFactory itm) {
-    if(((int)itm.getPowerUpSprite().getPosition().x == (int)positionX) && onGround == true){
+bool Hero::collect(PowerUp pup, PowerUpFactory itm,int delta) {
+    if(positionX >= (itm.getPowerUpSprite().getPosition().x-(float)delta) && positionX <= (itm.getPowerUpSprite().getPosition().x+((float)delta/2)) && onGround == true){
         switch (pup.getCurrentPowerUp()) {
             case 1:
                 swordCollected = true;

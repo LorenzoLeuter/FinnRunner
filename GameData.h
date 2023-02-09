@@ -2,7 +2,7 @@
 #define FINN_RUNNER_GAMEDATA_H
 
 #define max_options 2
-#define coolDownAttack 1.25
+#define coolDownAttack 1.5
 
 #include <fstream>
 #include "Hero.h"

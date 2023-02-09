@@ -36,7 +36,7 @@ void ZombieToast::update() {
 
 
 void ZombieToast::getKilled(GameCharacter hero) {
-    if ((int)positionX == (int)hero.getPositionX() + 20) {
+    if ((int)positionX >= (int)hero.getPositionX() + 15 && (int)positionX <= (int)hero.getPositionX() + 20) {
         isAlive = false;
         rectSourceSprite.left = 975;
         animation_fps = 0.03;

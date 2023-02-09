@@ -101,12 +101,7 @@ void GameData::update() {
 
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
                 if(swordTake){
-                    if(player.isAttacking1()){
-                        if(attackingTime.getElapsedTime().asSeconds() >= (float)coolDownAttack){
-                            player.setIsAttacking(false);
-                            attackingTime.restart();
-                        }
-                    }else{
+                    if(!player.isAttacking1()){
                         sis = player.attack();
                         if(sis){
                             swords[player.getAttackCounter()].setTextureRect(rectSourceSpriteSwords);
@@ -154,6 +149,10 @@ void GameData::update() {
     if(inGame){
         if(player.getStatus()){
 
+            if(attackingTime.getElapsedTime().asSeconds() >= (float)coolDownAttack){
+                player.setIsAttacking(false);
+                attackingTime.restart();
+            }
             setObjectVelocity();
             backgroundLoop();
 
@@ -162,7 +161,7 @@ void GameData::update() {
             player.jump();
 
 
-            for (int i = 0; i < enemies.size(); i++) {
+            /*for (int i = 0; i < enemies.size(); i++) {
                 int x = enemies[i]->getPositionX();
                 if(x != -64){
                     enemies[i]->update();
@@ -180,23 +179,28 @@ void GameData::update() {
             }
             if(enemySpawn.getElapsedTime().asSeconds() > rangeSpawn || (countE != 1 && (664-(int)enemies[enemies.size()-1]->getPositionX())==33)){
                 createEnemy();
-            }
+            }*/
 
 
             if(meters == (20)*spawnPUP){
                 spawnPUP++;
-                if((rand()%2) == 0){
+                /*if((rand()%2) == 0){
                     powerUp.setCurrentPowerUp(1);
                     powerUpGui.setTexture(swords_texture,powerUp);
                     powerUpGui.setPositionX(610);
-                }else{
+                }else{*/
                     powerUp.setCurrentPowerUp(2);
                     powerUpGui.setTexture(potion,powerUp);
                     powerUpGui.setPositionX(610);
-                }
+                //}
             }
 
-            contrTakeObj = player.collect(powerUp, powerUpGui);
+            if(powerUp.getCurrentPowerUp()==1){
+                contrTakeObj = player.collect(powerUp, powerUpGui,8);
+            }else{
+                contrTakeObj = player.collect(powerUp, powerUpGui,19);
+            }
+
 
             scoreUpdate();
 
@@ -235,7 +239,7 @@ void GameData::update() {
 
             player.update();
             player.animation();
-            player.jump();
+            //player.jump();
             if(!contrSaveR){
                 contrSaveR = setRecord();
             }
