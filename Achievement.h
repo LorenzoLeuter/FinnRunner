@@ -23,8 +23,10 @@ class Achievement : public Observer, public DisplayElement{
         sf::Clock achivmentGui;
         int cSP;
         int cPP;
+        int cK;
         bool achievementNotActiveS;
         bool achievementNotActiveP;
+        bool achievementNotActiveK;
 
 };
 

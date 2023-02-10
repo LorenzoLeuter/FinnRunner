@@ -168,7 +168,7 @@ void GameData::update() {
                     enemies[i]->animation();
 
                     if (player.isAttacking1()) {
-                        enemies[i]->getKilled(player);
+                        countKill = enemies[i]->getKilled(player,countKill);
                     }
 
                     player.getKilled(*enemies[i]);
@@ -184,15 +184,15 @@ void GameData::update() {
 
             if(meters == (20)*spawnPUP){
                 spawnPUP++;
-                /*if((rand()%2) == 0){
+                //if((rand()%2) == 0){
                     powerUp.setCurrentPowerUp(1);
                     powerUpGui.setTexture(swords_texture,powerUp);
                     powerUpGui.setPositionX(610);
-                }else{*/
+                /*}else{
                     powerUp.setCurrentPowerUp(2);
                     powerUpGui.setTexture(potion,powerUp);
                     powerUpGui.setPositionX(610);
-                //}
+                //}*/
             }
 
             if(powerUp.getCurrentPowerUp()==1){
@@ -317,9 +317,6 @@ void GameData::initGuiVariables() {
     score.setOutlineThickness(2.5);
 
     //CREAZIONE DEL RECORD
-
-
-    std::cout << strApp.length();
 
     recordT.setFont(font);
     recordT.setString("RECORD= "+strApp);
@@ -508,4 +505,8 @@ int GameData::getCountSp() const {
 
 int GameData::getCountPp() const {
     return countPP;
+}
+
+int GameData::getCountKill() const {
+    return countKill;
 }

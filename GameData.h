@@ -40,6 +40,7 @@ class GameData : public Subject {
         void setAchievementTxt(std::string achievement);
         int getCountSp() const;
         int getCountPp() const;
+        int getCountKill() const;
 
 private:
 
@@ -92,7 +93,7 @@ private:
         bool contrTakeObj;
         bool sis;
         const std::string defaultS;
-        int countKill;
+        int countKill; //numero di uccisioni
         int countSP; // numero di spade prese
         int countPP; //numero di pozioni prese
         std::FILE * f;
