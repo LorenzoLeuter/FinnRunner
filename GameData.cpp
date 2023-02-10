@@ -161,7 +161,7 @@ void GameData::update() {
             player.jump();
 
 
-            /*for (int i = 0; i < enemies.size(); i++) {
+            for (int i = 0; i < enemies.size(); i++) {
                 int x = enemies[i]->getPositionX();
                 if(x != -64){
                     enemies[i]->update();
@@ -179,7 +179,7 @@ void GameData::update() {
             }
             if(enemySpawn.getElapsedTime().asSeconds() > rangeSpawn || (countE != 1 && (664-(int)enemies[enemies.size()-1]->getPositionX())==33)){
                 createEnemy();
-            }*/
+            }
 
 
             if(meters == (20)*spawnPUP){

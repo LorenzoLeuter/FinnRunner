@@ -9,7 +9,7 @@ Hero::Hero(): GameCharacter(20,500,0.0,0.0), gravity(0.5), onGround(true), isAli
 }
 
 void Hero::getKilled(GameCharacter enemy){
-    if((int)positionX == (int)enemy.getPositionX() - 20 && ((int)positionY == (int)enemy.getPositionY() + 16  || (int)positionY == (int)enemy.getPositionY()) && isAttacking == false){
+    if((int)positionX >= (int)enemy.getPositionX() - 20 && (int)positionX <= (int)enemy.getPositionX() && ((int)positionY >= (int)enemy.getPositionY() && (int)positionY <= (int)enemy.getPositionY() + 16 ) && isAttacking == false){
         isAlive = false;
         rectSourceSprite.left = 512;
     }
