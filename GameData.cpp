@@ -47,23 +47,32 @@ void GameData::drawMenu() {
 
     //CREAZIONE DEL TITOLO
     title.setSize(sf::Vector2f(450,175));
-    title.setPosition(sf::Vector2f(77,50));
     titleTexture.loadFromFile("assets/Title.png");
     title.setTexture(&titleTexture);
+    sf::FloatRect titleRect = title.getLocalBounds();
+    title.setOrigin(titleRect.left + titleRect.width/2.0f, (titleRect.top + 120) + titleRect.height/2.0f);
+    title.setPosition(window->getView().getCenter());
 
     //CREAZIONE DEL TASTO PLAY
     menuOptions[0].setFont(font);
     menuOptions[0].setString("PLAY");
     menuOptions[0].setFillColor(sf::Color::White);
     menuOptions[0].setCharacterSize(50);
-    menuOptions[0].setPosition(30,320);
+
+    sf::FloatRect playRect = menuOptions[0].getLocalBounds();
+    menuOptions[0].setOrigin((playRect.left + 300) + playRect.width/2.0f, playRect.top + playRect.height/2.0f);
+    menuOptions[0].setPosition(window->getView().getCenter());
+
 
     //CREAZIONE DEL TASTO EXIT
     menuOptions[1].setFont(font);
     menuOptions[1].setString("EXIT");
     menuOptions[1].setFillColor(sf::Color::White);
     menuOptions[1].setCharacterSize(50);
-    menuOptions[1].setPosition(410,320);
+
+    sf::FloatRect exitRect = menuOptions[1].getLocalBounds();
+    menuOptions[1].setOrigin((exitRect.left - 300) + exitRect.width/2.0f, exitRect.top + exitRect.height/2.0f);
+    menuOptions[1].setPosition(window->getView().getCenter());
 
     //SCELTA NEL MENU A -1
     menuSelected = -1;
@@ -112,9 +121,12 @@ void GameData::update() {
 
 
             if(sf::Event::MouseMoved){
-                if(event.mouseMove.x >= 410 && event.mouseMove.x <= 572 && event.mouseMove.y >= 329 && event.mouseMove.y <= 370){   //exit
+
+                std::cout << sf::Mouse::getPosition(*window).y << std::endl;
+
+                if(event.mouseMove.x >= 813 && event.mouseMove.x <= 975 && event.mouseMove.y >= 278 && event.mouseMove.y <= 320){   //exit
                     menuSelected = 1;
-                }else if(event.mouseMove.x >= 29 && event.mouseMove.x <= 209 && event.mouseMove.y >= 329 && event.mouseMove.y <= 370) {  //play
+                }else if(event.mouseMove.x >= 210 && event.mouseMove.x <= 390 && event.mouseMove.y >= 278 && event.mouseMove.y <= 320) {  //play
                     menuSelected = 0;
                 }else{
                     menuSelected = -1;
@@ -211,7 +223,6 @@ void GameData::update() {
 
             player.update();
             player.animation();
-            player.jump();
 
         }
     }
@@ -252,7 +263,7 @@ void GameData::renderGame() {
 }
 
 void GameData::initWindow() {
-    this->window = new sf::RenderWindow(sf::VideoMode(600,600), "FinnRunner", sf::Style::Titlebar | sf::Style::Close);
+    this->window = new sf::RenderWindow(sf::VideoMode(1200,600), "FinnRunner", sf::Style::Titlebar | sf::Style::Close);
 }
 
 void GameData::initGuiVariables() {
@@ -265,13 +276,13 @@ void GameData::initGuiVariables() {
     }
 
     //CREAZIONE DEI 2 BACKGROUND PER LA REALIZZAZIONE DEL BACKGROUND LOOP
-    background.setSize(sf::Vector2f(600, 600));
+    background.setSize(sf::Vector2f(1200, 600));
     background.setPosition(sf::Vector2f(xL1, 0));
     textureB.loadFromFile("assets/background.png");
     background.setTexture(&textureB);
 
 
-    background2.setSize(sf::Vector2f(600, 600));
+    background2.setSize(sf::Vector2f(1200, 600));
     background2.setPosition(sf::Vector2f(xL2, 0));
     background2.setTexture(&textureB);
 
