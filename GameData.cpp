@@ -1,6 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include "GameData.h"
 #include <iostream>
+#include <fstream>
+#include <cstring>
 
 
 int GameData::getMeters() const {
@@ -11,12 +13,29 @@ void GameData::setMeters(int meters) {
     GameData::meters = meters;
 }
 
-int GameData::getRecord() const {
-    return record;
+int GameData::getRecord(){
+    f = std::fopen("record.txt","r");
+    std::fread(&record[0], sizeof record[0], record.size(),f);
+    for(int j=0;j<record.size();j++) {
+        if(record[0]<'0' || record[0]>'9'){
+            record[0]='0';
+        }
+        if(record[j]>='0' && record[j]<='9'){
+            strApp=strApp+record[j];
+        }else{
+            j=record.size()+1;
+        }
+    }
+    std::fclose(f);
 }
 
-void GameData::setRecord(int record) {
-    GameData::record = record;
+bool GameData::setRecord() {
+    if(meters > std::stoi(strApp)){
+        f= std::fopen("record.txt","w");
+        std::fputs(std::to_string(meters).c_str(),f);
+        std::fclose(f);
+    }
+    return true;
 }
 
 bool GameData::isCharacterAlive() const {
@@ -31,9 +50,11 @@ void GameData::restartGame() {
 
 }
 
-GameData::GameData() : meters(0), record(0),character_alive(false),inGame(false),xL1(0),xL2(600),rangeSpawn(2),enemyVX(-1.3),spawnPUP(1),objectVelX(30),countE(1),contrTakeObj(false),swordTake(false),defaultS("") {
+GameData::GameData() : meters(0), record(10),character_alive(false),inGame(false),xL1(0),xL2(600),rangeSpawn(2),
+                        enemyVX(-1.3),spawnPUP(1),objectVelX(30),countE(1),contrTakeObj(false),swordTake(false),defaultS(""),
+                       countKill(0), countSP(0), countPP(0),contrSaveR(false){
     //LA VELOCITA' DELLO ZOMBIE E' LA VELOCITA' DEL BACKGROUND / 100
-    this->window = nullptr; //INIZIALIZZAZIONE DELLA FINESTRA DI GIOCO
+    getRecord();
     initGuiVariables();
     initWindow();
 }
@@ -47,23 +68,32 @@ void GameData::drawMenu() {
 
     //CREAZIONE DEL TITOLO
     title.setSize(sf::Vector2f(450,175));
-    title.setPosition(sf::Vector2f(77,50));
     titleTexture.loadFromFile("assets/Title.png");
     title.setTexture(&titleTexture);
+    sf::FloatRect titleRect = title.getLocalBounds();
+    title.setOrigin(titleRect.left + titleRect.width/2.0f, (titleRect.top + 120) + titleRect.height/2.0f);
+    title.setPosition(window->getView().getCenter());
 
     //CREAZIONE DEL TASTO PLAY
     menuOptions[0].setFont(font);
     menuOptions[0].setString("PLAY");
     menuOptions[0].setFillColor(sf::Color::White);
     menuOptions[0].setCharacterSize(50);
-    menuOptions[0].setPosition(30,320);
+
+    sf::FloatRect playRect = menuOptions[0].getLocalBounds();
+    menuOptions[0].setOrigin((playRect.left + 300) + playRect.width/2.0f, playRect.top + playRect.height/2.0f);
+    menuOptions[0].setPosition(window->getView().getCenter());
+
 
     //CREAZIONE DEL TASTO EXIT
     menuOptions[1].setFont(font);
     menuOptions[1].setString("EXIT");
     menuOptions[1].setFillColor(sf::Color::White);
     menuOptions[1].setCharacterSize(50);
-    menuOptions[1].setPosition(410,320);
+
+    sf::FloatRect exitRect = menuOptions[1].getLocalBounds();
+    menuOptions[1].setOrigin((exitRect.left - 300) + exitRect.width/2.0f, exitRect.top + exitRect.height/2.0f);
+    menuOptions[1].setPosition(window->getView().getCenter());
 
     //SCELTA NEL MENU A -1
     menuSelected = -1;
@@ -80,12 +110,7 @@ void GameData::update() {
 
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
                 if(swordTake){
-                    if(player.isAttacking1()){
-                        if(attackingTime.getElapsedTime().asSeconds() >= (float)coolDownAttack){
-                            player.setIsAttacking(false);
-                            attackingTime.restart();
-                        }
-                    }else{
+                    if(!player.isAttacking1()){
                         sis = player.attack();
                         if(sis){
                             swords[player.getAttackCounter()].setTextureRect(rectSourceSpriteSwords);
@@ -112,14 +137,14 @@ void GameData::update() {
 
 
             if(sf::Event::MouseMoved){
-                if(event.mouseMove.x >= 410 && event.mouseMove.x <= 572 && event.mouseMove.y >= 329 && event.mouseMove.y <= 370){   //exit
+                std::cout << sf::Mouse::getPosition(*window).y << std::endl;
+                if(event.mouseMove.x >= 813 && event.mouseMove.x <= 975 && event.mouseMove.y >= 278 && event.mouseMove.y <= 320){   //exit
                     menuSelected = 1;
-                }else if(event.mouseMove.x >= 29 && event.mouseMove.x <= 209 && event.mouseMove.y >= 329 && event.mouseMove.y <= 370) {  //play
+                }else if(event.mouseMove.x >= 210 && event.mouseMove.x <= 390 && event.mouseMove.y >= 278 && event.mouseMove.y <= 320) {  //play
                     menuSelected = 0;
                 }else{
                     menuSelected = -1;
                 }
-
                 if(menuSelected == -1){
                     for (int i = 0; i < max_options; i++) {
                         menuOptions[i].setFillColor(sf::Color::White);
@@ -133,6 +158,10 @@ void GameData::update() {
     if(inGame){
         if(player.getStatus()){
 
+            if(attackingTime.getElapsedTime().asSeconds() >= (float)coolDownAttack){
+                player.setIsAttacking(false);
+                attackingTime.restart();
+            }
             setObjectVelocity();
             backgroundLoop();
 
@@ -148,7 +177,7 @@ void GameData::update() {
                     enemies[i]->animation();
 
                     if (player.isAttacking1()) {
-                        enemies[i]->getKilled(player);
+                        countKill = enemies[i]->getKilled(player,countKill);
                     }
 
                     player.getKilled(*enemies[i]);
@@ -162,20 +191,25 @@ void GameData::update() {
             }
 
 
-            if(meters == (30)*spawnPUP){
+            if(meters == (20)*spawnPUP){
                 spawnPUP++;
-                if((rand()%2) == 0){
+                //if((rand()%2) == 0){
                     powerUp.setCurrentPowerUp(1);
                     powerUpGui.setTexture(swords_texture,powerUp);
                     powerUpGui.setPositionX(610);
-                }else{
+                /*}else{
                     powerUp.setCurrentPowerUp(2);
                     powerUpGui.setTexture(potion,powerUp);
                     powerUpGui.setPositionX(610);
-                }
+                //}*/
             }
 
-            contrTakeObj = player.collect(powerUp, powerUpGui);
+            if(powerUp.getCurrentPowerUp()==1){
+                contrTakeObj = player.collect(powerUp, powerUpGui,8);
+            }else{
+                contrTakeObj = player.collect(powerUp, powerUpGui,19);
+            }
+
 
             scoreUpdate();
 
@@ -190,6 +224,9 @@ void GameData::update() {
                         swords[i].setTextureRect(rectSourceSprite_sword);
                     }
                     player.setAttackCounter(3);
+                    countSP++;
+                }else{
+                    countPP++;
                 }
             }else{
                 powerUpGui.update();
@@ -211,8 +248,10 @@ void GameData::update() {
 
             player.update();
             player.animation();
-            player.jump();
-
+            //player.jump();
+            if(!contrSaveR){
+                contrSaveR = setRecord();
+            }
         }
     }
 }
@@ -234,6 +273,7 @@ void GameData::renderGame() {
     window->draw(background);
     window->draw(background2);
     window->draw(score);
+    window->draw(recordT);
     if(swordTake && player.isSwordCollected()){
         window->draw(swords[0]);
         window->draw(swords[1]);
@@ -252,7 +292,7 @@ void GameData::renderGame() {
 }
 
 void GameData::initWindow() {
-    this->window = new sf::RenderWindow(sf::VideoMode(600,600), "FinnRunner", sf::Style::Titlebar | sf::Style::Close);
+    this->window = new sf::RenderWindow(sf::VideoMode(1200,600), "FinnRunner", sf::Style::Titlebar | sf::Style::Close);
 }
 
 void GameData::initGuiVariables() {
@@ -265,13 +305,13 @@ void GameData::initGuiVariables() {
     }
 
     //CREAZIONE DEI 2 BACKGROUND PER LA REALIZZAZIONE DEL BACKGROUND LOOP
-    background.setSize(sf::Vector2f(600, 600));
+    background.setSize(sf::Vector2f(1200, 600));
     background.setPosition(sf::Vector2f(xL1, 0));
     textureB.loadFromFile("assets/background.png");
     background.setTexture(&textureB);
 
 
-    background2.setSize(sf::Vector2f(600, 600));
+    background2.setSize(sf::Vector2f(1200, 600));
     background2.setPosition(sf::Vector2f(xL2, 0));
     background2.setTexture(&textureB);
 
@@ -284,6 +324,16 @@ void GameData::initGuiVariables() {
     score.setPosition(15, 15);
     score.setOutlineColor(sf::Color::Black);
     score.setOutlineThickness(2.5);
+
+    //CREAZIONE DEL RECORD
+
+    recordT.setFont(font);
+    recordT.setString("RECORD= "+strApp);
+    recordT.setFillColor(sf::Color::White);
+    recordT.setCharacterSize(20);
+    recordT.setPosition(280, 15);
+    recordT.setOutlineColor(sf::Color::Black);
+    recordT.setOutlineThickness(2.5);
 
     //SWORD GUI INFO
     swords_texture.loadFromFile("assets/sword_sprite.png");
@@ -411,7 +461,7 @@ void GameData::setAchievementTxt(std::string achievement) {
     achievementTxt.setOutlineThickness(2.5);
     achievementTxt.setCharacterSize(25);
 
-    //TESTO AL CENTRO
+//TESTO AL CENTRO
     sf::FloatRect textRect = achievementTxt.getLocalBounds();
     achievementTxt.setOrigin(textRect.left + textRect.width/2.0f, textRect.top + textRect.height/2.0f);
     achievementTxt.setPosition(window->getView().getCenter());
@@ -456,4 +506,16 @@ void GameData::setObjectVelocity() {
         }
     }
 
+}
+
+int GameData::getCountSp() const {
+    return countSP;
+}
+
+int GameData::getCountPp() const {
+    return countPP;
+}
+
+int GameData::getCountKill() const {
+    return countKill;
 }
