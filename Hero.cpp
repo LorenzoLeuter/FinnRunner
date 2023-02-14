@@ -9,7 +9,7 @@ Hero::Hero(): GameCharacter(20,500,0.0,0.0), gravity(0.5), onGround(true), isAli
 }
 
 void Hero::getKilled(GameCharacter enemy){
-    if((int)positionX == (int)enemy.getPositionX() - 20 && ((int)positionY == (int)enemy.getPositionY() + 16  || (int)positionY == (int)enemy.getPositionY()) && isAttacking == false){
+    if((int)positionX >= (int)enemy.getPositionX() - 20 && (int)positionX <= (int)enemy.getPositionX() && ((int)positionY >= (int)enemy.getPositionY() && (int)positionY <= (int)enemy.getPositionY() + 16 ) && isAttacking == false){
         isAlive = false;
         rectSourceSprite.left = 512;
     }
@@ -89,15 +89,14 @@ bool Hero::attack() {
     if(onGround && swordCollected){
         isAttacking = true;
         rectSourceSprite.left = 704;
-        std::cout << attackCounter << std::endl;
         attackCounter--;
         return true;
     }
     return false;
 }
 
-bool Hero::collect(PowerUp pup, PowerUpFactory itm) {
-    if(((int)itm.getPowerUpSprite().getPosition().x == (int)positionX) && onGround == true){
+bool Hero::collect(PowerUp pup, PowerUpFactory itm,int delta) {
+    if(positionX >= (itm.getPowerUpSprite().getPosition().x-(float)delta) && positionX <= (itm.getPowerUpSprite().getPosition().x+((float)delta/2)) && onGround == true){
         switch (pup.getCurrentPowerUp()) {
             case 1:
                 swordCollected = true;

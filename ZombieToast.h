@@ -9,11 +9,12 @@ class ZombieToast : public GameCharacter{
         virtual ~ZombieToast();
         void animation() override;
         void update() override;
-        void getKilled(GameCharacter hero);
+        int getKilled(GameCharacter hero,int countKill);
 
     private:
         sf::IntRect rectSourceSprite{0, 0, 64, 64};
         bool isAlive;
+        bool Active;
 
 };
 

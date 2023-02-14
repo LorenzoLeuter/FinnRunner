@@ -8,7 +8,7 @@ public:
 
     virtual void animation() {};
     virtual void update() {};
-    virtual void getKilled(GameCharacter gc){};
+    virtual int getKilled(GameCharacter gc,int countKill){};
 
     float getVelocityX() const {
         return velocityX;
