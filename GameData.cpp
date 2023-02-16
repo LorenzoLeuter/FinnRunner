@@ -1,16 +1,10 @@
 #include <SFML/Graphics.hpp>
 #include "GameData.h"
 #include <iostream>
-#include <fstream>
-#include <cstring>
 
 
 int GameData::getMeters() const {
     return meters;
-}
-
-void GameData::setMeters(int meters) {
-    GameData::meters = meters;
 }
 
 int GameData::getRecord() {
@@ -524,7 +518,7 @@ void GameData::scoreUpdate() {
 }
 
 void GameData::createEnemy() {
-    if (meters > 10 && meters <= 300) {
+    if (meters > 30 && meters <= 60) {
         if (countE != 1) {
             countE--;
         } else {
@@ -535,7 +529,7 @@ void GameData::createEnemy() {
             }
             enemySpawn.restart();
         }
-    } else if (meters > 300) {
+    } else if (meters > 60) {
         if (countE != 1) {
             countE--;
         } else {
@@ -597,30 +591,38 @@ void GameData::setObjectVelocity() {
     contr = false;
     switch (meters) {
         case 0:
-            objectVelX = 60;
+            objectVelX = 85;
             contr = true;
             break;
-        case 2:
-            objectVelX = 90;
+        case 30:
+            objectVelX = 150;
+            rangeSpawn = 1.5;
             contr = true;
             break;
-        case 4:
-            objectVelX = 120;
-            rangeSpawn = 1.8;
+        case 60:
+            objectVelX = 200;
+            rangeSpawn = 1.0;
             contr = true;
             break;
-            /*case 40:
-                blVel = 0.0085f;
-                break;
-            case 42:
-                blVel = 0.007f;
-                break;
-            case 44:
-                blVel = 0.0062f;
-                break;
-            case 46:
-                blVel = 0.0046f;
-                break;*/
+        case 100:
+            rangeSpawn = 0.95;
+            contr = true;
+            break;
+
+        case 150:
+            rangeSpawn = 0.90;
+            contr = true;
+            break;
+
+        case 200:
+            rangeSpawn = 0.85;
+            contr = true;
+            break;
+
+        case 250:
+            rangeSpawn = 0.8;
+            contr = true;
+            break;
 
     }
 
