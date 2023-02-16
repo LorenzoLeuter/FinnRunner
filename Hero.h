@@ -11,7 +11,7 @@ public:
 
     Hero();
 
-    virtual ~Hero(); //todo FARE DISTRUTTORE CLASSE HERO
+    virtual ~Hero();
 
     bool getStatus() {
         return isAlive;

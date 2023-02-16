@@ -38,19 +38,8 @@ bool GameData::setRecord() {
     return true;
 }
 
-bool GameData::isCharacterAlive() const {
-    return character_alive;
-}
 
-void GameData::setCharacterAlive(bool characterAlive) {
-    character_alive = characterAlive;
-}
-
-void GameData::restartGame() {
-
-}
-
-GameData::GameData() : meters(0), record(10), character_alive(false), inGame(false), xL1(0), xL2(600), rangeSpawn(2),
+GameData::GameData() : meters(0), record(10), inGame(false), xL1(0), xL2(600), rangeSpawn(2),
                        enemyVX(-1.3), spawnPUP(1), objectVelX(30), countE(1), contrTakeObj(false), swordTake(false),
                        defaultS(""),
                        countKill(0), countSP(0), countPP(0), contrSaveR(false) {
@@ -84,7 +73,8 @@ void GameData::drawMenu() {
     menuOptions[0].setCharacterSize(50);
 
     sf::FloatRect playRect = menuOptions[0].getLocalBounds();
-    menuOptions[0].setOrigin((playRect.left + 300) + playRect.width / 2.0f, (playRect.top - 50) + playRect.height / 2.0f);
+    menuOptions[0].setOrigin((playRect.left + 300) + playRect.width / 2.0f,
+                             (playRect.top - 50) + playRect.height / 2.0f);
     menuOptions[0].setPosition(window->getView().getCenter());
 
 
@@ -95,7 +85,8 @@ void GameData::drawMenu() {
     menuOptions[1].setCharacterSize(50);
 
     sf::FloatRect exitRect = menuOptions[1].getLocalBounds();
-    menuOptions[1].setOrigin((exitRect.left - 300) + exitRect.width / 2.0f, (exitRect.top - 50) + exitRect.height / 2.0f);
+    menuOptions[1].setOrigin((exitRect.left - 300) + exitRect.width / 2.0f,
+                             (exitRect.top - 50) + exitRect.height / 2.0f);
     menuOptions[1].setPosition(window->getView().getCenter());
 
     //SCELTA NEL MENU A -1
@@ -132,7 +123,7 @@ void GameData::update() {
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
                 if (menuSelected == 0) {
                     inGame = true;
-                    character_alive = true;
+
                 } else if (menuSelected == 1) {
                     this->window->close();
                 }
@@ -160,9 +151,6 @@ void GameData::update() {
                 } else {
                     menuOptions[menuSelected].setFillColor(sf::Color::Black);
                 }
-
-
-
 
 
             }
