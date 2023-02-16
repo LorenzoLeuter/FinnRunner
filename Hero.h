@@ -45,10 +45,12 @@ public:
 
     bool isPotionCollected() const;
 
+    void reset();
+
 private:
     float gravity;
     bool onGround, isAlive, isAttacking, swordCollected, potionCollected;
-    int attackCounter = 0;
+    int attackCounter;
     int potionJumpCounter = 0;
     sf::IntRect rectSourceSprite{448, 0, 32, 32};
     sf::Texture texture;

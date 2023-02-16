@@ -102,16 +102,53 @@ void GameData::update() {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 this->window->close();
 
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-                if (swordTake) {
-                    if (!player.isAttacking1()) {
-                        sis = player.attack();
-                        if (sis) {
-                            swords[player.getAttackCounter()].setTextureRect(rectSourceSpriteSwords);
+            if (player.getStatus()) {
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+                    if (swordTake) {
+                        if (!player.isAttacking1()) {
+                            sis = player.attack();
+                            if (sis) {
+                                swords[player.getAttackCounter()].setTextureRect(rectSourceSpriteSwords);
+                            }
                         }
                     }
                 }
+            } else {
+                //SETTING TAST DEATH SCREEN
+
+                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+                    if (menuSelected == 0) {
+                        resetGame();
+                    } else if (menuSelected == 1) {
+                        this->window->close();
+                    }
+                }
+
+                if (sf::Event::MouseMoved) {
+
+                    std::cout << sf::Mouse::getPosition(*window).x << std::endl;
+                    std::cout << menuSelected << std::endl;
+
+                    if (event.mouseMove.x >= 816 && event.mouseMove.x <= 976 && event.mouseMove.y >= 274 &&
+                        event.mouseMove.y <= 322) {   //exit
+                        menuSelected = 1;
+                    } else if (event.mouseMove.x >= 208 && event.mouseMove.x <= 392 && event.mouseMove.y >= 274 &&
+                               event.mouseMove.y <= 322) {  //play
+                        menuSelected = 0;
+                    } else {
+                        menuSelected = -1;
+                    }
+                    if (menuSelected == -1) {
+                        deathOptions[0].setFillColor(sf::Color::White);
+                        deathOptions[1].setFillColor(sf::Color::White);
+                    } else {
+                        deathOptions[menuSelected].setFillColor(sf::Color::Black);
+                    }
+
+
+                }
             }
+
 
         } else {
             if (event.type == sf::Event::Closed)
@@ -119,6 +156,9 @@ void GameData::update() {
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 this->window->close();
+
+
+            //SETTING TASTI MENU INIZIALE
 
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
                 if (menuSelected == 0) {
@@ -134,7 +174,6 @@ void GameData::update() {
 
                 std::cout << sf::Mouse::getPosition(*window).x << std::endl;
 
-                //SETTING TASTI MENU INIZIALE
                 if (event.mouseMove.x >= 813 && event.mouseMove.x <= 975 && event.mouseMove.y >= 328 &&
                     event.mouseMove.y <= 370) {   //exit
                     menuSelected = 1;
@@ -263,11 +302,6 @@ void GameData::update() {
 }
 
 void GameData::deathScreen() {
-    sf::Text txt;
-    sf::Text deathOptions[2];
-    sf::Text metersDeath;
-    sf::Text recordDeath;
-
     //SCRITTA GAME OVER
     txt.setFont(font);
     txt.setString("GAME OVER");
@@ -285,7 +319,6 @@ void GameData::deathScreen() {
     deathOptions[0].setFont(font);
     deathOptions[0].setString("PLAY");
 
-    deathOptions[0].setFillColor(sf::Color::White);
     deathOptions[0].setCharacterSize(50);
     sf::FloatRect op1Rect = deathOptions[0].getLocalBounds();
     deathOptions[0].setOrigin((op1Rect.left + 300) + op1Rect.width / 2.0f, op1Rect.top + op1Rect.height / 2.0f);
@@ -294,7 +327,6 @@ void GameData::deathScreen() {
 
     deathOptions[1].setFont(font);
     deathOptions[1].setString("EXIT");
-    deathOptions[1].setFillColor(sf::Color::White);
     deathOptions[1].setCharacterSize(50);
     sf::FloatRect op2Rect = deathOptions[1].getLocalBounds();
     deathOptions[1].setOrigin((op2Rect.left - 300) + op2Rect.width / 2.0f, op2Rect.top + op2Rect.height / 2.0f);
@@ -611,4 +643,27 @@ int GameData::getCountPp() const {
 
 int GameData::getCountKill() const {
     return countKill;
+}
+
+void GameData::resetGame() {
+    player.reset();
+    meters = 0;
+    xL1 = 0;
+    xL2 = 600;
+    rangeSpawn = 2;
+    enemyVX = -1.3;
+    spawnPUP = 1;
+    objectVelX = 30;
+    countE = 1;
+    contrTakeObj = false;
+    swordTake = false;
+    countKill = 0;
+    countSP = 0;
+    countPP = 0;
+    contrSaveR = false;
+
+    for (int i = 0; i < enemies.size(); i++) {
+        deleteEnemy(i);
+    }
+
 }

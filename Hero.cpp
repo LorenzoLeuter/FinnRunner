@@ -133,6 +133,14 @@ bool Hero::isPotionCollected() const {
     return potionCollected;
 }
 
+void Hero::reset() {
+    isAlive = true;
+    swordCollected = false;
+    potionCollected = false;
+    potionJumpCounter = 0;
+    rectSourceSprite.left = 448;
+}
+
 
 
 

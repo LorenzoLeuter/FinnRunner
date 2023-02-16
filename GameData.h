@@ -115,6 +115,10 @@ private:
     std::FILE *f;
     std::string strApp;
     bool contrSaveR;
+    sf::Text txt;
+    sf::Text deathOptions[2];
+    sf::Text metersDeath;
+    sf::Text recordDeath;
 
     //functions
     void initGuiVariables();
@@ -130,6 +134,8 @@ private:
     void deleteEnemy(int posList);
 
     void setObjectVelocity();
+
+    void resetGame();
 
 
 };
