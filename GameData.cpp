@@ -137,7 +137,6 @@ void GameData::update() {
 
 
             if(sf::Event::MouseMoved){
-                std::cout << sf::Mouse::getPosition(*window).y << std::endl;
                 if(event.mouseMove.x >= 813 && event.mouseMove.x <= 975 && event.mouseMove.y >= 278 && event.mouseMove.y <= 320){   //exit
                     menuSelected = 1;
                 }else if(event.mouseMove.x >= 210 && event.mouseMove.x <= 390 && event.mouseMove.y >= 278 && event.mouseMove.y <= 320) {  //play
@@ -186,7 +185,7 @@ void GameData::update() {
                     deleteEnemy(i);
                 }
             }
-            if(enemySpawn.getElapsedTime().asSeconds() > rangeSpawn || (countE != 1 && (664-(int)enemies[enemies.size()-1]->getPositionX())==33)){
+            if(enemySpawn.getElapsedTime().asSeconds() > rangeSpawn || (countE != 1 && (1264-(int)enemies[enemies.size()-1]->getPositionX())==33)){
                 createEnemy();
             }
 
@@ -399,11 +398,13 @@ void GameData::scoreUpdate() {
 }
 
 void GameData::createEnemy() {
-    if(meters > 200 && meters<=300){
+    std::cout << countE << std::endl;
+    if(meters > 10 && meters<=300){
         if(countE != 1){
             countE--;
         }else{
-            if(rand()%10 <= 3) {
+            int app = rand()%10;
+            if(app <= 3) {
                 countE = 1;
             }else{
                 countE = 2;
@@ -479,12 +480,12 @@ void GameData::setObjectVelocity() {
             objectVelX = 90;
             contr = true;
             break;
-        case 4:
-            objectVelX = 120;
-            rangeSpawn = 1.8;
-            contr = true;
-            break;
-            /*case 40:
+            /*case 4:
+                objectVelX = 120;
+                rangeSpawn = 1.8;
+                contr = true;
+                break;
+            case 40:
                 blVel = 0.0085f;
                 break;
             case 42:

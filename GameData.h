@@ -40,8 +40,7 @@ class GameData : public Subject {
         void setAchievementTxt(std::string achievement);
         int getCountSp() const;
         int getCountPp() const;
-
-    int getCountKill() const;
+        int getCountKill() const;
 
 private:
 
