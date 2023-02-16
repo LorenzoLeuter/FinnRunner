@@ -1,6 +1,6 @@
 #include "Bat.h"
 
-Bat::Bat(float positY,float v,const sf::Texture& t): GameCharacter(664,positY,v+0.15,0.0){
+Bat::Bat(float positY,float v,const sf::Texture& t): GameCharacter(1264,positY,v+0.15,0.0){
     game_character.setTexture(t);
     game_character.setPosition(positionX, positionY);
     game_character.scale(1.5, 1.5);

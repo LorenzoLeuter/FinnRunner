@@ -33,6 +33,7 @@ class GameData : public Subject {
         void renderGame();
         const bool running();
         void renderMenu();
+        void deathScreen();
         bool isInGame() const;
         void registerObserver(Observer *o) override;
         void removeObserver(Observer *o) override;

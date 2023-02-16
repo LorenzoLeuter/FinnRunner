@@ -13,26 +13,26 @@ void GameData::setMeters(int meters) {
     GameData::meters = meters;
 }
 
-int GameData::getRecord(){
-    f = std::fopen("record.txt","r");
-    std::fread(&record[0], sizeof record[0], record.size(),f);
-    for(int j=0;j<record.size();j++) {
-        if(record[0]<'0' || record[0]>'9'){
-            record[0]='0';
+int GameData::getRecord() {
+    f = std::fopen("record.txt", "r");
+    std::fread(&record[0], sizeof record[0], record.size(), f);
+    for (int j = 0; j < record.size(); j++) {
+        if (record[0] < '0' || record[0] > '9') {
+            record[0] = '0';
         }
-        if(record[j]>='0' && record[j]<='9'){
-            strApp=strApp+record[j];
-        }else{
-            j=record.size()+1;
+        if (record[j] >= '0' && record[j] <= '9') {
+            strApp = strApp + record[j];
+        } else {
+            j = record.size() + 1;
         }
     }
     std::fclose(f);
 }
 
 bool GameData::setRecord() {
-    if(meters > std::stoi(strApp)){
-        f= std::fopen("record.txt","w");
-        std::fputs(std::to_string(meters).c_str(),f);
+    if (meters > std::stoi(strApp)) {
+        f = std::fopen("record.txt", "w");
+        std::fputs(std::to_string(meters).c_str(), f);
         std::fclose(f);
     }
     return true;
@@ -50,10 +50,13 @@ void GameData::restartGame() {
 
 }
 
-GameData::GameData() : meters(0), record(10),character_alive(false),inGame(false),xL1(0),xL2(600),rangeSpawn(2),
-                        enemyVX(-1.3),spawnPUP(1),objectVelX(30),countE(1),contrTakeObj(false),swordTake(false),defaultS(""),
-                       countKill(0), countSP(0), countPP(0),contrSaveR(false){
+GameData::GameData() : meters(0), record(10), character_alive(false), inGame(false), xL1(0), xL2(600), rangeSpawn(2),
+                       enemyVX(-1.3), spawnPUP(1), objectVelX(30), countE(1), contrTakeObj(false), swordTake(false),
+                       defaultS(""),
+                       countKill(0), countSP(0), countPP(0), contrSaveR(false) {
+
     //LA VELOCITA' DELLO ZOMBIE E' LA VELOCITA' DEL BACKGROUND / 100
+
     getRecord();
     initGuiVariables();
     initWindow();
@@ -67,11 +70,11 @@ void GameData::drawMenu() {
     //CREAZIONE DEL MENU DI GIOCO
 
     //CREAZIONE DEL TITOLO
-    title.setSize(sf::Vector2f(450,175));
+    title.setSize(sf::Vector2f(650, 200));
     titleTexture.loadFromFile("assets/Title.png");
     title.setTexture(&titleTexture);
     sf::FloatRect titleRect = title.getLocalBounds();
-    title.setOrigin(titleRect.left + titleRect.width/2.0f, (titleRect.top + 120) + titleRect.height/2.0f);
+    title.setOrigin(titleRect.left + titleRect.width / 2.0f, (titleRect.top + 120) + titleRect.height / 2.0f);
     title.setPosition(window->getView().getCenter());
 
     //CREAZIONE DEL TASTO PLAY
@@ -81,7 +84,7 @@ void GameData::drawMenu() {
     menuOptions[0].setCharacterSize(50);
 
     sf::FloatRect playRect = menuOptions[0].getLocalBounds();
-    menuOptions[0].setOrigin((playRect.left + 300) + playRect.width/2.0f, playRect.top + playRect.height/2.0f);
+    menuOptions[0].setOrigin((playRect.left + 300) + playRect.width / 2.0f, (playRect.top - 50) + playRect.height / 2.0f);
     menuOptions[0].setPosition(window->getView().getCenter());
 
 
@@ -92,7 +95,7 @@ void GameData::drawMenu() {
     menuOptions[1].setCharacterSize(50);
 
     sf::FloatRect exitRect = menuOptions[1].getLocalBounds();
-    menuOptions[1].setOrigin((exitRect.left - 300) + exitRect.width/2.0f, exitRect.top + exitRect.height/2.0f);
+    menuOptions[1].setOrigin((exitRect.left - 300) + exitRect.width / 2.0f, (exitRect.top - 50) + exitRect.height / 2.0f);
     menuOptions[1].setPosition(window->getView().getCenter());
 
     //SCELTA NEL MENU A -1
@@ -100,65 +103,79 @@ void GameData::drawMenu() {
 }
 
 void GameData::update() {
-    while (this->window->pollEvent(this->event)){
-        if(inGame){
-            if(event.type == sf::Event::Closed)
+    while (this->window->pollEvent(this->event)) {
+        if (inGame) {
+            if (event.type == sf::Event::Closed)
                 this->window->close();
 
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 this->window->close();
 
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
-                if(swordTake){
-                    if(!player.isAttacking1()){
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+                if (swordTake) {
+                    if (!player.isAttacking1()) {
                         sis = player.attack();
-                        if(sis){
+                        if (sis) {
                             swords[player.getAttackCounter()].setTextureRect(rectSourceSpriteSwords);
                         }
                     }
                 }
             }
 
-        }else{
-            if(event.type == sf::Event::Closed)
+        } else {
+            if (event.type == sf::Event::Closed)
                 this->window->close();
 
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 this->window->close();
 
-            if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-                if(menuSelected == 0){
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+                if (menuSelected == 0) {
                     inGame = true;
                     character_alive = true;
-                }else if(menuSelected == 1){
+                } else if (menuSelected == 1) {
                     this->window->close();
                 }
             }
 
 
-            if(sf::Event::MouseMoved){
-                std::cout << sf::Mouse::getPosition(*window).y << std::endl;
-                if(event.mouseMove.x >= 813 && event.mouseMove.x <= 975 && event.mouseMove.y >= 278 && event.mouseMove.y <= 320){   //exit
+            if (sf::Event::MouseMoved) {
+
+                std::cout << sf::Mouse::getPosition(*window).x << std::endl;
+
+                //SETTING TASTI MENU INIZIALE
+                if (event.mouseMove.x >= 813 && event.mouseMove.x <= 975 && event.mouseMove.y >= 328 &&
+                    event.mouseMove.y <= 370) {   //exit
                     menuSelected = 1;
-                }else if(event.mouseMove.x >= 210 && event.mouseMove.x <= 390 && event.mouseMove.y >= 278 && event.mouseMove.y <= 320) {  //play
+                } else if (event.mouseMove.x >= 210 && event.mouseMove.x <= 390 && event.mouseMove.y >= 328 &&
+                           event.mouseMove.y <= 370) {  //play
                     menuSelected = 0;
-                }else{
+                } else {
                     menuSelected = -1;
                 }
-                if(menuSelected == -1){
+                if (menuSelected == -1) {
                     for (int i = 0; i < max_options; i++) {
                         menuOptions[i].setFillColor(sf::Color::White);
                     }
-                }else{
+                } else {
                     menuOptions[menuSelected].setFillColor(sf::Color::Black);
                 }
+
+
+
+
+
             }
+
+
         }
     }
-    if(inGame){
-        if(player.getStatus()){
 
-            if(attackingTime.getElapsedTime().asSeconds() >= (float)coolDownAttack){
+
+    if (inGame) {
+        if (player.getStatus()) {
+
+            if (attackingTime.getElapsedTime().asSeconds() >= (float) coolDownAttack) {
                 player.setIsAttacking(false);
                 attackingTime.restart();
             }
@@ -172,31 +189,32 @@ void GameData::update() {
 
             for (int i = 0; i < enemies.size(); i++) {
                 int x = enemies[i]->getPositionX();
-                if(x != -64){
+                if (x != -64) {
                     enemies[i]->update();
                     enemies[i]->animation();
 
                     if (player.isAttacking1()) {
-                        countKill = enemies[i]->getKilled(player,countKill);
+                        countKill = enemies[i]->getKilled(player, countKill);
                     }
 
                     player.getKilled(*enemies[i]);
 
-                }else{
+                } else {
                     deleteEnemy(i);
                 }
             }
-            if(enemySpawn.getElapsedTime().asSeconds() > rangeSpawn || (countE != 1 && (664-(int)enemies[enemies.size()-1]->getPositionX())==33)){
+            if (enemySpawn.getElapsedTime().asSeconds() > rangeSpawn ||
+                (countE != 1 && (664 - (int) enemies[enemies.size() - 1]->getPositionX()) == 33)) {
                 createEnemy();
             }
 
 
-            if(meters == (20)*spawnPUP){
+            if (meters == (20) * spawnPUP) {
                 spawnPUP++;
                 //if((rand()%2) == 0){
-                    powerUp.setCurrentPowerUp(1);
-                    powerUpGui.setTexture(swords_texture,powerUp);
-                    powerUpGui.setPositionX(610);
+                powerUp.setCurrentPowerUp(1);
+                powerUpGui.setTexture(swords_texture, powerUp);
+                powerUpGui.setPositionX(610);
                 /*}else{
                     powerUp.setCurrentPowerUp(2);
                     powerUpGui.setTexture(potion,powerUp);
@@ -204,31 +222,31 @@ void GameData::update() {
                 //}*/
             }
 
-            if(powerUp.getCurrentPowerUp()==1){
-                contrTakeObj = player.collect(powerUp, powerUpGui,8);
-            }else{
-                contrTakeObj = player.collect(powerUp, powerUpGui,19);
+            if (powerUp.getCurrentPowerUp() == 1) {
+                contrTakeObj = player.collect(powerUp, powerUpGui, 8);
+            } else {
+                contrTakeObj = player.collect(powerUp, powerUpGui, 19);
             }
 
 
             scoreUpdate();
 
 
-            if(contrTakeObj){
+            if (contrTakeObj) {
                 powerUpGui.updateCollect();
-                if(!swordTake){
+                if (!swordTake) {
                     swordTake = true;
                 }
-                if(powerUp.getCurrentPowerUp()==1){
+                if (powerUp.getCurrentPowerUp() == 1) {
                     for (int i = 0; i < 3; i++) {
                         swords[i].setTextureRect(rectSourceSprite_sword);
                     }
                     player.setAttackCounter(3);
                     countSP++;
-                }else{
+                } else {
                     countPP++;
                 }
-            }else{
+            } else {
                 powerUpGui.update();
             }
 
@@ -237,26 +255,90 @@ void GameData::update() {
 
             for (int i = 0; i < enemies.size(); i++) {
                 int x = enemies[i]->getPositionX();
-                if(x != -64){
+                if (x != -64) {
                     enemies[i]->update();
                     enemies[i]->animation();
 
-                }else{
+                } else {
                     deleteEnemy(i);
                 }
             }
 
             player.update();
             player.animation();
-            //player.jump();
-            if(!contrSaveR){
+
+            if (!contrSaveR) {
                 contrSaveR = setRecord();
             }
         }
     }
 }
 
+void GameData::deathScreen() {
+    sf::Text txt;
+    sf::Text deathOptions[2];
+    sf::Text metersDeath;
+    sf::Text recordDeath;
 
+    //SCRITTA GAME OVER
+    txt.setFont(font);
+    txt.setString("GAME OVER");
+    txt.setFillColor(sf::Color::White);
+    txt.setOutlineColor(sf::Color::Black);
+    txt.setOutlineThickness(2.5);
+    txt.setCharacterSize(70);
+
+    sf::FloatRect txtRect = txt.getLocalBounds();
+    txt.setOrigin((txtRect.left) + txtRect.width / 2.0f, (txtRect.top + 120) + txtRect.height / 2.0f);
+    txt.setPosition(window->getView().getCenter());
+    window->draw(txt);
+
+    //MENU
+    deathOptions[0].setFont(font);
+    deathOptions[0].setString("PLAY");
+
+    deathOptions[0].setFillColor(sf::Color::White);
+    deathOptions[0].setCharacterSize(50);
+    sf::FloatRect op1Rect = deathOptions[0].getLocalBounds();
+    deathOptions[0].setOrigin((op1Rect.left + 300) + op1Rect.width / 2.0f, op1Rect.top + op1Rect.height / 2.0f);
+    deathOptions[0].setPosition(window->getView().getCenter());
+
+
+    deathOptions[1].setFont(font);
+    deathOptions[1].setString("EXIT");
+    deathOptions[1].setFillColor(sf::Color::White);
+    deathOptions[1].setCharacterSize(50);
+    sf::FloatRect op2Rect = deathOptions[1].getLocalBounds();
+    deathOptions[1].setOrigin((op2Rect.left - 300) + op2Rect.width / 2.0f, op2Rect.top + op2Rect.height / 2.0f);
+    deathOptions[1].setPosition(window->getView().getCenter());
+
+    window->draw(deathOptions[0]);
+    window->draw(deathOptions[1]);
+
+    //METERS E RECORD PER IL DEATH SCREEN
+    metersDeath.setFont(font);
+    metersDeath.setString("METERS: " + std::to_string(meters));
+    metersDeath.setFillColor(sf::Color::White);
+    metersDeath.setOutlineColor(sf::Color::Black);
+    metersDeath.setOutlineThickness(2.5);
+    metersDeath.setCharacterSize(30);
+    sf::FloatRect metRect = metersDeath.getLocalBounds();
+    metersDeath.setOrigin((metRect.left) + metRect.width / 2.0f, (metRect.top - 100) + metRect.height / 2.0f);
+    metersDeath.setPosition(window->getView().getCenter());
+    window->draw(metersDeath);
+
+    recordDeath.setFont(font);
+    recordDeath.setString("RECORD: " + strApp);
+    recordDeath.setFillColor(sf::Color::White);
+    recordDeath.setOutlineColor(sf::Color::Black);
+    recordDeath.setOutlineThickness(2.5);
+    recordDeath.setCharacterSize(30);
+    sf::FloatRect recRect = recordDeath.getLocalBounds();
+    recordDeath.setOrigin((recRect.left) + recRect.width / 2.0f, (recRect.top - 150) + recRect.height / 2.0f);
+    recordDeath.setPosition(window->getView().getCenter());
+    window->draw(recordDeath);
+
+}
 
 void GameData::renderMenu() {
     window->clear();
@@ -269,30 +351,50 @@ void GameData::renderMenu() {
 }
 
 void GameData::renderGame() {
-    window->clear();
-    window->draw(background);
-    window->draw(background2);
-    window->draw(score);
-    window->draw(recordT);
-    if(swordTake && player.isSwordCollected()){
-        window->draw(swords[0]);
-        window->draw(swords[1]);
-        window->draw(swords[2]);
+    if (player.getStatus()) {
+        window->clear();
+        window->draw(background);
+        window->draw(background2);
+        window->draw(score);
+        window->draw(recordT);
+        if (swordTake && player.isSwordCollected()) {
+            window->draw(swords[0]);
+            window->draw(swords[1]);
+            window->draw(swords[2]);
+        }
+        if (achievementTxt.getString() != defaultS) {
+            window->draw(achievementTrophy);
+            window->draw(achievementTxt);
+        }
+        window->draw(player.getGameCharacter());
+        for (int i = 0; i < enemies.size(); i++) {
+            window->draw(enemies[i]->getGameCharacter());
+        }
+        window->draw(powerUpGui.getPowerUpSprite());
+        window->display();
+    } else {
+
+        //SCHERMATA MORTE
+
+        window->clear();
+
+        window->draw(background);
+        window->draw(background2);
+
+        window->draw(player.getGameCharacter());
+        for (int i = 0; i < enemies.size(); i++) {
+            window->draw(enemies[i]->getGameCharacter());
+        }
+
+        deathScreen();
+
+
+        window->display();
     }
-    if(achievementTxt.getString() != defaultS){
-        window->draw(achievementTrophy);
-        window->draw(achievementTxt);
-    }
-    window->draw(player.getGameCharacter());
-    for (int i = 0; i < enemies.size(); i++) {
-        window->draw(enemies[i]->getGameCharacter());
-    }
-    window->draw(powerUpGui.getPowerUpSprite());
-    window->display();
 }
 
 void GameData::initWindow() {
-    this->window = new sf::RenderWindow(sf::VideoMode(1200,600), "FinnRunner", sf::Style::Titlebar | sf::Style::Close);
+    this->window = new sf::RenderWindow(sf::VideoMode(1200, 600), "FinnRunner", sf::Style::Titlebar | sf::Style::Close);
 }
 
 void GameData::initGuiVariables() {
@@ -316,6 +418,7 @@ void GameData::initGuiVariables() {
     background2.setTexture(&textureB);
 
     //CREAZIONE DEGLI OGGETTI DI GIOCO
+
     //CREAZIONE DELLO SCORE
     score.setFont(font);
     score.setString("METERS: 0");
@@ -328,7 +431,7 @@ void GameData::initGuiVariables() {
     //CREAZIONE DEL RECORD
 
     recordT.setFont(font);
-    recordT.setString("RECORD= "+strApp);
+    recordT.setString("RECORD: " + strApp);
     recordT.setFillColor(sf::Color::White);
     recordT.setCharacterSize(20);
     recordT.setPosition(280, 15);
@@ -358,7 +461,9 @@ void GameData::initGuiVariables() {
     z.loadFromFile("assets/ZombieToast.png");
     b.loadFromFile("assets/Bat.png");
     potion.loadFromFile("assets/potion.png");
-    trophy.loadFromFile("assets/trophy.png");
+
+
+    //trophy.loadFromFile("assets/trophy.png");
 
     /* Realizzazione del trofeo per gli achievement
 
@@ -380,63 +485,63 @@ bool GameData::isInGame() const {
 void GameData::backgroundLoop() {
     xL1 -= objectVelX * c.getElapsedTime().asSeconds();
     xL2 -= objectVelX * c.getElapsedTime().asSeconds();
-    if((int)xL1 == -600){
+    if ((int) xL1 == -600) {
         xL1 = 0;
         xL2 = 600;
     }
-    background.setPosition(sf::Vector2f(xL1,0));
-    background2.setPosition(sf::Vector2f(xL2,0));
+    background.setPosition(sf::Vector2f(xL1, 0));
+    background2.setPosition(sf::Vector2f(xL2, 0));
     c.restart();
 }
 
 void GameData::scoreUpdate() {
-    if(cs.getElapsedTime().asSeconds() > 0.5f){
+    if (cs.getElapsedTime().asSeconds() > 0.5f) {
         meters += 1;
-        score.setString("METERS: "+ std::to_string(meters));
+        score.setString("METERS: " + std::to_string(meters));
         cs.restart();
     }
     notifyObservers();
 }
 
 void GameData::createEnemy() {
-    if(meters > 200 && meters<=300){
-        if(countE != 1){
+    if (meters > 200 && meters <= 300) {
+        if (countE != 1) {
             countE--;
-        }else{
-            if(rand()%10 <= 3) {
+        } else {
+            if (rand() % 10 <= 3) {
                 countE = 1;
-            }else{
+            } else {
                 countE = 2;
             }
             enemySpawn.restart();
         }
-    }else if(meters > 300){
-        if(countE != 1){
+    } else if (meters > 300) {
+        if (countE != 1) {
             countE--;
-        }else{
-            if(rand()%15 <= 1) {
+        } else {
+            if (rand() % 15 <= 1) {
                 countE = 1;
-            }else if(rand()%15 > 1 && rand()%15 <= 8){
+            } else if (rand() % 15 > 1 && rand() % 15 <= 8) {
                 countE = 2;
-            }else{
+            } else {
                 countE = 3;
             }
         }
     }
     enemySpawn.restart();
-    if(meters >= 30) {
-        if(rand()%15==0) {
-            enemies.push_back(std::unique_ptr<Bat>(new Bat(500,enemyVX,b)));
-        }else {
-            enemies.push_back(std::unique_ptr<ZombieToast>(new ZombieToast(enemyVX,z)));
+    if (meters >= 30) {
+        if (rand() % 15 == 0) {
+            enemies.push_back(std::unique_ptr<Bat>(new Bat(500, enemyVX, b)));
+        } else {
+            enemies.push_back(std::unique_ptr<ZombieToast>(new ZombieToast(enemyVX, z)));
         }
-    }else{
-        enemies.push_back(std::unique_ptr<ZombieToast>(new ZombieToast(enemyVX,z)));
+    } else {
+        enemies.push_back(std::unique_ptr<ZombieToast>(new ZombieToast(enemyVX, z)));
     }
 }
 
 void GameData::deleteEnemy(int posList) {
-    enemies.erase(enemies.begin()+posList);
+    enemies.erase(enemies.begin() + posList);
 }
 
 void GameData::registerObserver(Observer *o) {
@@ -447,7 +552,7 @@ void GameData::removeObserver(Observer *o) {
     observers.remove(o);
 }
 
-void GameData::notifyObservers() const{
+void GameData::notifyObservers() const {
     for (auto itr = std::begin(observers); itr != std::end(observers); itr++)
         (*itr)->update();
 }
@@ -461,9 +566,9 @@ void GameData::setAchievementTxt(std::string achievement) {
     achievementTxt.setOutlineThickness(2.5);
     achievementTxt.setCharacterSize(25);
 
-//TESTO AL CENTRO
+    //TESTO AL CENTRO
     sf::FloatRect textRect = achievementTxt.getLocalBounds();
-    achievementTxt.setOrigin(textRect.left + textRect.width/2.0f, textRect.top + textRect.height/2.0f);
+    achievementTxt.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
     achievementTxt.setPosition(window->getView().getCenter());
 
 }
@@ -498,14 +603,14 @@ void GameData::setObjectVelocity() {
                 break;*/
 
     }
-    if(contr){
+
+    if (contr) {
         enemyVX = -(objectVelX / 100) - 1;
         powerUpGui.setVelocityX(objectVelX);
         for (int i = 0; i < enemies.size(); i++) {
             enemies[i]->setVelocityX(enemyVX);
         }
     }
-
 }
 
 int GameData::getCountSp() const {
