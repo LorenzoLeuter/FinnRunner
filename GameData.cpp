@@ -231,7 +231,7 @@ void GameData::update() {
                 }
             }
             if (enemySpawn.getElapsedTime().asSeconds() > rangeSpawn ||
-                (countE != 1 && (664 - (int) enemies[enemies.size() - 1]->getPositionX()) == 33)) {
+                (countE != 1 && (1264 - (int) enemies[enemies.size() - 1]->getPositionX()) == 33)) {
                 createEnemy();
             }
 
@@ -297,6 +297,7 @@ void GameData::update() {
             if (!contrSaveR) {
                 contrSaveR = setRecord();
             }
+
         }
     }
 }
@@ -395,7 +396,6 @@ void GameData::renderGame() {
     } else {
 
         //SCHERMATA MORTE
-
         window->clear();
 
         window->draw(background);
@@ -524,7 +524,7 @@ void GameData::scoreUpdate() {
 }
 
 void GameData::createEnemy() {
-    if (meters > 200 && meters <= 300) {
+    if (meters > 10 && meters <= 300) {
         if (countE != 1) {
             countE--;
         } else {
