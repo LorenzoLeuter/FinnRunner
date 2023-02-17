@@ -28,6 +28,7 @@ bool GameData::setRecord() {
         f = std::fopen("record.txt", "w");
         std::fputs(std::to_string(meters).c_str(), f);
         std::fclose(f);
+        strApp = std::to_string(meters);
     }
     return true;
 }
@@ -53,12 +54,16 @@ void GameData::drawMenu() {
     //CREAZIONE DEL MENU DI GIOCO
 
     //CREAZIONE DEL TITOLO
-    title.setSize(sf::Vector2f(650, 200));
-    titleTexture.loadFromFile("assets/Title.png");
+    title.setSize(sf::Vector2f(750, 450)); //650 200 prima
+
+    //Titolo senza spada
+    titleTexture.loadFromFile("assets/title_nosword.png");
     title.setTexture(&titleTexture);
-    sf::FloatRect titleRect = title.getLocalBounds();
-    title.setOrigin(titleRect.left + titleRect.width / 2.0f, (titleRect.top + 120) + titleRect.height / 2.0f);
-    title.setPosition(window->getView().getCenter());
+
+    //Spada titolo
+    title_sword_txt.loadFromFile("assets/title_sword.png");
+    title_sword.setTexture(&title_sword_txt);
+    title_sword.setSize(sf::Vector2f(750, 450));
 
     //CREAZIONE DEL TASTO PLAY
     menuOptions[0].setFont(font);
@@ -104,6 +109,7 @@ void GameData::update() {
                             if (sis) {
                                 swords[player.getAttackCounter()].setTextureRect(rectSourceSpriteSwords);
                             }
+                            attackingTime.restart();
                         }
                     }
                 }
@@ -157,6 +163,7 @@ void GameData::update() {
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
                 if (menuSelected == 0) {
                     inGame = true;
+                    c.restart();
 
                 } else if (menuSelected == 1) {
                     this->window->close();
@@ -166,7 +173,7 @@ void GameData::update() {
 
             if (sf::Event::MouseMoved) {
 
-                std::cout << sf::Mouse::getPosition(*window).x << std::endl;
+                std::cout << sf::Mouse::getPosition(*window).y << std::endl;
 
                 if (event.mouseMove.x >= 813 && event.mouseMove.x <= 975 && event.mouseMove.y >= 328 &&
                     event.mouseMove.y <= 370) {   //exit
@@ -232,21 +239,21 @@ void GameData::update() {
 
             if (meters == (20) * spawnPUP) {
                 spawnPUP++;
-                //if((rand()%2) == 0){
-                powerUp.setCurrentPowerUp(1);
-                powerUpGui.setTexture(swords_texture, powerUp);
-                powerUpGui.setPositionX(610);
-                /*}else{
+                if ((rand() % 2) == 0) {
+                    powerUp.setCurrentPowerUp(1);
+                    powerUpGui.setTexture(swords_texture, powerUp);
+                    powerUpGui.setPositionX(800);
+                } else {
                     powerUp.setCurrentPowerUp(2);
-                    powerUpGui.setTexture(potion,powerUp);
-                    powerUpGui.setPositionX(610);
-                //}*/
+                    powerUpGui.setTexture(potion, powerUp);
+                    powerUpGui.setPositionX(800);
+                }
             }
 
             if (powerUp.getCurrentPowerUp() == 1) {
-                contrTakeObj = player.collect(powerUp, powerUpGui, 8);
+                contrTakeObj = player.collect(powerUp, powerUpGui, 30);
             } else {
-                contrTakeObj = player.collect(powerUp, powerUpGui, 19);
+                contrTakeObj = player.collect(powerUp, powerUpGui, 29);
             }
 
 
@@ -359,9 +366,50 @@ void GameData::renderMenu() {
     window->clear();
     window->draw(background);
     window->draw(title);
-    for (int i = 0; i < max_options; i++) {
-        window->draw(menuOptions[i]);
+
+    if (title.getSize().x == 750 && title_sword.getPosition().x == 220) {
+
+        titleTexture.loadFromFile("assets/Title.png");
+
+        for (int i = 0; i < max_options; i++) {
+            window->draw(menuOptions[i]);
+        }
+
+    } else {
+
+        //ANIMAZIONE TITOLO
+        window->draw(title_sword);
+
+        if (clock.getElapsedTime().asSeconds() > 0.08) {
+            if (title.getSize().x != 750 && title.getSize().y != 450) {
+                x_title += 75;
+                y_title += 45;
+            }
+
+            title.setSize(sf::Vector2f(x_title, y_title));
+            sf::FloatRect titleRect = title.getLocalBounds();
+            title.setOrigin(titleRect.left + titleRect.width / 2.0f, (titleRect.top + 120) + titleRect.height / 2.0f);
+            title.setOrigin(titleRect.left + titleRect.width / 2.0f, (titleRect.top + 120) + titleRect.height / 2.0f);
+            title.setPosition(window->getView().getCenter());
+            clock.restart();
+
+        }
+
+        if (clock1.getElapsedTime().asSeconds() > 0.04) {
+
+            if (title_sword.getPosition().x != 220) {
+                x_sword += 20;
+            }
+
+
+            title_sword.setPosition(x_sword, y_sword);
+            clock1.restart();
+
+        }
+
     }
+
+
     window->display();
 }
 
@@ -475,17 +523,6 @@ void GameData::initGuiVariables() {
     z.loadFromFile("assets/ZombieToast.png");
     b.loadFromFile("assets/Bat.png");
     potion.loadFromFile("assets/potion.png");
-
-
-    //trophy.loadFromFile("assets/trophy.png");
-
-    /* Realizzazione del trofeo per gli achievement
-
-    achievementTrophy.setSize(sf::Vector2f(20, 20));
-    achievementTrophy.setPosition(sf::Vector2f(380, 5));
-    achievementTrophy.setTexture(&trophy);
-
-     */
 }
 
 const bool GameData::running() {
@@ -497,15 +534,15 @@ bool GameData::isInGame() const {
 }
 
 void GameData::backgroundLoop() {
-    xL1 -= objectVelX * c.getElapsedTime().asSeconds();
-    xL2 -= objectVelX * c.getElapsedTime().asSeconds();
-    if ((int) xL1 == -600) {
-        xL1 = 0;
-        xL2 = 600;
-    }
-    background.setPosition(sf::Vector2f(xL1, 0));
-    background2.setPosition(sf::Vector2f(xL2, 0));
-    c.restart();
+        xL1 -= objectVelX * c.getElapsedTime().asSeconds();
+        xL2 -= objectVelX * c.getElapsedTime().asSeconds();
+        if ((int) xL1 == -600) {
+            xL1 = 0;
+            xL2 = 600;
+        }
+        background.setPosition(sf::Vector2f(xL1, 0));
+        background2.setPosition(sf::Vector2f(xL2, 0));
+        c.restart();
 }
 
 void GameData::scoreUpdate() {
@@ -649,6 +686,7 @@ int GameData::getCountKill() const {
 
 void GameData::resetGame() {
     player.reset();
+    recordT.setString("RECORD: " + strApp);
     meters = 0;
     xL1 = 0;
     xL2 = 600;
@@ -663,9 +701,12 @@ void GameData::resetGame() {
     countSP = 0;
     countPP = 0;
     contrSaveR = false;
+    powerUpGui.setPositionX(2000);
+    c.restart();
 
     for (int i = 0; i < enemies.size(); i++) {
         deleteEnemy(i);
     }
+
 
 }

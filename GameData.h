@@ -2,7 +2,7 @@
 #define FINN_RUNNER_GAMEDATA_H
 
 #define max_options 2
-#define coolDownAttack 1.5
+#define coolDownAttack 0.75
 
 #include <fstream>
 #include "Hero.h"
@@ -103,6 +103,8 @@ private:
     sf::Texture potion;
     sf::IntRect rectSourceSpriteSwords{0, 0, 32, 32};
     sf::IntRect rectSourceSprite_sword{32, 0, 32, 32};
+    sf::Texture title_sword_txt;
+    sf::RectangleShape title_sword;
     float objectVelX;
     bool contr;
     int countE;
@@ -119,6 +121,10 @@ private:
     sf::Text deathOptions[2];
     sf::Text metersDeath;
     sf::Text recordDeath;
+    sf::Clock clock;
+    sf::Clock clock1;
+    int x_title = 0, y_title = 0;
+    int x_sword = -400, y_sword = -45;
 
     //functions
     void initGuiVariables();
