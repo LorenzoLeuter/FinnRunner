@@ -123,8 +123,13 @@ private:
     sf::Text recordDeath;
     sf::Clock clock;
     sf::Clock clock1;
+    sf::Sprite explosion;
+    sf::Texture explosion_txt;
+    sf::Clock clock2;
+    sf::IntRect rectSourceSpriteExplosion{0,0,48,48};
+    sf::Image icon;
     int x_title = 0, y_title = 0;
-    int x_sword = -400, y_sword = -45;
+    int x_sword = -1200, y_sword = -45;
 
     //functions
     void initGuiVariables();

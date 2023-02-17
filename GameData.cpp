@@ -43,6 +43,9 @@ GameData::GameData() : meters(0), record(10), inGame(false), xL1(0), xL2(600), r
 
     getRecord();
     initGuiVariables();
+
+    icon.loadFromFile("assets/icon.png");
+
     initWindow();
 }
 
@@ -53,8 +56,7 @@ GameData::~GameData() {
 void GameData::drawMenu() {
     //CREAZIONE DEL MENU DI GIOCO
 
-    //CREAZIONE DEL TITOLO
-    title.setSize(sf::Vector2f(750, 450)); //650 200 prima
+    //TITOLO
 
     //Titolo senza spada
     titleTexture.loadFromFile("assets/title_nosword.png");
@@ -64,6 +66,18 @@ void GameData::drawMenu() {
     title_sword_txt.loadFromFile("assets/title_sword.png");
     title_sword.setTexture(&title_sword_txt);
     title_sword.setSize(sf::Vector2f(750, 450));
+    title_sword.setPosition(x_sword, y_sword);
+
+    //Esplosione titolo
+    explosion_txt.loadFromFile("assets/explosion.png");
+    explosion.setTexture(explosion_txt);
+    explosion.setTextureRect(rectSourceSpriteExplosion);
+    explosion.setScale(25, 11);
+    sf::FloatRect explosionRect = explosion.getLocalBounds();
+    explosion.setOrigin(explosionRect.left + explosionRect.width / 2.0f,
+                        (explosionRect.top + 6) + explosionRect.height / 2.0f);
+    explosion.setPosition(window->getView().getCenter());
+
 
     //CREAZIONE DEL TASTO PLAY
     menuOptions[0].setFont(font);
@@ -365,9 +379,21 @@ void GameData::deathScreen() {
 void GameData::renderMenu() {
     window->clear();
     window->draw(background);
-    window->draw(title);
 
     if (title.getSize().x == 750 && title_sword.getPosition().x == 220) {
+        window->draw(title);
+        window->draw(explosion);
+        if (clock2.getElapsedTime().asSeconds() > 0.06) {
+
+            if (rectSourceSpriteExplosion.left != 432) {
+                rectSourceSpriteExplosion.left += 48;
+            }
+
+            explosion.setTextureRect(rectSourceSpriteExplosion);
+            clock2.restart();
+
+        }
+
 
         titleTexture.loadFromFile("assets/Title.png");
 
@@ -376,11 +402,11 @@ void GameData::renderMenu() {
         }
 
     } else {
+        window->draw(title_sword);
+        window->draw(title);
 
         //ANIMAZIONE TITOLO
-        window->draw(title_sword);
-
-        if (clock.getElapsedTime().asSeconds() > 0.08) {
+        if (clock.getElapsedTime().asSeconds() > 0.06) {
             if (title.getSize().x != 750 && title.getSize().y != 450) {
                 x_title += 75;
                 y_title += 45;
@@ -389,18 +415,15 @@ void GameData::renderMenu() {
             title.setSize(sf::Vector2f(x_title, y_title));
             sf::FloatRect titleRect = title.getLocalBounds();
             title.setOrigin(titleRect.left + titleRect.width / 2.0f, (titleRect.top + 120) + titleRect.height / 2.0f);
-            title.setOrigin(titleRect.left + titleRect.width / 2.0f, (titleRect.top + 120) + titleRect.height / 2.0f);
             title.setPosition(window->getView().getCenter());
             clock.restart();
 
         }
-
-        if (clock1.getElapsedTime().asSeconds() > 0.04) {
+        if (clock1.getElapsedTime().asSeconds() > 0.0099 && title.getSize().x == 750) {
 
             if (title_sword.getPosition().x != 220) {
                 x_sword += 20;
             }
-
 
             title_sword.setPosition(x_sword, y_sword);
             clock1.restart();
@@ -426,7 +449,6 @@ void GameData::renderGame() {
             window->draw(swords[2]);
         }
         if (achievementTxt.getString() != defaultS) {
-            window->draw(achievementTrophy);
             window->draw(achievementTxt);
         }
         window->draw(player.getGameCharacter());
@@ -457,6 +479,8 @@ void GameData::renderGame() {
 
 void GameData::initWindow() {
     this->window = new sf::RenderWindow(sf::VideoMode(1200, 600), "FinnRunner", sf::Style::Titlebar | sf::Style::Close);
+    window->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+
 }
 
 void GameData::initGuiVariables() {
@@ -496,7 +520,7 @@ void GameData::initGuiVariables() {
     recordT.setString("RECORD: " + strApp);
     recordT.setFillColor(sf::Color::White);
     recordT.setCharacterSize(20);
-    recordT.setPosition(280, 15);
+    recordT.setPosition(220, 15);
     recordT.setOutlineColor(sf::Color::Black);
     recordT.setOutlineThickness(2.5);
 
@@ -508,6 +532,7 @@ void GameData::initGuiVariables() {
 
     swords[0].setTexture(swords_texture);
     swords[1].setTexture(swords_texture);
+    swords[2].setTexture(swords_texture);
     swords[2].setTexture(swords_texture);
 
     swords[0].scale(2.0, 2.0);
@@ -534,15 +559,15 @@ bool GameData::isInGame() const {
 }
 
 void GameData::backgroundLoop() {
-        xL1 -= objectVelX * c.getElapsedTime().asSeconds();
-        xL2 -= objectVelX * c.getElapsedTime().asSeconds();
-        if ((int) xL1 == -600) {
-            xL1 = 0;
-            xL2 = 600;
-        }
-        background.setPosition(sf::Vector2f(xL1, 0));
-        background2.setPosition(sf::Vector2f(xL2, 0));
-        c.restart();
+    xL1 -= objectVelX * c.getElapsedTime().asSeconds();
+    xL2 -= objectVelX * c.getElapsedTime().asSeconds();
+    if ((int) xL1 == -600) {
+        xL1 = 0;
+        xL2 = 600;
+    }
+    background.setPosition(sf::Vector2f(xL1, 0));
+    background2.setPosition(sf::Vector2f(xL2, 0));
+    c.restart();
 }
 
 void GameData::scoreUpdate() {
@@ -582,7 +607,7 @@ void GameData::createEnemy() {
     enemySpawn.restart();
     if (meters >= 30) {
         if (rand() % 15 == 0) {
-            enemies.push_back(std::unique_ptr<Bat>(new Bat(500, enemyVX, b)));
+            enemies.push_back(std::unique_ptr<Bat>(new Bat(430, enemyVX, b)));
         } else {
             enemies.push_back(std::unique_ptr<ZombieToast>(new ZombieToast(enemyVX, z)));
         }
@@ -612,9 +637,9 @@ void GameData::setAchievementTxt(std::string achievement) {
     //CREAZIONE DEGLI ACHIEVEMENT
     achievementTxt.setFont(font);
     achievementTxt.setString(achievement);
-    achievementTxt.setFillColor(sf::Color::White);
+    achievementTxt.setFillColor(sf::Color(255,215,0));
     achievementTxt.setOutlineColor(sf::Color::Black);
-    achievementTxt.setOutlineThickness(2.5);
+    achievementTxt.setOutlineThickness(2.25);
     achievementTxt.setCharacterSize(25);
 
     //TESTO AL CENTRO
@@ -629,6 +654,10 @@ void GameData::setObjectVelocity() {
     switch (meters) {
         case 0:
             objectVelX = 85;
+            contr = true;
+            break;
+        case 15:
+            objectVelX = 125;
             contr = true;
             break;
         case 30:
