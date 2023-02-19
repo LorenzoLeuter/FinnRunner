@@ -35,15 +35,13 @@ public:
 
     bool attack();
 
-    bool collect(PowerUp pup, PowerUpFactory itm,int delta);
+    bool collect(PowerUp pup, PowerUpFactory itm, int delta);
 
     int getAttackCounter() const;
 
     void setAttackCounter(int attackCounter);
 
     bool isSwordCollected() const;
-
-    bool isPotionCollected() const;
 
     void reset();
 

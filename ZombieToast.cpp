@@ -1,6 +1,6 @@
 #include "ZombieToast.h"
 
-ZombieToast::ZombieToast(float v,const sf::Texture& t) : GameCharacter(1264, 484, v, 0.0), isAlive(true),Active(false) {
+ZombieToast::ZombieToast(float v, const sf::Texture &t) : GameCharacter(1264, 484, v, 0.0), isAlive(true) {
     game_character.setTexture(t);
     game_character.setPosition(positionX, positionY);
     game_character.scale(1.25, 1.25);
@@ -17,7 +17,7 @@ void ZombieToast::animation() {
 
         } else {
             //ANIMAZIONE MORTE
-            if(rectSourceSprite.left != 768){
+            if (rectSourceSprite.left != 768) {
                 rectSourceSprite.left += 64;
             }
         }
@@ -36,12 +36,13 @@ void ZombieToast::update() {
 }
 
 
-int ZombieToast::getKilled(GameCharacter hero,int countKill) {
-    if ((int)positionX >= (int)hero.getPositionX() + 15 && (int)positionX <= (int)hero.getPositionX() + 20 && isAlive) {
+int ZombieToast::getKilled(GameCharacter hero, int countKill) {
+    if ((int) positionX >= (int) hero.getPositionX() + 15 && (int) positionX <= (int) hero.getPositionX() + 20 &&
+        isAlive) {
         isAlive = false;
         rectSourceSprite.left = 975;
         animation_fps = 0.03;
-        return countKill+1;
+        return countKill + 1;
     }
     return countKill;
 }

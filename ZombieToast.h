@@ -14,7 +14,6 @@ class ZombieToast : public GameCharacter{
     private:
         sf::IntRect rectSourceSprite{0, 0, 64, 64};
         bool isAlive;
-        bool Active;
 
 };
 

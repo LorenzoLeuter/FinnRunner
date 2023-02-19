@@ -1,15 +1,18 @@
-#include <iostream>
 #include "Hero.h"
 
-Hero::Hero(): GameCharacter(20,500,0.0,0.0), gravity(0.5), onGround(true), isAlive(true), isAttacking(false), swordCollected(false), potionCollected(false), attackCounter(3){
+Hero::Hero() : GameCharacter(20, 500, 0.0, 0.0), gravity(0.5), onGround(true), isAlive(true), isAttacking(false),
+               swordCollected(false), potionCollected(false), attackCounter(3) {
     texture.loadFromFile("assets/FinnSprite.png");
     game_character.setTexture(texture);
     game_character.setPosition(positionX, positionY);
     game_character.scale(2.5, 2.5);
 }
 
-void Hero::getKilled(GameCharacter enemy){
-    if((int)positionX >= (int)enemy.getPositionX() - 20 && (int)positionX <= (int)enemy.getPositionX() && ((int)positionY >= (int)enemy.getPositionY() && (int)positionY <= (int)enemy.getPositionY() + 16 ) && isAttacking == false){
+void Hero::getKilled(GameCharacter enemy) {
+    if ((int) positionX >= (int) enemy.getPositionX() - 20 && (int) positionX <= (int) enemy.getPositionX() &&
+        (((int) positionY >= (int) enemy.getPositionY() && (int) positionY <= (int) enemy.getPositionY() + 16) ||
+         ((int) positionY >= (int) enemy.getPositionY() - 16 && (int) positionY <= (int) enemy.getPositionY() + 16)) &&
+        isAttacking == false) {
         isAlive = false;
         rectSourceSprite.left = 512;
     }
@@ -22,7 +25,7 @@ void Hero::animation() {
                 //ANIMAZIONE CORSA (quando è a terra)
                 if (rectSourceSprite.left == 448 || rectSourceSprite.left == 480 || rectSourceSprite.left == 864) {
                     rectSourceSprite.left = 288;
-                } else if(isAttacking){
+                } else if (isAttacking) {
                     rectSourceSprite.left += 32;
                 } else {
                     rectSourceSprite.left += 32;
@@ -33,7 +36,7 @@ void Hero::animation() {
             }
         } else {
             //ANIMAZIONE MORTE
-            if(rectSourceSprite.left != 704){
+            if (rectSourceSprite.left != 704) {
                 rectSourceSprite.left += 32;
             }
 
@@ -50,18 +53,18 @@ void Hero::update() {
 
     game_character.setPosition(positionX, positionY);
 
-    if(attackCounter == 0){
+    if (attackCounter == 0) {
         swordCollected = false;
         attackCounter = 3;
     }
 
-    if(potionJumpCounter == 3){
+    if (potionJumpCounter == 3) {
         potionCollected = false;
         potionJumpCounter = 0;
     }
 
     //MANTIENE A TERRA IL PERSONAGGIO
-    if(positionY > 500){
+    if (positionY > 500) {
         positionY = 500;
         velocityY = 0.0;
         onGround = true;
@@ -71,9 +74,9 @@ void Hero::update() {
 }
 
 void Hero::jump() {
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && onGround){
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && onGround) {
 
-        if(potionCollected){
+        if (potionCollected) {
             velocityY = -21;
             potionJumpCounter++;
         } else {
@@ -86,7 +89,7 @@ void Hero::jump() {
 }
 
 bool Hero::attack() {
-    if(onGround && swordCollected){
+    if (onGround && swordCollected) {
         isAttacking = true;
         rectSourceSprite.left = 704;
         attackCounter--;
@@ -95,8 +98,9 @@ bool Hero::attack() {
     return false;
 }
 
-bool Hero::collect(PowerUp pup, PowerUpFactory itm,int delta) {
-    if(positionX >= (itm.getPowerUpSprite().getPosition().x-(float)delta) && positionX <= (itm.getPowerUpSprite().getPosition().x+((float)(delta+10)/2)) && onGround == true){
+bool Hero::collect(PowerUp pup, PowerUpFactory itm, int delta) {
+    if (positionX >= (itm.getPowerUpSprite().getPosition().x - (float) delta) &&
+        positionX <= (itm.getPowerUpSprite().getPosition().x + ((float) (delta + 10) / 2)) && onGround == true) {
         switch (pup.getCurrentPowerUp()) {
             case 1:
                 swordCollected = true;
@@ -115,7 +119,7 @@ bool Hero::collect(PowerUp pup, PowerUpFactory itm,int delta) {
     return false;
 }
 
-Hero::~Hero() { }
+Hero::~Hero() {}
 
 int Hero::getAttackCounter() const {
     return attackCounter;
@@ -127,10 +131,6 @@ void Hero::setAttackCounter(int attackCounter) {
 
 bool Hero::isSwordCollected() const {
     return swordCollected;
-}
-
-bool Hero::isPotionCollected() const {
-    return potionCollected;
 }
 
 void Hero::reset() {

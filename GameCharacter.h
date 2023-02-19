@@ -1,18 +1,19 @@
 #ifndef FINN_RUNNER_GAMECHARACTER_H
 #define FINN_RUNNER_GAMECHARACTER_H
+
 #include <SFML/Graphics.hpp>
 
-class GameCharacter{
+class GameCharacter {
 public:
-    GameCharacter(float posX,float posY,float velX,float velY) : positionX(posX),positionY(posY),velocityX(velX),velocityY(velY) {}
+    GameCharacter(float posX, float posY, float velX, float velY) : positionX(posX), positionY(posY), velocityX(velX),
+                                                                    velocityY(velY) {}
 
     virtual void animation() {};
-    virtual void update() {};
-    virtual int getKilled(GameCharacter gc,int countKill){};
 
-    float getVelocityX() const {
-        return velocityX;
-    }
+    virtual void update() {};
+
+    virtual int getKilled(GameCharacter gc, int countKill) {};
+
 
     void setVelocityX(float velX) {
         GameCharacter::velocityX = velX;
@@ -26,12 +27,8 @@ public:
         return positionY;
     }
 
-    sf::Sprite getGameCharacter(){
+    sf::Sprite getGameCharacter() {
         return game_character;
-    }
-
-    void setPositionX(float posX) {
-        GameCharacter::positionX = posX;
     }
 
 protected:

@@ -12,7 +12,6 @@
 #include "ZombieToast.h"
 #include "Bat.h"
 #include "PowerUpFactory.h"
-//#include "FileMgr.h"
 
 
 class GameData : public Subject {
@@ -24,8 +23,6 @@ public:
     GameData();
 
     int getMeters() const;
-
-    void setMeters(int meters);
 
     int getRecord();
 
@@ -126,7 +123,7 @@ private:
     sf::Sprite explosion;
     sf::Texture explosion_txt;
     sf::Clock clock2;
-    sf::IntRect rectSourceSpriteExplosion{0,0,48,48};
+    sf::IntRect rectSourceSpriteExplosion{0, 0, 48, 48};
     sf::Image icon;
     int x_title = 0, y_title = 0;
     int x_sword = -1200, y_sword = -45;

@@ -27,8 +27,7 @@ public:
 
 private:
     float positionX, positionY;
-    float velocityX, velocityY;
-    int obj_type;
+    float velocityX;
     sf::Sprite power_up;
     sf::Texture texture;
     sf::Clock clock;

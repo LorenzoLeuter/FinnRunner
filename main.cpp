@@ -1,4 +1,3 @@
-#include <SFML/Graphics.hpp>
 #include "GameData.h"
 #include "Achievement.h"
 

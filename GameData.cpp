@@ -140,9 +140,6 @@ void GameData::update() {
 
                 if (sf::Event::MouseMoved) {
 
-                    std::cout << sf::Mouse::getPosition(*window).x << std::endl;
-                    std::cout << menuSelected << std::endl;
-
                     if (event.mouseMove.x >= 816 && event.mouseMove.x <= 976 && event.mouseMove.y >= 274 &&
                         event.mouseMove.y <= 322) {   //exit
                         menuSelected = 1;
@@ -186,8 +183,6 @@ void GameData::update() {
 
 
             if (sf::Event::MouseMoved) {
-
-                std::cout << sf::Mouse::getPosition(*window).y << std::endl;
 
                 if (event.mouseMove.x >= 813 && event.mouseMove.x <= 975 && event.mouseMove.y >= 328 &&
                     event.mouseMove.y <= 370) {   //exit
@@ -251,16 +246,16 @@ void GameData::update() {
             }
 
 
-            if (meters == (20) * spawnPUP) {
+            if (meters == (30) * spawnPUP) {
                 spawnPUP++;
                 if ((rand() % 2) == 0) {
                     powerUp.setCurrentPowerUp(1);
                     powerUpGui.setTexture(swords_texture, powerUp);
-                    powerUpGui.setPositionX(800);
+                    powerUpGui.setPositionX(1200);
                 } else {
                     powerUp.setCurrentPowerUp(2);
                     powerUpGui.setTexture(potion, powerUp);
-                    powerUpGui.setPositionX(800);
+                    powerUpGui.setPositionX(1200);
                 }
             }
 
@@ -607,7 +602,7 @@ void GameData::createEnemy() {
     enemySpawn.restart();
     if (meters >= 30) {
         if (rand() % 15 == 0) {
-            enemies.push_back(std::unique_ptr<Bat>(new Bat(430, enemyVX, b)));
+            enemies.push_back(std::unique_ptr<Bat>(new Bat(440, enemyVX, b)));
         } else {
             enemies.push_back(std::unique_ptr<ZombieToast>(new ZombieToast(enemyVX, z)));
         }
@@ -637,7 +632,7 @@ void GameData::setAchievementTxt(std::string achievement) {
     //CREAZIONE DEGLI ACHIEVEMENT
     achievementTxt.setFont(font);
     achievementTxt.setString(achievement);
-    achievementTxt.setFillColor(sf::Color(255,215,0));
+    achievementTxt.setFillColor(sf::Color(255, 215, 0));
     achievementTxt.setOutlineColor(sf::Color::Black);
     achievementTxt.setOutlineThickness(2.25);
     achievementTxt.setCharacterSize(25);
