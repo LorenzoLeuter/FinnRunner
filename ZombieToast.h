@@ -3,17 +3,21 @@
 
 #include "GameCharacter.h"
 
-class ZombieToast : public GameCharacter{
-    public:
-        ZombieToast(float v, const sf::Texture& texture);
-        virtual ~ZombieToast();
-        void animation() override;
-        void update() override;
-        int getKilled(GameCharacter hero,int countKill);
+class ZombieToast : public GameCharacter {
+public:
+    ZombieToast(float v, const sf::Texture &texture);
 
-    private:
-        sf::IntRect rectSourceSprite{0, 0, 64, 64};
-        bool isAlive;
+    virtual ~ZombieToast();
+
+    void animation() override;
+
+    void update() override;
+
+    int getKilled(GameCharacter hero, int countKill);
+
+private:
+    sf::IntRect rectSourceSprite{0, 0, 64, 64};
+    bool isAlive;
 
 };
 

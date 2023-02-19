@@ -33,17 +33,17 @@ public:
 
     void jump();
 
+    void setAttackCounter(int attackCounter);
+
+    void reset();
+
     bool attack();
 
     bool collect(PowerUp pup, PowerUpFactory itm, int delta);
 
-    int getAttackCounter() const;
-
-    void setAttackCounter(int attackCounter);
-
     bool isSwordCollected() const;
 
-    void reset();
+    int getAttackCounter() const;
 
 private:
     float gravity;

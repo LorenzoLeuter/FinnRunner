@@ -4,12 +4,16 @@
 class PowerUp {
 
 public:
-        PowerUp();
-        virtual ~PowerUp();
-        int getCurrentPowerUp() const;
-        void setCurrentPowerUp(int currentPowerUp);
+    PowerUp();
+
+    virtual ~PowerUp();
+
+    int getCurrentPowerUp() const;
+
+    void setCurrentPowerUp(int currentPowerUp);
+
 private:
-        int currentPowerUp;
+    int currentPowerUp;
 };
 
 

@@ -3,10 +3,10 @@
 
 
 class Observer {
-    protected:
-        virtual ~Observer() {};
-    public:
-        virtual void update() = 0;
+protected:
+    virtual ~Observer() {};
+public:
+    virtual void update() = 0;
 };
 
 

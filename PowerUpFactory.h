@@ -11,11 +11,11 @@ public:
 
     virtual ~PowerUpFactory();
 
-    sf::Sprite getPowerUpSprite(){
+    sf::Sprite getPowerUpSprite() {
         return power_up;
     }
 
-    void setTexture(const sf::Texture &texture,const PowerUp &pUp);
+    void setTexture(const sf::Texture &texture, const PowerUp &pUp);
 
     void setPositionX(float positionX);
 
