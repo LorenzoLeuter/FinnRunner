@@ -211,7 +211,7 @@ void GameData::update() {
 
     if (inGame) {
         if (player.getStatus()) {
-
+            window->setMouseCursorVisible(false);
             if (attackingTime.getElapsedTime().asSeconds() >= (float) coolDownAttack) {
                 player.setIsAttacking(false);
                 attackingTime.restart();
@@ -375,8 +375,10 @@ void GameData::deathScreen() {
 void GameData::renderMenu() {
     window->clear();
     window->draw(background);
+    window->setMouseCursorVisible(false);
 
     if (title.getSize().x == 750 && title_sword.getPosition().x == 220) {
+        window->setMouseCursorVisible(true);
         window->draw(title);
         window->draw(explosion);
         if (clock2.getElapsedTime().asSeconds() > 0.06) {
@@ -466,6 +468,7 @@ void GameData::renderGame() {
             window->draw(enemies[i]->getGameCharacter());
         }
 
+        window->setMouseCursorVisible(true);
         deathScreen();
 
 
