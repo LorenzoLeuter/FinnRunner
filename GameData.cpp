@@ -216,6 +216,7 @@ void GameData::update() {
                 player.setIsAttacking(false);
                 attackingTime.restart();
             }
+
             setObjectVelocity();
             backgroundLoop();
 
@@ -251,11 +252,11 @@ void GameData::update() {
                 if ((rand() % 2) == 0) {
                     powerUp.setCurrentPowerUp(1);
                     powerUpGui.setTexture(swords_texture, powerUp);
-                    powerUpGui.setPositionX(1200);
+                    powerUpGui.setPositionX(1220);
                 } else {
                     powerUp.setCurrentPowerUp(2);
                     powerUpGui.setTexture(potion, powerUp);
-                    powerUpGui.setPositionX(1200);
+                    powerUpGui.setPositionX(1220);
                 }
             }
 
@@ -711,6 +712,13 @@ int GameData::getCountKill() const {
 void GameData::resetGame() {
     player.reset();
     recordT.setString("RECORD: " + strApp);
+
+    for (int i = 0; i < enemies.size(); i++) {
+        deleteEnemy(i);
+    }
+
+    powerUpGui.setPositionX(3000);
+    powerUpGui.update();
     meters = 0;
     xL1 = 0;
     xL2 = 600;
@@ -725,12 +733,5 @@ void GameData::resetGame() {
     countSP = 0;
     countPP = 0;
     contrSaveR = false;
-    powerUpGui.setPositionX(2000);
     c.restart();
-
-    for (int i = 0; i < enemies.size(); i++) {
-        deleteEnemy(i);
-    }
-
-
 }

@@ -8,16 +8,16 @@ public:
     GameCharacter(float posX, float posY, float velX, float velY) : positionX(posX), positionY(posY), velocityX(velX),
                                                                     velocityY(velY) {}
 
-    virtual void animation() {};
+    virtual void animation() {}
 
-    virtual void update() {};
+    virtual void update() {}
 
-    virtual int getKilled(GameCharacter gc, int countKill) {};
+    virtual int getKilled(GameCharacter gc, int countKill) {}
 
 
     void setVelocityX(float velX) {
         GameCharacter::velocityX = velX;
-    };
+    }
 
     float getPositionX() const {
         return positionX;
@@ -25,6 +25,10 @@ public:
 
     float getPositionY() const {
         return positionY;
+    }
+
+    void setPositionX(float posX){
+        positionX = posX;
     }
 
     sf::Sprite getGameCharacter() {
