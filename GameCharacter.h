@@ -27,10 +27,6 @@ public:
         return positionY;
     }
 
-    void setPositionX(float posX){
-        positionX = posX;
-    }
-
     sf::Sprite getGameCharacter() {
         return game_character;
     }
