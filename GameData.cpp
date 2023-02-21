@@ -736,5 +736,9 @@ void GameData::resetGame() {
     countSP = 0;
     countPP = 0;
     contrSaveR = false;
+    attackingTime.restart();
+    frameRate.restart();
+    enemySpawn.restart();
+    cs.restart();
     c.restart();
 }
