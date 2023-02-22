@@ -1,4 +1,4 @@
-![Title](https://i.ibb.co/fkkV42L/Title.png)
+![Title](assets/Title.png)
 
 **FinnRunner** is a project for "**Programmazione**" exam of **Computer Engineering** course at **Università degli Studi di Firenze**.
 The game is a **2D endless platform** where the goal is to get the highest score trying not to hit the obstacles.
