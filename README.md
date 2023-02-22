@@ -1,6 +1,6 @@
 ![Title](assets/Title.png)
 
-**FinnRunner** is a project for "**Programmazione**" exam of **Computer Engineering** course at **Università degli Studi di Firenze**.\
+**FinnRunner** is a project for "**Programmazione/Laboratorio di Programmazione**" exam of **Computer Engineering** course at **Università degli Studi di Firenze**.\
 The game is a **2D endless platform** where the goal is to get the highest score trying not to hit the obstacles.\
 It is inspired by the cartoon **Adventure Time** in fact the player is the protagonist "**Finn**" who lives in a fantasy world full of creatures for this reason the obstacles are **zombies** and **bats**.
 
