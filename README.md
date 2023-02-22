@@ -11,8 +11,8 @@ It is inspired by the cartoon **Adventure Time** in fact the player is the prota
 ![Gameplay](https://i.ibb.co/k8ydVtJ/Gameplay.gif)
 
 ## Keyboard commands:
-**SPACE** - Jump
-**RIGHT ARROW** - Attack (only if the sword is collected)
+**SPACE** - Jump\
+**RIGHT ARROW** - Attack (only if the sword is collected)\
 **ESC** - Exit
 
 # Collectibles and Power-Ups
