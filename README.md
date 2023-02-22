@@ -6,9 +6,9 @@ It is inspired by the cartoon **Adventure Time** in fact the player is the prota
 
 # Main Menu and Gameplay
 
-![Menu intro](https://i.postimg.cc/K8XyhxCq/INTRO-Trim.gif)
+![Menu intro](gifs/INTRO.gif)
 -
-![Gameplay](https://i.postimg.cc/yY3zGkp3/Gameplay.gif)
+![Gameplay](gifs/Gameplay.gif)
 
 ## Keyboard commands:
 **SPACE** - Jump\
@@ -18,13 +18,13 @@ It is inspired by the cartoon **Adventure Time** in fact the player is the prota
 # Collectibles and Power-Ups
 
 ## Sword
-![Spada](https://i.ibb.co/NxyB0Ng/Spada.gif)
+![Spada](gifs/Spada.gif)
 
 By collecting the **sword** the player gets **3 attacks**, very useful when the rhythm of jumps gets lost.
 Be careful, the sword is **lost** if you take the potion! 
 
 ## Potion
-![Pozione](https://i.ibb.co/rmRQgWF/Pozione.gif)
+![Pozione](gifs/Pozione.gif)
 
 The potion gives the player the ability to **jump very high 3 times**.
 it is a **bonus** that will allow you to jump over many enemies but be careful when you jump because it will turn into a **malus** making you fall right on the enemy.
