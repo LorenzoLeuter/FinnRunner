@@ -20,13 +20,13 @@ It is inspired by the cartoon **Adventure Time** in fact the player is the prota
 ## Sword
 ![Spada](gifs/Spada.gif)
 
-By collecting the **sword** the player gets **3 attacks**, very useful when the rhythm of jumps gets lost.
+By collecting the **sword** the player gets **3 attacks**, very useful when the rhythm of jumps gets lost.\
 Be careful, the sword is **lost** if you take the potion! 
 
 ## Potion
 ![Pozione](gifs/Pozione.gif)
 
-The potion gives the player the ability to **jump very high 3 times**.
+The potion gives the player the ability to **jump very high 3 times**.\
 it is a **bonus** that will allow you to jump over many enemies but be careful when you jump because it will turn into a **malus** making you fall right on the enemy.
 
 # Tools used and assets
