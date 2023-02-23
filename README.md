@@ -27,7 +27,7 @@ Be careful, the sword is **lost** if you take the potion!
 ![Pozione](gifs/Pozione.gif)
 
 The potion gives the player the ability to **jump very high 3 times**.\
-it is a **bonus** that will allow you to jump over many enemies but be careful when you jump because it will turn into a **malus** making you fall right on the enemy.
+It is a **bonus** that will allow you to jump over many enemies but be careful when you jump because it will turn into a **malus** making you fall right on the enemy.
 
 # Tools used and assets
 
