@@ -1,9 +1,10 @@
 #include "ZombieToast.h"
 
-ZombieToast::ZombieToast(float v, const sf::Texture &t) : GameCharacter(1264, 484, v, 0.0), isAlive(true) {
+ZombieToast::ZombieToast(float v, const sf::Texture &t) : GameCharacter(1264, 484, v, 0.0){
     game_character.setTexture(t);
     game_character.setPosition(positionX, positionY);
     game_character.scale(1.25, 1.25);
+    isAlive = true;
 }
 
 void ZombieToast::animation() {
@@ -36,15 +37,13 @@ void ZombieToast::update() {
 }
 
 
-int ZombieToast::getKilled(GameCharacter hero, int countKill) {
+void ZombieToast::getKilled(GameCharacter hero) {
     if ((int) positionX >= (int) hero.getPositionX() + 15 && (int) positionX <= (int) hero.getPositionX() + 20 &&
         isAlive) {
         isAlive = false;
         rectSourceSprite.left = 975;
         animation_fps = 0.03;
-        return countKill + 1;
     }
-    return countKill;
 }
 
 

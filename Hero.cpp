@@ -1,11 +1,12 @@
 #include "Hero.h"
 
-Hero::Hero() : GameCharacter(20, 500, 0.0, 0.0), gravity(0.5), onGround(true), isAlive(true), isAttacking(false),
+Hero::Hero() : GameCharacter(20, 500, 0.0, 0.0), gravity(0.5), onGround(true), isAttacking(false),
                swordCollected(false), potionCollected(false), attackCounter(3) {
     texture.loadFromFile("assets/FinnSprite.png");
     game_character.setTexture(texture);
     game_character.setPosition(positionX, positionY);
     game_character.scale(2.5, 2.5);
+    isAlive = true;
 }
 
 void Hero::getKilled(GameCharacter enemy) {

@@ -12,7 +12,7 @@ public:
 
     virtual void update() {}
 
-    virtual int getKilled(GameCharacter gc, int countKill) {}
+    virtual void getKilled(GameCharacter gc) {}
 
 
     void setVelocityX(float velX) {
@@ -31,10 +31,15 @@ public:
         return game_character;
     }
 
+    bool getStatus(){
+        return isAlive;
+    }
+
 protected:
     float positionX, positionY;
     float velocityX, velocityY;
     float animation_fps = 0.06;
+    bool isAlive;
     sf::Sprite game_character;
     sf::Clock clock;
 };
