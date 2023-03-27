@@ -7,10 +7,10 @@ protected:
     int x = 2;
 };
 
-TEST_F(GameTest, testDeleteEnemy){
+TEST_F(GameTest, testDeleteEnemy) {
     ASSERT_EQ(x, 2);
     for (int i = 0; i < gdt.getEnemySize(); i++) {
-        if(gdt.enemies[i]->getPositionX() == 130) {
+        if (gdt.enemies[i]->getPositionX() == 130) {
             gdt.deleteEnemy(i);
         }
     }
