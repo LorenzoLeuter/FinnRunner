@@ -13,11 +13,10 @@ public:
 
     void update() override;
 
-    int getKilled(GameCharacter hero, int countKill);
+    void getKilled(GameCharacter hero);
 
 private:
     sf::IntRect rectSourceSprite{0, 0, 64, 64};
-    bool isAlive;
 
 };
 

@@ -47,7 +47,7 @@ public:
 
 private:
     float gravity;
-    bool onGround, isAlive, isAttacking, swordCollected, potionCollected;
+    bool onGround, isAttacking, swordCollected, potionCollected;
     int attackCounter;
     int potionJumpCounter = 0;
     sf::IntRect rectSourceSprite{448, 0, 32, 32};

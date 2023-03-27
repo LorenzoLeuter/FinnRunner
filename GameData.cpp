@@ -231,12 +231,15 @@ void GameData::update() {
                     enemies[i]->animation();
 
                     if (player.isAttacking1()) {
-                        countKill = enemies[i]->getKilled(player, countKill);
+                        enemies[i]->getKilled(player);
                     }
 
                     player.getKilled(*enemies[i]);
 
                 } else {
+                    if(enemies[i]->getStatus() == false){
+                        countKill++;
+                    }
                     deleteEnemy(i);
                 }
             }
