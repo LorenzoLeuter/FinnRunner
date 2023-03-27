@@ -12,6 +12,7 @@
 #include "ZombieToast.h"
 #include "Bat.h"
 #include "PowerUpFactory.h"
+#include <iostream>
 
 
 class GameData : public Subject {
@@ -56,6 +57,11 @@ public:
 
     void setAchievementTxt(std::string achievement);
 
+    int getEnemySize();
+
+    void deleteEnemy(int posList);
+    std::vector<std::unique_ptr<GameCharacter>> enemies;
+
 private:
 
     //variables
@@ -82,7 +88,6 @@ private:
     const std::string defaultS;
     std::vector<char> record;
     std::list<Observer *> observers;
-    std::vector<std::unique_ptr<GameCharacter>> enemies;
     std::FILE *f;
     std::string strApp;
     sf::RenderWindow *window;
@@ -136,8 +141,6 @@ private:
     void scoreUpdate();
 
     void createEnemy();
-
-    void deleteEnemy(int posList);
 
     void setObjectVelocity();
 

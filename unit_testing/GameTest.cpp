@@ -1,14 +1,17 @@
-#include "GameTest.h"
+#include "gtest/gtest.h"
+#include "../GameData.h"
 
-void GameTest::GameRunningTest() {
-    while (GD.running()) {
-        double start = clock() / CLOCKS_PER_SEC;
-        GD.update();
-        if (GD.isInGame()) {
-            GD.renderGame();
-        } else {
-            exit(0);
+class GameTest : public ::testing::Test{
+protected:
+    GameData gdt;
+    int x = 2;
+};
+
+TEST_F(GameTest, testDeleteEnemy){
+    ASSERT_EQ(x, 2);
+    for (int i = 0; i < gdt.getEnemySize(); i++) {
+        if(gdt.enemies[i]->getPositionX() == 130) {
+            gdt.deleteEnemy(i);
         }
-        std::this_thread::sleep_for(std::chrono::milliseconds((int) start + MS_PER_FRAME - (clock() / CLOCKS_PER_SEC)));
     }
 }

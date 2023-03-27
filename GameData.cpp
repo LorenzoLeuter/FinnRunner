@@ -1,6 +1,5 @@
-#include <SFML/Graphics.hpp>
 #include "GameData.h"
-#include <iostream>
+#include <SFML/Graphics.hpp>
 
 
 int GameData::getMeters() const {
@@ -297,8 +296,6 @@ void GameData::update() {
                     enemies[i]->update();
                     enemies[i]->animation();
 
-                } else {
-                    deleteEnemy(i);
                 }
             }
 
@@ -741,4 +738,8 @@ void GameData::resetGame() {
     enemySpawn.restart();
     cs.restart();
     c.restart();
+}
+
+int GameData::getEnemySize() {
+    return 0;
 }
